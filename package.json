@@ -1,7 +1,7 @@
 {
   "name": "svdo",
   "private": true,
-  "description": "Serge van den Oever Weblog",
+  "description": "Serge van den Oever's weblog",
   "version": "1.0.0",
   "author": "Serge van den Oever <svdoever@gmail.com>",
   "bugs": {

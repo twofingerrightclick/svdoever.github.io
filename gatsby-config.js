@@ -1,8 +1,8 @@
 module.exports = {
   siteMetadata: {
-    title: 'Serge van den Oever weblog',
+    title: 'Serge van den Oever\'s weblog',
     author: 'Serge van den Oever',
-    description: 'Personal blog by Serge van den Oever.',
+    description: 'Personal webblog by Serge van den Oever.',
     siteUrl: 'https://sergevandenoever.nl',
     social: {
       twitter: '@svdoever',

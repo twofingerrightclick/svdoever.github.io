@@ -68,7 +68,7 @@ class BlogPostTemplate extends React.Component {
             }}
             to={'/'}
           >
-            Serge van den Oever Weblog
+            Serge van den Oever's weblog
           </Link>
         </h3>
         <Bio />
