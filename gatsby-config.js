@@ -2,7 +2,7 @@ module.exports = {
   siteMetadata: {
     title: 'Serge van den Oever\'s weblog',
     author: 'Serge van den Oever',
-    description: 'Personal webblog by Serge van den Oever.',
+    description: 'Personal weblog by Serge van den Oever.',
     siteUrl: 'https://sergevandenoever.nl',
     social: {
       twitter: '@svdoever',
@@ -169,7 +169,7 @@ module.exports = {
         short_name: `svdo`,
         start_url: `/`,
         background_color: `#ffffff`,
-        theme_color: `#0`,
+        theme_color: `#000000`,
         display: `minimal-ui`,
         icon: `src/assets/icon.png`,
       },

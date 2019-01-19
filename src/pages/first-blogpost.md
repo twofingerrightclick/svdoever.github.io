@@ -23,6 +23,6 @@ and
 
 So this the start of my first self-owned blogging platform. I'm using [Gatsby](https://www.gatsbyjs.org), and "stole" the initial code from Dan Abramov's weblog [overreacted.io](https://overreacted.io). Thanks Dan!
 
-Joel Hooks also created a great Gatsby-based weblog starter,  I will definitely steal some of the ideas from his code-base - I love the MDX idea!
+Joel Hooks also created a great [Gatsby-based weblog starter](https://github.com/eggheadio/gatsby-starter-egghead-blog),  I will definitely steal some of the ideas from his code-base - I love the MDX idea!
 
 So let's get started with blogging! It has been a while...
