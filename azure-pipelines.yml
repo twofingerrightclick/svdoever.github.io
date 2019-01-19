@@ -20,11 +20,6 @@ steps:
     npm run azure-build
   displayName: 'npm install and build'
 
-- task: CopyFiles@2
-  inputs:
-    SourceFolder: '$(System.DefaultWorkingDirectory)'
-    Contents: |
-      public\**
-    TargetFolder: '$(Build.ArtifactStagingDirectory)'
-
 - task: PublishBuildArtifacts@1
+  inputs:
+    PathtoPublish: '$(System.DefaultWorkingDirectory)/public'
