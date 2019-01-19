@@ -1,7 +1,7 @@
 ---
 title: Serge's first blog post!?
 date: '2019-01-18'
-spoiler: My first blog post on my own "blogging platform".
+spoiler: That mandatory first blog post on my own "blogging platform". After blogging for years on http://weblogs.asp.net/soever and some endeavors with the Medium blogging platform.
 ---
 
 There is always that first blog post when you start a weblog. Well, this is THAT post.
