@@ -27,9 +27,7 @@ class Bio extends React.Component {
           }}
         />
         <p style={{ maxWidth: 310 }}>
-          Personal blog by <a href="https://mobile.twitter.com/svdoever">Serge van den Oever</a>
-          <br/>
-          Als je maar lol hebt...
+          Personal blog by <a href="https://mobile.twitter.com/svdoever">Serge van den Oever</a> - Als je maar lol hebt...
         </p>
       </div>
     )
