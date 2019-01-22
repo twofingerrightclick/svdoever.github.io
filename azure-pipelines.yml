@@ -23,3 +23,14 @@ steps:
 - task: PublishBuildArtifacts@1
   inputs:
     PathtoPublish: '$(System.DefaultWorkingDirectory)/public'
+
+
+- task: AzureFileCopy@2 
+  displayName: 'AzureBlob File Copy to static website' 
+  inputs: 
+    SourcePath: $(System.DefaultWorkingDirectory)/svdoever.serge-weblog/drop 
+    azureSubscription: 'Visual Studio Enterprise – MPN (69b6f9b6-f0c3-47f6-8694-ffbbaeec9d9b)' 
+    Destination: AzureBlob 
+    storage: personalsvdoever 
+    ContainerName: $web 
+ 
