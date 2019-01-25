@@ -3,13 +3,23 @@ module.exports = {
     title: 'Serge van den Oever\'s weblog',
     author: 'Serge van den Oever',
     description: 'Personal weblog by Serge van den Oever.',
-    siteUrl: 'https://sergevandenoever.nl',
+    siteUrl: 'https://www.sergevandenoever.nl',
     social: {
       twitter: '@svdoever',
     },
   },
   pathPrefix: '/',
   plugins: [
+    {
+      resolve: `gatsby-plugin-sitemap`,
+      options: {
+        exclude: [
+          "/confirm/",
+          "/thanks/",
+          "/_*"
+        ]
+      }
+    },
     {
       resolve: `gatsby-source-filesystem`,
       options: {
@@ -110,7 +120,7 @@ module.exports = {
               return allMarkdownRemark.edges.map(edge => {
                 const siteUrl = site.siteMetadata.siteUrl;
                 const postText = `
-                <div style="margin-top=55px; font-style: italic;">(This is an article posted to my blog at sergevandenoever.nl. You can read it online by <a href="${siteUrl +
+                <div style="margin-top=55px; font-style: italic;">(This is an article posted to my blog at https://www.sergevandenoever.nl. You can read it online by <a href="${siteUrl +
                   edge.node.fields.slug}">clicking here</a>.)</div>
               `
 
