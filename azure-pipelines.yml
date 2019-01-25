@@ -9,7 +9,7 @@ trigger:
 pool:
   vmImage: 'Ubuntu-16.04' # 'vs2017-win2016'
 
-# steps:
+steps:
 # - task: NodeTool@0
 #   inputs:
 #     versionSpec: '10.x'
