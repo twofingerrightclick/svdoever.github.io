@@ -11,6 +11,7 @@ const query = graphql`
         author
         description
         siteUrl
+        googleSiteVerification
         social {
           twitter
         }
@@ -40,6 +41,10 @@ function SEO({ meta, image, title, description, slug }) {
                   title: siteMetadata.title,
                 })}
             meta={[
+              {
+                name: 'google-site-verification',
+                content: siteMetadata.googleSiteVerification
+              },
               {
                 name: 'description',
                 content: metaDescription,
