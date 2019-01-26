@@ -4,6 +4,7 @@ module.exports = {
     author: 'Serge van den Oever',
     description: 'Personal weblog by Serge van den Oever.',
     siteUrl: 'https://www.sergevandenoever.nl',
+    'google-site-verification': 'rkcO7RgCEUF13RY-0PA9dZc7aS3wEnfKF--cY_EJGfo',
     social: {
       twitter: '@svdoever',
     },
