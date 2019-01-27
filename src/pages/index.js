@@ -23,6 +23,9 @@ class BlogIndex extends React.Component {
         <SEO />
         <Bio />
         {posts.map(({ node }) => {
+          if (process.env.NODE_ENV == 'production' && node.fields.slug.startsWith("/_")) { // posts still under construction start with _
+            return null;
+          };
           const title = get(node, 'frontmatter.title') || node.fields.slug
           return (
             <div key={node.fields.slug}>
