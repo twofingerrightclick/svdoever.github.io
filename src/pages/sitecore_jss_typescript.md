@@ -6,19 +6,19 @@ spoiler: At my company we use TypeScript for front-end development where possibl
          which did not work out of the box. In this post I describe how I got ypeScript compilation working.
 ---
 
-In this blog post I describe my adventures to create a Sitecore 9.1 with JSS project from
-scratch. To get started head over to the [Quickstart |Sitecore JSS Documentation](https://jss.sitecore.com/docs/getting-started/quick-start) 
+In this blog post I describe my adventures to convert an "out of the box" Sitecore 9.1 with JSS in React with TypeScript project from scratch. To get started head over to the [Quickstart |Sitecore JSS Documentation](https://jss.sitecore.com/docs/getting-started/quick-start) 
 and follow the steps to create a disconnected JSS starter project:
 
-npm install -g @sitecore-jss/sitecore-jss-cli
-jss create hello-jss-typescript reactgit init
-cd hello-jss-typescript
-git init
-git add -A
-git commit -m "first commit"
-git remote add origin https://github.com/macaw-interactive/hello-jss-sitecore.git
-git push -u origin master
-jss start
+1. npm install -g @sitecore-jss/sitecore-jss-cli
+2. jss create hello-jss-typescript react
+3. git init
+4. cd hello-jss-typescript
+5. git init
+6. git add -A
+7. git commit -m "first commit"
+8. git remote add origin https://github.com/macaw-interactive/hello-jss-sitecore.git
+9. git push -u origin master
+10. jss start
 
 We now have the starter website running on http://localhost:3000.
 
@@ -77,6 +77,8 @@ included is the ```tsconfig.json``` below. The rationale behind these changes ar
     "types": ["node"]
   }
 ```
+
+### Scaffolding a Hero component
 
 We now scaffold the ```Hero``` component using the command ```jss scaffold Hero``` as
 described in [Scaffolding a JSS Component](https://jss.sitecore.com/docs/getting-started/first-component).
@@ -150,7 +152,7 @@ When the Sitecore Layout service returns a layout definition, it returns the com
 Based on the mapping provided by the component factory the component hierarchy can be
 constructed for the layout.
 
-The script ```scripts/generate-component-factory.js``` is responsible for the generation of
+The script `scripts/generate-component-factory.js` is responsible for the generation of
 this mapping and produces the ```componentFactory.js``` output file. We want to use TypeScript for this file because we want the generated import statements also to search for ```.ts``` 
 and ```.tsx``` files. must be changed to the ```ts``` extensions. This means that we need to change
 the output file to ```componentFactory.ts```. We also want the component factory generation script
@@ -226,6 +228,8 @@ NEXT STEPS
 As specified in the ```NEXT STEPS``` we should deploy the configuration using ```jss deploy config```
 and deploy the app using ```jss deploy app -c -d```.
 
+### Building the server bundle
+
 When we deploy the app we get a compilation error in building the ```server.bundle.js```:
 
 ```
@@ -248,7 +252,18 @@ entry point of the app invoked by the renderer for server and client rendering. 
 the generated ```src/temp/componentFactory``` file, but we can't import a ```.ts``` file
 from a ```.js``` file. It won't be resolved.
 
-Strangely I has issues with awesome-typescript-loader, so I used ts-loader in ```server/server.webpack.config.js```.
+For the Typescript compilation of the server bundle we need the same ```tsconfig.json``` configuration
+as for the client bundle, with only the include path changed. For this we can create the file 
+```server/tsconfig``` with the following contents:
+
+```json
+{
+  "extends": "../tsconfig.json",
+  "include": [
+    "."
+  ]
+}
+```
 
 Including the content of the above described files will make this blog post too large, so please refer 
 to the GitHub repository [hello-jss-typescript](https://www.github.com/macaw-interactive/hello-jss-typescript)
@@ -256,6 +271,76 @@ for the details.
 
 If we now the app using ```jss deploy app -c -d``` we can navigate to http://hello-jss-typescript.dev.local/ and
 the site is rendered correctly.
+
+### The Sitecore layout service
+
+The layout of the rendered React page for a given route is provided by the 
+[Sitecore layout service](https://jss.sitecore.com/docs/fundamentals/services/layout-service).
+
+In our case a hit on ```http://hello-jss-typescript.dev.local/sitecore/api/layout/render/jss?item=/&sc_apikey={57231674-4CC9-48AA-AFF0-190DB9D68FE1}``` (your API key will vary) gives us:
+
+```json
+{
+  "sitecore": {
+    "context": {
+      "pageEditing": false,
+      "site": {
+        "name": "hello-jss-typescript"
+      },
+      "pageState": "normal",
+      "language": "en"
+    },
+    "route": {
+      "name": "home",
+      "displayName": "home",
+      "fields": {
+        "pageTitle": {
+          "value": "Welcome to Sitecore JSS"
+        }
+      },
+      "databaseName": "master",
+      "deviceId": "fe5d7fdf-89c0-4d99-9aa3-b5fbd009c9f3",
+      "itemId": "75b2a549-f227-51dd-98dd-599438514aad",
+      "itemLanguage": "en",
+      "itemVersion": 1,
+      "layoutId": "a0909742-4629-5ae4-a71a-1fe76a57379a",
+      "templateId": "ab82556d-8208-5edd-a980-be88546ccf5b",
+      "templateName": "App Route",
+      "placeholders": {
+        "jss-main": [
+          {
+            "uid": "3af894c3-37f9-52fa-943b-561cdf38da1a",
+            "componentName": "Hero",
+            "dataSource": "{0DC131EC-C855-5F8B-BFB9-62606ABB2DF2}",
+            "fields": {
+              "heading": {
+                "value": "Serge's hero component!"
+              }
+            }
+          },
+          {
+            "uid": "7418112d-b1c0-53fe-9256-b807b16fe3f4",
+            "componentName": "ContentBlock",
+            "dataSource": "{20448A26-84CB-52B7-BCE7-8D4851E8AABC}",
+            "fields": {
+              "heading": {
+                "value": "Welcome to Sitecore JSS"
+              },
+              "content": {
+                "value": "<p>Thanks for using JSS. Here are some resources to get you started:</p>\n\n<h3><a href=\"https://jss.sitecore.net\" rel=\"noopener noreferrer\">Documentation</a></h3>\n<p>The official JSS documentation can help you with any JSS task from getting started to advanced techniques.</p>\n\n<h3><a href=\"/styleguide\">Styleguide</a></h3>\n<p>The JSS styleguide is a living example of how to use JSS, hosted right in this app.\nIt demonstrates most of the common patterns that JSS implementations may need to use,\nas well as useful architectural patterns.</p>\n\n<h3><a href=\"/graphql\">GraphQL</a></h3>\n<p>JSS features integration with the Sitecore GraphQL API to enable fetching non-route data from Sitecore - or from other internal backends as an API aggregator or proxy.\nThis route is a living example of how to use an integrate with GraphQL data in a JSS app.</p>\n\n<div class=\"alert alert-dark\">\n  <h4>This app is a boilerplate</h4>\n  <p>The JSS samples are a boilerplate, not a library. That means that any code in this app is meant for you to own and customize to your own requirements.</p>\n  <p>Want to get change the lint settings? Do it. Want to read manifest data from a MongoDB database? Go for it. This app is yours.</p>\n</div>\n\n<div class=\"alert alert-dark\">\n  <h4>How to start with an empty app</h4>\n  <p>To remove all of the default sample content (the Styleguide and GraphQL routes) and start out with an empty JSS app:</p>\n  <ol>\n    <li>Delete <code>/src/components/Styleguide*</code> and <code>/src/components/GraphQL*</code></li>\n    <li>Delete <code>/sitecore/definitions/components/Styleguide*</code>, <code>/sitecore/definitions/templates/Styleguide*</code>, and <code>/sitecore/definitions/components/GraphQL*</code></li>\n    <li>Delete <code>/data/component-content/Styleguide</code></li>\n    <li>Delete <code>/data/content/Styleguide</code></li>\n    <li>Delete <code>/data/routes/styleguide</code> and <code>/data/routes/graphql</code></li>\n    <li>Delete <code>/data/dictionary/*.yml</code></li>\n  </ol>\n</div>\n"
+              }
+            }
+          }
+        ]
+      }
+    }
+  }
+}
+```
+
+Based on this JSON the final page is built.
+
+### And now...
 
 This is just the first step... all app specific code must be rewritten in TypeScript. I will keep you posted.
 
