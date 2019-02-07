@@ -77,3 +77,5 @@ server.listen(port, () => {
 Execute `npm start` and voila, the site is running on `http://localhost:3000`, completely separate from the Sitecore server.
 
 Note that the `.vscode` folder contains a `launch.json` configured to debug the Node code in Visual Studio Code.
+
+The complete example can be found at https://github.com/macaw-interactive/hello-jss-sitecore-node.
