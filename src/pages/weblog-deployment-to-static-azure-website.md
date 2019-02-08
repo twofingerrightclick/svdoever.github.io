@@ -66,6 +66,24 @@ Import in the configuration of the **Azure File Copy** task is that the we need 
 
 One issue with the static web sites on Azure storage is that they support http only. This can be solved using an Azure CDN as described in [Tutorial: Use Azure CDN to enable a custom domain with SSL for a static website](https://docs.microsoft.com/en-us/azure/storage/blobs/storage-blob-static-website-custom-domain).
 
+My first take on selecting a CDN was taking the Microsoft standard
+CDN. The issue that I faced was that when I updated an article the
+CDN did not reflect these changes. Expiration of items on the CDN
+are controlled by `Cache-Control` headers as explained in the
+article [Manage expiration of web content in Azure CDN](https://docs.microsoft.com/en-us/azure/cdn/cdn-manage-expiration-of-cloud-service-content). Because I'm running from a static web site hosted on Azure blob
+storage I don't have a web server in between where I can control
+these headers like I can do on for example IIS. The other CDN
+offerings on Azure (Verizon, Akamai) give you more control to 
+override caching based on for example file extensions. I first tried
+the Verizon offering which let you control these settings in a 
+separate and incomprehensible "manage" interface. After struggling
+for a while I tried the Akamai offering of the CDN which has the
+Azure management screens as described in the above mentioned article
+so I could make all pages cache for 1 minute except for .js, .css 
+and .json files which get a new unique url after each site 
+generation and can be cached fr a year.  
+
+
 The CDN for this weblog is running on [https://svdoever.azureedge.net](https://svdoever.azureedge.net). The custom domain name [www.sergevandenoever.nl](https://www.sergevandenoever.nl) points to this url.
 
 

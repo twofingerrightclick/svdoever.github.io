@@ -23,6 +23,7 @@ if (process.env.NODE_ENV !== 'production') {
   require('dotenv').config()
 }
 ```
+
 This enables us to add a file `.env` in the root to manage the required
 environment variables:
 

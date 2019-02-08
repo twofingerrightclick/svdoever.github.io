@@ -1,6 +1,6 @@
 ---
 title: Serge's first blog post!?
-date: '2019-01-18'
+date: '2019-01-17'
 spoiler: That mandatory first blog post on my own "blogging platform". After blogging for years on http://weblogs.asp.net/soever and some endeavors with the Medium blogging platform.
 ---
 
