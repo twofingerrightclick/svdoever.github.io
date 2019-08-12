@@ -9,4 +9,4 @@ Sitecore 9.1 depends on two big pieces of software that must be up and running o
 - SQL Server (database server)
 - Solr (search engine)
 
-SQL Server can be 
+SQL Server can be ...
