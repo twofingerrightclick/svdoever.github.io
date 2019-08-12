@@ -1,0 +1,743 @@
+<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[Serge van den Oever's weblog]]></title><description><![CDATA[Personal weblog by Serge van den Oever.]]></description><link>https://www.sergevandenoever.nl</link><generator>RSS for Node</generator><lastBuildDate>Mon, 12 Aug 2019 17:30:36 GMT</lastBuildDate><item><title><![CDATA[Install Sitecore 9.1 in a breeze]]></title><description><![CDATA[I would prefer to have a Sitecore installation on a VM so I only put it "on"]]></description><link>https://www.sergevandenoever.nl/_install-sitecore-91/</link><guid isPermaLink="false">https://www.sergevandenoever.nl/_install-sitecore-91/</guid><content:encoded>&lt;p&gt;Sitecore 9.1 depends on two big pieces of software that must be up and running on your machine:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;SQL Server (database server)&lt;/li&gt;
+&lt;li&gt;Solr (search engine)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;SQL Server can be &lt;/p&gt;
+                &lt;div style=&quot;margin-top=55px; font-style: italic;&quot;&gt;(This is an article posted to my blog at https://www.sergevandenoever.nl. You can read it online by &lt;a href=&quot;https://www.sergevandenoever.nl/_install-sitecore-91/&quot;&gt;clicking here&lt;/a&gt;.)&lt;/div&gt;
+              </content:encoded></item><item><title><![CDATA[Umbrella for Sitecore JSS]]></title><description><![CDATA[Umbrella for Sitecore JSS is our vision on how a website should be developed and hosted while using the JSS SDK and Sitecore as a headless CMS.]]></description><link>https://www.sergevandenoever.nl/sitecore_jss_umbrella/</link><guid isPermaLink="false">https://www.sergevandenoever.nl/sitecore_jss_umbrella/</guid><content:encoded>&lt;p&gt;I’m sitting at the keynote of the Sitecore &lt;a href=&quot;https://www.sugcon.eu/&quot;&gt;SUGCON Europe 2019&lt;/a&gt; conference listening to the opening keynote by Donovan Brown from Microsoft. Donovan Brown is a Senior DevOps Program Manager on Microsoft’s US Developer Division team and is telling about Azure DevOps. A perfect time to write a blog post on our open source Sitecore JSS starter project we have been working on for the last months.&lt;/p&gt;
+&lt;p&gt;And the nice thing: the project uses Azure DevOps pipelines to build and deploy the sample site coming with the starter kit!&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;bit.ly/sitecoreumbrella&quot;&gt;Umbrella for Sitecore JSS&lt;/a&gt; is our vision on how a website should be developed and hosted while using the JSS SDK and Sitecore as a headless CMS.&lt;/p&gt;
+&lt;p&gt;With the introduction of &lt;a href=&quot;https://jss.sitecore.com/&quot;&gt;Sitecore JavaScript Services&lt;/a&gt;, or JSS for short, Sitecore created an SDK to allow developers to use Sitecore as a headless CMS. Finally website developers are free to build a website using their own technology stack while utilizing the Sitecore platform.&lt;/p&gt;
+&lt;p&gt;Sitecore provides a great starter to start working with Sitecore JSS in combination with React, but we had some additional ideas on how we want to use JSS in combination with React. Some of those ideas are:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Use TypeScript for development (standard Sitecore JSS starter for React used JavaScript)&lt;/li&gt;
+&lt;li&gt;Run the frontend separate from the Sitecore CD server&lt;/li&gt;
+&lt;li&gt;Run the frontend in a Linux Docker container, utilizing NodeJS, Express, PM2, NGINX, …&lt;/li&gt;
+&lt;li&gt;Be able to run disconnected from Sitecore, so we can showcase a solution without having the licensing issues for JSS already solved&lt;/li&gt;
+&lt;li&gt;Be able to export Sitecore items items including media so we can enbed them in the Docker container so we can develop “Sitecore first”, but run without Sitecore installed&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;For more information head over to the &lt;a href=&quot;https://github.com/macaw-interactive/react-jss-typescript-starter&quot;&gt;GitHub repo&lt;/a&gt;, or checkout the &lt;a href=&quot;https://react-jss-typescript-starter-develop.azurewebsites.net/&quot;&gt;sample website&lt;/a&gt;!&lt;/p&gt;
+&lt;p&gt;And what did we do to build and deploy the Docker image using azure pipelines?&lt;/p&gt;
+&lt;p&gt;azure_pipelines.yaml:&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;yaml&quot;&gt;&lt;pre class=&quot;language-yaml&quot;&gt;&lt;code class=&quot;language-yaml&quot;&gt;&lt;span class=&quot;token key atrule&quot;&gt;trigger&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;token key atrule&quot;&gt;branches&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;token key atrule&quot;&gt;include&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;token punctuation&quot;&gt;-&lt;/span&gt; master
+    &lt;span class=&quot;token punctuation&quot;&gt;-&lt;/span&gt; develop
+
+&lt;span class=&quot;token key atrule&quot;&gt;pool&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;token key atrule&quot;&gt;vmImage&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&apos;Ubuntu-16.04&apos;&lt;/span&gt;
+
+&lt;span class=&quot;token key atrule&quot;&gt;steps&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+&lt;span class=&quot;token punctuation&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;token key atrule&quot;&gt;checkout&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; self
+  
+&lt;span class=&quot;token punctuation&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;token key atrule&quot;&gt;script&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;|&lt;/span&gt;&lt;span class=&quot;token scalar string&quot;&gt;
+    docker build -f Docker/Dockerfile -t $(dockerId).azurecr.io/$(imageName):$(Build.SourceBranchName) .
+    docker login -u $(dockerId) -p $(dockerPassword) $(dockerId).azurecr.io
+    docker push $(dockerId).azurecr.io/$(imageName):$(Build.SourceBranchName) &lt;/span&gt;
+  &lt;span class=&quot;token key atrule&quot;&gt;displayName&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&apos;docker build&apos;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Pretty easy! The hard thing for the build is the multistage Dockerfile:&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;dockerfile&quot;&gt;&lt;pre class=&quot;language-dockerfile&quot;&gt;&lt;code class=&quot;language-dockerfile&quot;&gt;# Stage 0, &amp;quot;build-stage&amp;quot;, based on Node.js, to build and compile the frontend
+FROM tiangolo/node-frontend:10 as build-stage
+WORKDIR /app
+COPY package*.json /app/
+RUN npm install
+COPY ./ /app/
+RUN npm run build
+RUN npm run build-server:production
+
+# Stage 1, based on Nginx, to have only the compiled app, ready for production with Nginx
+FROM nginx:1.15
+
+# Install node
+RUN apt-get update -yq &amp;amp;&amp;amp; apt-get upgrade -yq
+RUN apt-get install -yq \
+		curl \
+		git \
+		nano \
+		gnupg \
+		gnupg2 \
+		gnupg1
+RUN curl -sL https://deb.nodesource.com/setup_10.x | bash - &amp;amp;&amp;amp; apt-get install -yq nodejs
+
+# Enable with ssh configures for Azure App Service
+ENV SSH_PASSWD &amp;quot;root:Docker!&amp;quot;
+RUN apt-get update \
+        &amp;amp;&amp;amp; apt-get install -y --no-install-recommends dialog \
+        &amp;amp;&amp;amp; apt-get update \
+	&amp;amp;&amp;amp; apt-get install -y --no-install-recommends openssh-server \
+	&amp;amp;&amp;amp; echo &amp;quot;$SSH_PASSWD&amp;quot; | chpasswd 
+COPY Docker/sshd_config /etc/ssh/
+
+# Install PM2
+RUN npm install -g pm2
+
+# PM2 process script
+COPY Docker/process.yml /app/
+
+# Entry point script
+COPY Docker/init.sh /usr/local/bin/init.sh
+RUN chmod u+x /usr/local/bin/init.sh
+
+# Copy the default nginx.config provided by tiangolo/node-frontend
+COPY Docker/nginx.config /etc/nginx/sites-available/default
+
+# Copy the static creat-react-app assets
+COPY --from=build-stage /app/build/ /app/build
+
+# Copy the Node Express server
+COPY --from=build-stage /app/build.server/ /app/build.server
+
+# Copy the disconnected mode proxy server and install dependencies
+COPY --from=build-stage /app/server.disconnectedproxy/ /app/server.disconnectedproxy
+WORKDIR /app/server.disconnectedproxy
+RUN npm install
+
+# Copy the data/sitecore for running offline
+COPY --from=build-stage /app/data/ /app/data
+COPY --from=build-stage /app/sitecore/ /app/sitecore
+
+WORKDIR /app
+
+EXPOSE 80 2222
+ENTRYPOINT [&amp;quot;/usr/local/bin/init.sh&amp;quot;]&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;For more information checkout the &lt;a href=&quot;https://github.com/macaw-interactive/react-jss-typescript-starter&quot;&gt;GitHub repo&lt;/a&gt; and let us know if it is helpful for you! Have fun!&lt;/p&gt;
+                &lt;div style=&quot;margin-top=55px; font-style: italic;&quot;&gt;(This is an article posted to my blog at https://www.sergevandenoever.nl. You can read it online by &lt;a href=&quot;https://www.sergevandenoever.nl/sitecore_jss_umbrella/&quot;&gt;clicking here&lt;/a&gt;.)&lt;/div&gt;
+              </content:encoded></item><item><title><![CDATA[Serving static files from GitHub]]></title><description><![CDATA[When you need to request files from GitHub with the correct mime-types GitHub itself is not the best place.]]></description><link>https://www.sergevandenoever.nl/serving_static_files_from_github/</link><guid isPermaLink="false">https://www.sergevandenoever.nl/serving_static_files_from_github/</guid><content:encoded>&lt;p&gt;Sometimes there is the need to fetch the raw contents of a file from a GitHub repository. I have this case for a Markdown documentation file that I want to show in a web page. The url of this document is &lt;code class=&quot;language-text&quot;&gt;https://github.com/macaw-interactive/react-jss-typescript-starter/blob/develop/README.md&lt;/code&gt;. When you request this url you get the contents of the GitHub page. There is also a “raw” version of this page where you navigate to when you select the “Raw” tab on the page. This leads you to the url &lt;code class=&quot;language-text&quot;&gt;https://raw.githubusercontent.com/macaw-interactive/react-jss-typescript-starter/develop/README.md&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;When this raw document is requested from GitHub it returns the required content, but it has two drawbacks:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;A cached copy is returned, this cached copy is often older than the current version&lt;/li&gt;
+&lt;li&gt;It returns the document with the incorrect content type: &lt;code class=&quot;language-text&quot;&gt;text/plain; charset=utf-8&lt;/code&gt; while it should be &lt;code class=&quot;language-text&quot;&gt;text/markdown; charset=utf-8&lt;/code&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;Both issues are very annoying when you are developing, and the second issue can be blocking for your purpose.&lt;/p&gt;
+&lt;p&gt;In the past I used the services of &lt;code class=&quot;language-text&quot;&gt;https://rawgit.com/&lt;/code&gt; to overcome these issues, but they decided to stop their services as stated on their website: &lt;em&gt;RawGit has reached the end of its useful life&lt;/em&gt;.&lt;/p&gt;
+&lt;p&gt;On the website they propose some other services. I decided to check out &lt;a href=&quot;https://www.jsdelivr.com/&quot;&gt;jsDeliver&lt;/a&gt;. They even provide a service to &lt;a href=&quot;https://www.jsdelivr.com/rawgit&quot;&gt;convert RawGit links to jsDeliver links&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;With the jsDeliver service the required url looks like &lt;code class=&quot;language-text&quot;&gt;https://cdn.jsdelivr.net/gh/macaw-interactive/react-jss-typescript-starter@develop/README.md&lt;/code&gt;, and it provides the correct content type!&lt;/p&gt;
+&lt;p&gt;But… it is cached on the CDN. What if the contents has changed? jsDelivr to the rescue: change the &lt;code class=&quot;language-text&quot;&gt;cdn&lt;/code&gt; to &lt;code class=&quot;language-text&quot;&gt;purge&lt;/code&gt; in the url and the next request you get a fresh copy. Easy way to automate that in your package.json scripts:&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;text&quot;&gt;&lt;pre class=&quot;language-text&quot;&gt;&lt;code class=&quot;language-text&quot;&gt;&amp;quot;purge:readme&amp;quot;: &amp;quot;npx req https://purge.jsdelivr.net/gh/macaw-interactive/react-jss-typescript-starter@develop/README.md&amp;quot;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+                &lt;div style=&quot;margin-top=55px; font-style: italic;&quot;&gt;(This is an article posted to my blog at https://www.sergevandenoever.nl. You can read it online by &lt;a href=&quot;https://www.sergevandenoever.nl/serving_static_files_from_github/&quot;&gt;clicking here&lt;/a&gt;.)&lt;/div&gt;
+              </content:encoded></item><item><title><![CDATA[Render Sitecore 9.1 JSS site using separate node server]]></title><description><![CDATA[Use a custom Node based server to render Sitecore 9.1 JSS pages.]]></description><link>https://www.sergevandenoever.nl/sitecore_jss_typescript_node/</link><guid isPermaLink="false">https://www.sergevandenoever.nl/sitecore_jss_typescript_node/</guid><content:encoded>&lt;p&gt;In a &lt;a href=&quot;https://www.sergevandenoever.nl/sitecore_jss_typescript&quot;&gt;previous post&lt;/a&gt; I described how to use TypeScript in
+building JSS components. In this post I use the results of this connected &lt;strong&gt;hello-jss-typescript&lt;/strong&gt;
+JSS app to build a custom Node express web server that consumes the layout service to render
+pages. This process is described by Sitecore in the documentation  &lt;a href=&quot;https://jss.sitecore.com/docs/techniques/ssr/headless-mode-ssr#headless-ssr-via-sitecore-jss-proxy&quot;&gt;Headless SSR via sitecore-jss-proxy&lt;/a&gt;.
+I took the sample &lt;a href=&quot;https://github.com/Sitecore/jss/tree/dev/samples/node-headless-ssr-proxy&quot;&gt;node-headless-ssr-proxy&lt;/a&gt; and worked from there.&lt;/p&gt;
+&lt;p&gt;I placed the code in a folder &lt;code class=&quot;language-text&quot;&gt;hello-jss-typescript-node&lt;/code&gt; next to the folder &lt;code class=&quot;language-text&quot;&gt;hello-jss-typescript&lt;/code&gt;
+as described in my post &lt;a href=&quot;https://www.sergevandenoever.nl/sitecore_jss_typescript&quot;&gt;Developing React components in Typescript with Sitecore JSS 9.1&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;The example provides an Express web server that I modified slightly for easy
+experimentation. It is great that all configuration is done through environment variables, but for development it is easier to use another
+approach. I added dotenv using &lt;code class=&quot;language-text&quot;&gt;npm install dotenv&lt;/code&gt; and added at the
+top of &lt;code class=&quot;language-text&quot;&gt;index.js&lt;/code&gt; the code:&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;javascript&quot;&gt;&lt;pre class=&quot;language-javascript&quot;&gt;&lt;code class=&quot;language-javascript&quot;&gt;&lt;span class=&quot;token keyword&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;process&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;env&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token constant&quot;&gt;NODE_ENV&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;!==&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&apos;production&apos;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;token function&quot;&gt;require&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&apos;dotenv&apos;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;config&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;This enables us to add a file &lt;code class=&quot;language-text&quot;&gt;.env&lt;/code&gt; in the root to manage the required
+environment variables:&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;text&quot;&gt;&lt;pre class=&quot;language-text&quot;&gt;&lt;code class=&quot;language-text&quot;&gt;SITECORE_JSS_APP_NAME=hello-jss-typescript
+SITECORE_JSS_SERVER_BUNDLE=../hello-jss-typescript/build/server.bundle.js
+SITECORE_API_HOST=http://hello-jss-typescript.dev.local
+SITECORE_LAYOUT_SERVICE_ROUTE=http://hello-jss-typescript.dev.local/sitecore/api/layout/render/jss
+SITECORE_API_KEY{57231674-4CC9-48AA-AFF0-190DB9D68FE1}
+SITECORE_PATH_REWRITE_EXCLUDE_ROUTES=
+SITECORE_ENABLE_DEBUG=true&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;I also modified the &lt;code class=&quot;language-text&quot;&gt;index.js&lt;/code&gt; file slightly to work together with the
+&lt;code class=&quot;language-text&quot;&gt;hello-jss-typescript&lt;/code&gt; project:&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;javascript&quot;&gt;&lt;pre class=&quot;language-javascript&quot;&gt;&lt;code class=&quot;language-javascript&quot;&gt;&lt;span class=&quot;token keyword&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;process&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;env&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token constant&quot;&gt;NODE_ENV&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;!==&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&apos;production&apos;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;token function&quot;&gt;require&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&apos;dotenv&apos;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;config&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+
+&lt;span class=&quot;token keyword&quot;&gt;const&lt;/span&gt; express &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token function&quot;&gt;require&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&apos;express&apos;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;token keyword&quot;&gt;const&lt;/span&gt; compression &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token function&quot;&gt;require&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&apos;compression&apos;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;token keyword&quot;&gt;const&lt;/span&gt; scProxy &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token function&quot;&gt;require&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&apos;@sitecore-jss/sitecore-jss-proxy&apos;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token keyword&quot;&gt;default&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;token keyword&quot;&gt;const&lt;/span&gt; config &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token function&quot;&gt;require&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&apos;./config&apos;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+
+&lt;span class=&quot;token keyword&quot;&gt;const&lt;/span&gt; server &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token function&quot;&gt;express&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;token keyword&quot;&gt;const&lt;/span&gt; port &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; process&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;env&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token constant&quot;&gt;PORT&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;||&lt;/span&gt; &lt;span class=&quot;token number&quot;&gt;3000&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+
+&lt;span class=&quot;token comment&quot;&gt;// enable gzip compression for appropriate file types&lt;/span&gt;
+server&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;use&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;compression&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+
+&lt;span class=&quot;token comment&quot;&gt;// turn off x-powered-by http header&lt;/span&gt;
+server&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;settings&lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&apos;x-powered-by&apos;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token boolean&quot;&gt;false&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+
+&lt;span class=&quot;token comment&quot;&gt;// Serve static app assets from local /dist folder&lt;/span&gt;
+server&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;use&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;
+  &lt;span class=&quot;token string&quot;&gt;&apos;/dist/hello-jss-typescript/&apos;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+  express&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token keyword&quot;&gt;static&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&apos;../hello-jss-typescript/build&apos;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+    fallthrough&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token boolean&quot;&gt;false&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token comment&quot;&gt;// force 404 for unknown assets under /disthello-jss-typescript/&lt;/span&gt;
+  &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+
+&lt;span class=&quot;token comment&quot;&gt;// For any other requests, we render app routes server-side and return them&lt;/span&gt;
+server&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;use&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&apos;*&apos;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token function&quot;&gt;scProxy&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;config&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;serverBundle&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;renderView&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; config&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; config&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;serverBundle&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;parseRouteUrl&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+
+server&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;listen&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;port&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;=&gt;&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+  console&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;log&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token template-string&quot;&gt;&lt;span class=&quot;token string&quot;&gt;`server listening on port &lt;/span&gt;&lt;span class=&quot;token interpolation&quot;&gt;&lt;span class=&quot;token interpolation-punctuation punctuation&quot;&gt;${&lt;/span&gt;port&lt;span class=&quot;token interpolation-punctuation punctuation&quot;&gt;}&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;!`&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Execute &lt;code class=&quot;language-text&quot;&gt;npm start&lt;/code&gt; and voila, the site is running on &lt;code class=&quot;language-text&quot;&gt;http://localhost:3000&lt;/code&gt;, completely separate from the Sitecore server.&lt;/p&gt;
+&lt;p&gt;Note that the &lt;code class=&quot;language-text&quot;&gt;.vscode&lt;/code&gt; folder contains a &lt;code class=&quot;language-text&quot;&gt;launch.json&lt;/code&gt; configured to debug the Node code in Visual Studio Code.&lt;/p&gt;
+&lt;p&gt;The complete example can be found at &lt;a href=&quot;https://github.com/macaw-interactive/hello-jss-sitecore-node&quot;&gt;https://github.com/macaw-interactive/hello-jss-sitecore-node&lt;/a&gt;.&lt;/p&gt;
+                &lt;div style=&quot;margin-top=55px; font-style: italic;&quot;&gt;(This is an article posted to my blog at https://www.sergevandenoever.nl. You can read it online by &lt;a href=&quot;https://www.sergevandenoever.nl/sitecore_jss_typescript_node/&quot;&gt;clicking here&lt;/a&gt;.)&lt;/div&gt;
+              </content:encoded></item><item><title><![CDATA[Developing React components in Typescript with Sitecore JSS 9.1]]></title><description><![CDATA[At my company we use TypeScript for front-end development where possible. In my first steps in using JSS I wanted to build my first component in TypeScript, which did not work out of the box. In this post I describe how I got ypeScript compilation working.]]></description><link>https://www.sergevandenoever.nl/sitecore_jss_typescript/</link><guid isPermaLink="false">https://www.sergevandenoever.nl/sitecore_jss_typescript/</guid><content:encoded>&lt;p&gt;In this blog post I describe my adventures to convert an “out of the box” Sitecore 9.1 with JSS in React with TypeScript project from scratch. To get started head over to the &lt;a href=&quot;https://jss.sitecore.com/docs/getting-started/quick-start&quot;&gt;Quickstart |Sitecore JSS Documentation&lt;/a&gt;
+and follow the steps to create a disconnected JSS starter project:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;code class=&quot;language-text&quot;&gt;npm install -g @sitecore-jss/sitecore-jss-cli&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code class=&quot;language-text&quot;&gt;jss create hello-jss-typescript react&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code class=&quot;language-text&quot;&gt;git init&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code class=&quot;language-text&quot;&gt;cd hello-jss-typescript&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code class=&quot;language-text&quot;&gt;git init&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code class=&quot;language-text&quot;&gt;git add -A&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code class=&quot;language-text&quot;&gt;git commit -m &amp;quot;first commit&amp;quot;&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code class=&quot;language-text&quot;&gt;git remote add origin https://github.com/macaw-interactive/hello-jss-sitecore.git&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code class=&quot;language-text&quot;&gt;git push -u origin master&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code class=&quot;language-text&quot;&gt;jss start&lt;/code&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;We now have the starter website running on &lt;a href=&quot;http://localhost:3000&quot;&gt;http://localhost:3000&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Now we can scaffold a new Hero component using &lt;code class=&quot;language-text&quot;&gt;jss scaffold Hero&lt;/code&gt;.
+The scaffolder generates the new component in it’s own folder &lt;code class=&quot;language-text&quot;&gt;src/components/Hero&lt;/code&gt; named &lt;code class=&quot;language-text&quot;&gt;index.js&lt;/code&gt;.
+The easy way to introduce TypeScript is described by my colleague Gary Wenneker in his blog post &lt;a href=&quot;https://gary.wenneker.org/sitecore-jss-get-typed/&quot;&gt;Sitecore JSS: Get Typed!&lt;/a&gt;:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;rename the &lt;code class=&quot;language-text&quot;&gt;Hero.js&lt;/code&gt; to &lt;code class=&quot;language-text&quot;&gt;Hero.tsx&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code class=&quot;language-text&quot;&gt;npm install typescript @types/node @types/react @types/react-dom&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;modify the &lt;code class=&quot;language-text&quot;&gt;tsconfig.json&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;run &lt;code class=&quot;language-text&quot;&gt;tsc --watch&lt;/code&gt; to compile the &lt;code class=&quot;language-text&quot;&gt;.ts&lt;/code&gt; and &lt;code class=&quot;language-text&quot;&gt;.tsx&lt;/code&gt; files to &lt;code class=&quot;language-text&quot;&gt;.js&lt;/code&gt; next to the source file&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;The JSS tooling picks up the &lt;code class=&quot;language-text&quot;&gt;.js&lt;/code&gt; component files in the script &lt;code class=&quot;language-text&quot;&gt;&amp;quot;start:watch-components&amp;quot;: &amp;quot;node scripts/generate-component-factory.js --watch&amp;quot;&lt;/code&gt; for mapping the React components to JSS components. &lt;/p&gt;
+&lt;p&gt;Problem with this approach is that source tree is cluttered with generated &lt;code class=&quot;language-text&quot;&gt;.js&lt;/code&gt; files
+next to the TypeScript files that are difficult to exclude from source control.&lt;/p&gt;
+&lt;h2 id=&quot;another-approach-in-using-typescript&quot;&gt;&lt;a href=&quot;#another-approach-in-using-typescript&quot; aria-hidden class=&quot;anchor&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Another approach in using TypeScript&lt;/h2&gt;
+&lt;p&gt;In this blog post we describe another approach in using TypeScript in you Sitecore JSS project.
+The blog post is accompanied by the GitHub repository
+&lt;a href=&quot;https://www.github.com/macaw-interactive/hello-jss-typescript&quot;&gt;hello-jss-typescript&lt;/a&gt;
+with the required modifications for a simple “Hello world” app as a reference for you
+adventures.&lt;/p&gt;
+&lt;p&gt;The first step to execute is to install the required TypeScript tooling
+and type definitions: &lt;/p&gt;
+&lt;p&gt;&lt;code class=&quot;language-text&quot;&gt;npm install typescript @types/node @types/react @types/react-dom&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;Now add a &lt;code class=&quot;language-text&quot;&gt;tsconfig.json&lt;/code&gt; file in the root tailered for JSS development.
+Because the JSS tool-set is based on the magnificent tool-set of &lt;a href=&quot;https://facebook.github.io/create-react-app/&quot;&gt;Create React App&lt;/a&gt; we took as a starter point the
+&lt;code class=&quot;language-text&quot;&gt;tsconfig.json&lt;/code&gt; as generated by &lt;code class=&quot;language-text&quot;&gt;create-react-app&lt;/code&gt;. We need to make some modifications to tailer it to the needs of the JSS project. Those changes are already
+included is the &lt;code class=&quot;language-text&quot;&gt;tsconfig.json&lt;/code&gt; below. The rationale behind these changes are described below where appropriate.&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;json&quot;&gt;&lt;pre class=&quot;language-json&quot;&gt;&lt;code class=&quot;language-json&quot;&gt;&lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;token property&quot;&gt;&quot;compilerOptions&quot;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+      &lt;span class=&quot;token property&quot;&gt;&quot;target&quot;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;es5&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+      &lt;span class=&quot;token property&quot;&gt;&quot;allowJs&quot;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token boolean&quot;&gt;false&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+      &lt;span class=&quot;token property&quot;&gt;&quot;skipLibCheck&quot;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token boolean&quot;&gt;false&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+      &lt;span class=&quot;token property&quot;&gt;&quot;esModuleInterop&quot;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token boolean&quot;&gt;true&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+      &lt;span class=&quot;token property&quot;&gt;&quot;allowSyntheticDefaultImports&quot;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token boolean&quot;&gt;true&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+      &lt;span class=&quot;token property&quot;&gt;&quot;strict&quot;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token boolean&quot;&gt;true&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+      &lt;span class=&quot;token property&quot;&gt;&quot;forceConsistentCasingInFileNames&quot;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token boolean&quot;&gt;true&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+      &lt;span class=&quot;token property&quot;&gt;&quot;module&quot;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;esnext&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+      &lt;span class=&quot;token property&quot;&gt;&quot;moduleResolution&quot;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;node&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+      &lt;span class=&quot;token property&quot;&gt;&quot;resolveJsonModule&quot;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token boolean&quot;&gt;true&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+      &lt;span class=&quot;token property&quot;&gt;&quot;isolatedModules&quot;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token boolean&quot;&gt;true&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+      &lt;span class=&quot;token property&quot;&gt;&quot;noEmit&quot;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token boolean&quot;&gt;true&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+      &lt;span class=&quot;token property&quot;&gt;&quot;jsx&quot;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;preserve&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+      &lt;span class=&quot;token property&quot;&gt;&quot;lib&quot;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&quot;es2018&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;dom&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+    &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+    &lt;span class=&quot;token property&quot;&gt;&quot;include&quot;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;
+      &lt;span class=&quot;token string&quot;&gt;&quot;src&quot;&lt;/span&gt;
+    &lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+    &lt;span class=&quot;token property&quot;&gt;&quot;types&quot;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&quot;node&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt;
+  &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h3 id=&quot;scaffolding-a-hero-component&quot;&gt;&lt;a href=&quot;#scaffolding-a-hero-component&quot; aria-hidden class=&quot;anchor&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Scaffolding a Hero component&lt;/h3&gt;
+&lt;p&gt;We now scaffold the &lt;code class=&quot;language-text&quot;&gt;Hero&lt;/code&gt; component using the command &lt;code class=&quot;language-text&quot;&gt;jss scaffold Hero&lt;/code&gt; as
+described in &lt;a href=&quot;https://jss.sitecore.com/docs/getting-started/first-component&quot;&gt;Scaffolding a JSS Component&lt;/a&gt;.
+This will generate two files:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code class=&quot;language-text&quot;&gt;src\components\Hero\index.js&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code class=&quot;language-text&quot;&gt;sitecore\definitions\components\Hero.sitecore.js&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;The generated &lt;code class=&quot;language-text&quot;&gt;src\components\Hero\index.js&lt;/code&gt; looks like:&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;javascript&quot;&gt;&lt;pre class=&quot;language-javascript&quot;&gt;&lt;code class=&quot;language-javascript&quot;&gt;&lt;span class=&quot;token keyword&quot;&gt;import&lt;/span&gt; React &lt;span class=&quot;token keyword&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&apos;react&apos;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;token keyword&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt; Text &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&apos;@sitecore-jss/sitecore-jss-react&apos;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+
+&lt;span class=&quot;token keyword&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;token function-variable function&quot;&gt;Hero&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;props&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;=&gt;&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;
+  &lt;span class=&quot;token operator&quot;&gt;&amp;lt;&lt;/span&gt;div&lt;span class=&quot;token operator&quot;&gt;&gt;&lt;/span&gt;
+    &lt;span class=&quot;token operator&quot;&gt;&amp;lt;&lt;/span&gt;p&lt;span class=&quot;token operator&quot;&gt;&gt;&lt;/span&gt;Hero Component&lt;span class=&quot;token operator&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;/&lt;/span&gt;p&lt;span class=&quot;token operator&quot;&gt;&gt;&lt;/span&gt;
+    &lt;span class=&quot;token operator&quot;&gt;&amp;lt;&lt;/span&gt;Text field&lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;props&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;fields&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;heading&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;&gt;&lt;/span&gt;
+  &lt;span class=&quot;token operator&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;/&lt;/span&gt;div&lt;span class=&quot;token operator&quot;&gt;&gt;&lt;/span&gt;
+&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+
+&lt;span class=&quot;token keyword&quot;&gt;export&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;default&lt;/span&gt; Hero&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;rename the file to &lt;code class=&quot;language-text&quot;&gt;src\components\Hero\index.tsx&lt;/code&gt; and rewrite the code to:&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;typescript&quot;&gt;&lt;pre class=&quot;language-typescript&quot;&gt;&lt;code class=&quot;language-typescript&quot;&gt;&lt;span class=&quot;token keyword&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;as&lt;/span&gt; React &lt;span class=&quot;token keyword&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&apos;react&apos;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;token keyword&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt; Text &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&apos;@sitecore-jss/sitecore-jss-react&apos;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+
+&lt;span class=&quot;token keyword&quot;&gt;type&lt;/span&gt; HeroPropsFields &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+  heading&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+    value&lt;span class=&quot;token operator&quot;&gt;?&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token builtin&quot;&gt;string&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+    editable&lt;span class=&quot;token operator&quot;&gt;?&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token builtin&quot;&gt;string&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt; 
+&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;token keyword&quot;&gt;type&lt;/span&gt; HeroProps &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+  fields&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; HeroPropsFields&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+
+&lt;span class=&quot;token keyword&quot;&gt;type&lt;/span&gt; HeroAllProps &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; HeroProps&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+
+&lt;span class=&quot;token keyword&quot;&gt;const&lt;/span&gt; Hero&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; React&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token constant&quot;&gt;SFC&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;&amp;lt;&lt;/span&gt;HeroAllProps&lt;span class=&quot;token operator&quot;&gt;&gt;&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;props&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; HeroAllProps&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;=&gt;&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;
+  &lt;span class=&quot;token operator&quot;&gt;&amp;lt;&lt;/span&gt;div&lt;span class=&quot;token operator&quot;&gt;&gt;&lt;/span&gt;
+    &lt;span class=&quot;token operator&quot;&gt;&amp;lt;&lt;/span&gt;p&lt;span class=&quot;token operator&quot;&gt;&gt;&lt;/span&gt;Hero Component&lt;span class=&quot;token operator&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;/&lt;/span&gt;p&lt;span class=&quot;token operator&quot;&gt;&gt;&lt;/span&gt;
+    &lt;span class=&quot;token operator&quot;&gt;&amp;lt;&lt;/span&gt;Text field&lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;props&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;fields&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;heading&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;&gt;&lt;/span&gt;
+  &lt;span class=&quot;token operator&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;/&lt;/span&gt;div&lt;span class=&quot;token operator&quot;&gt;&gt;&lt;/span&gt;
+&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+
+&lt;span class=&quot;token keyword&quot;&gt;export&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;default&lt;/span&gt; Hero&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;To include the Hero component in a route layout in disconnected mode open the file &lt;code class=&quot;language-text&quot;&gt;data\routes\en.yml&lt;/code&gt;
+and add the Hero component to the &lt;code class=&quot;language-text&quot;&gt;jss-main&lt;/code&gt; placeholder:&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;yaml&quot;&gt;&lt;pre class=&quot;language-yaml&quot;&gt;&lt;code class=&quot;language-yaml&quot;&gt;&lt;span class=&quot;token key atrule&quot;&gt;placeholders&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;token key atrule&quot;&gt;jss-main&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;token punctuation&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;token key atrule&quot;&gt;componentName&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; Hero
+    &lt;span class=&quot;token key atrule&quot;&gt;fields&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+      &lt;span class=&quot;token key atrule&quot;&gt;heading&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; Serge&apos;s hero component!
+  &lt;span class=&quot;token punctuation&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;token key atrule&quot;&gt;componentName&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; ContentBlock
+    fields&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h3 id=&quot;generating-the-component-factory&quot;&gt;&lt;a href=&quot;#generating-the-component-factory&quot; aria-hidden class=&quot;anchor&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Generating the component factory&lt;/h3&gt;
+&lt;p&gt;The component factory does the mapping op React components to JSS components. It provides
+the mapping between a string name based on the component folder and name the React component instance.
+When the Sitecore Layout service returns a layout definition, it returns the components by name.
+Based on the mapping provided by the component factory the component hierarchy can be
+constructed for the layout.&lt;/p&gt;
+&lt;p&gt;The script &lt;code class=&quot;language-text&quot;&gt;scripts/generate-component-factory.js&lt;/code&gt; is responsible for the generation of
+this mapping and produces the &lt;code class=&quot;language-text&quot;&gt;componentFactory.js&lt;/code&gt; output file. We want to use TypeScript for this file because we want the generated import statements also to search for &lt;code class=&quot;language-text&quot;&gt;.ts&lt;/code&gt;
+and &lt;code class=&quot;language-text&quot;&gt;.tsx&lt;/code&gt; files. must be changed to the &lt;code class=&quot;language-text&quot;&gt;.ts&lt;/code&gt; extensions. This means that we need to change
+the output file to &lt;code class=&quot;language-text&quot;&gt;componentFactory.ts&lt;/code&gt;. We also want the component factory generation script
+to pick up &lt;code class=&quot;language-text&quot;&gt;.ts&lt;/code&gt; and &lt;code class=&quot;language-text&quot;&gt;.tsx&lt;/code&gt; files so components can be written in both JavaScript and TypeScript. This means that we need to add the following lines to the script:&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;javascript&quot;&gt;&lt;pre class=&quot;language-javascript&quot;&gt;&lt;code class=&quot;language-javascript&quot;&gt;&lt;span class=&quot;token keyword&quot;&gt;const&lt;/span&gt; componentFactoryPath &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; path&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;resolve&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&apos;src/temp/componentFactory.ts&apos;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;and&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;javascript&quot;&gt;&lt;pre class=&quot;language-javascript&quot;&gt;&lt;code class=&quot;language-javascript&quot;&gt;      fs&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;existsSync&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;path&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;join&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;componentFolderFullPath&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&apos;index.js&apos;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;||&lt;/span&gt;
+      fs&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;existsSync&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;path&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;join&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;componentFolderFullPath&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&apos;index.jsx&apos;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;||&lt;/span&gt;
+&lt;span class=&quot;gatsby-highlight-code-line&quot;&gt;      fs&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;existsSync&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;path&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;join&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;componentFolderFullPath&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&apos;index.ts&apos;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;||&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;gatsby-highlight-code-line&quot;&gt;      fs&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;existsSync&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;path&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;join&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;componentFolderFullPath&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&apos;index.tsx&apos;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Rewriting the JSS tool scripts like &lt;code class=&quot;language-text&quot;&gt;scripts/generate-component-factory.js&lt;/code&gt; to TypeScript
+as well makes no sense because they are node scripts, and we don’t want to introduce a
+compilation step in order to run them, although &lt;a href=&quot;https://github.com/TypeStrong/ts-node&quot;&gt;ts-node&lt;/a&gt; is a viable solution for directly running TypeScript files in a development environment. Another
+reason is that the JSS tool-set calls these scripts.&lt;/p&gt;
+&lt;h3 id=&quot;compiling-the-component-factory&quot;&gt;&lt;a href=&quot;#compiling-the-component-factory&quot; aria-hidden class=&quot;anchor&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Compiling the component factory&lt;/h3&gt;
+&lt;p&gt;On compilation of the &lt;code class=&quot;language-text&quot;&gt;componentFactory.ts&lt;/code&gt; file we got the error:&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;text&quot;&gt;&lt;pre class=&quot;language-text&quot;&gt;&lt;code class=&quot;language-text&quot;&gt;Type error: Could not find a declaration file for module &amp;#39;../components/Hero&amp;#39;. &amp;#39;C:/P/hello-jss-typescript/src/components/Hero/index.js&amp;#39; implicitly has an &amp;#39;any&amp;#39; type.  TS7016&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;We got similar errors on more files. The easiest way to resolve this is to set the option
+&lt;code class=&quot;language-text&quot;&gt;&amp;quot;noImplicitAny&amp;quot;: false&lt;/code&gt; in the &lt;code class=&quot;language-text&quot;&gt;tsconfig.json&lt;/code&gt;. This is not a really sustainable option
+because using types instead of &lt;code class=&quot;language-text&quot;&gt;any&lt;/code&gt; is the whole purpose of using TypeScript, and settings this
+option means that also the application specific code is not checked if types are omitted. &lt;/p&gt;
+&lt;p&gt;Make sure that you don’t have an old &lt;code class=&quot;language-text&quot;&gt;src/temp/componentFactory.js&lt;/code&gt; file because this file will be picked up in the compilation as well.&lt;/p&gt;
+&lt;p&gt;We can now run &lt;code class=&quot;language-text&quot;&gt;jss start&lt;/code&gt; again and get our TypeScript Hero component working in the disconnected site:&lt;/p&gt;
+&lt;p&gt;
+  &lt;a
+    class=&quot;gatsby-resp-image-link&quot;
+    href=&quot;https://www.sergevandenoever.nl/static/70daae2655add4c306f6ae155b025502/e84a4/hero-typescript-component-rendering.png&quot;
+    style=&quot;display: block&quot;
+    target=&quot;_blank&quot;
+    rel=&quot;noopener&quot;
+  &gt;
+  
+  &lt;span
+    class=&quot;gatsby-resp-image-wrapper&quot;
+    style=&quot;position: relative; display: block;  max-width: 590px; margin-left: auto; margin-right: auto;&quot;
+  &gt;
+    &lt;span
+      class=&quot;gatsby-resp-image-background-image&quot;
+      style=&quot;padding-bottom: 74.68443197755961%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAPCAYAAADkmO9VAAAACXBIWXMAACToAAAk6AGCYwUcAAAB+0lEQVQ4y6VUyW7bQAzV//9ED/2EAr0GPRQ92EBQNG7tSI6szan2fbGl0Qs543G8FD20BAhqPOTj9sbGOE6Ypgl9P6BtO4RxAs8P4O5f8TvJkJcVqqZBWWut6dyeNSsK+K8RvH2ImuINIQRYGZT1cDigJ23TFD05z7iXaRI4jiO4mOPxiH44QMwzbMeFgT8JOQ1fHtB9/IDI97FYLvFztcLq6QnLxYI6aZXfPF/Zx+8/YMx00MoXsmKyzbevaD5/QpYXsG0bQRBI67kujaeXfjqOv1nWz+YNIAlnz6nVtCyRVBUKstxWmmWoqhrjNCKmOfNZi441ty8K8H5Gap7iZHlmPC+1QCFVz17NX1X4bG1hcEUZZcvyHFEcIyd7mfmy+vP55k6IU4UWVTgMA7VSoSZK1EQJVk7Cc7oMugO9AhTvLXMwz0ODMXhJ3GNO3spIVPmbSEAGW683VK4FhzbI7fu00SDYw3U9uSBru5VJPM+HaVrydx6PTw/AIe7lxISrlvf0KviSQcIwlJZnats7NPQaOBFXnySpTLbbOQijSMYxnbIsfwfsuh5RFEvn/xXZMqPvHEdmZYr8i5y3zIC8TSZvTX8ATaM2rWwjt92QsuX7Vn+fmFBJ250ZsDGJh/wKCho8g6gNl9KZbXXauv5d0asmf3Wn4zTg6tcGbx8YhOtBqFSaAAAAAElFTkSuQmCC&apos;); background-size: cover; display: block;&quot;
+    &gt;
+      &lt;img
+        class=&quot;gatsby-resp-image-image&quot;
+        style=&quot;width: 100%; height: 100%; margin: 0; vertical-align: middle; position: absolute; top: 0; left: 0; box-shadow: inset 0px 0px 0px 400px white;&quot;
+        alt=&quot;hero typescript component rendering&quot;
+        title=&quot;&quot;
+        src=&quot;https://www.sergevandenoever.nl/static/70daae2655add4c306f6ae155b025502/fb8a0/hero-typescript-component-rendering.png&quot;
+        srcset=&quot;https://www.sergevandenoever.nl/static/70daae2655add4c306f6ae155b025502/1a291/hero-typescript-component-rendering.png 148w,https://www.sergevandenoever.nl/static/70daae2655add4c306f6ae155b025502/2bc4a/hero-typescript-component-rendering.png 295w,https://www.sergevandenoever.nl/static/70daae2655add4c306f6ae155b025502/fb8a0/hero-typescript-component-rendering.png 590w,https://www.sergevandenoever.nl/static/70daae2655add4c306f6ae155b025502/526de/hero-typescript-component-rendering.png 885w,https://www.sergevandenoever.nl/static/70daae2655add4c306f6ae155b025502/fa2eb/hero-typescript-component-rendering.png 1180w,https://www.sergevandenoever.nl/static/70daae2655add4c306f6ae155b025502/e84a4/hero-typescript-component-rendering.png 1426w&quot;
+        sizes=&quot;(max-width: 590px) 100vw, 590px&quot;
+      /&gt;
+    &lt;/span&gt;
+  &lt;/span&gt;
+  
+  &lt;/a&gt;
+    &lt;/p&gt;
+&lt;h2 id=&quot;getting-connected&quot;&gt;&lt;a href=&quot;#getting-connected&quot; aria-hidden class=&quot;anchor&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Getting connected&lt;/h2&gt;
+&lt;p&gt;Now it’s time to deploy our JSS app to Sitecore as described in
+&lt;a href=&quot;https://jss.sitecore.com/docs/getting-started/jss-server-install&quot;&gt;JSS Server Setup&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Part of these steps as described in &lt;a href=&quot;https://jss.sitecore.com/docs/getting-started/app-deployment&quot;&gt;App Deployment&lt;/a&gt; is:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;In IIS add a binding to your Sitecore site for &lt;code class=&quot;language-text&quot;&gt;hello-jss-typescript.dev.local&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Add &lt;code class=&quot;language-text&quot;&gt;127.0.0.1   hello-jss-typescript.dev.local&lt;/code&gt; to the file &lt;code class=&quot;language-text&quot;&gt;C:\Windows\System32\drivers\etc\hosts&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;After everything is configured we can run &lt;code class=&quot;language-text&quot;&gt;jss setup&lt;/code&gt; and answer the questions (you answers may vary):&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;text&quot;&gt;&lt;pre class=&quot;language-text&quot;&gt;&lt;code class=&quot;language-text&quot;&gt;Is your Sitecore instance on this machine or accessible via network share? [y/n]: y
+Path to the Sitecore folder (e.g. c:\inetpub\wwwroot\my.siteco.re): c:\inetpub\wwwroot\sc910.sc
+Sitecore hostname (e.g. http://myapp.local.siteco.re; see /sitecore/config; ensure added to hosts): http://hello-jss-typescript.dev.local
+Sitecore import service URL [http://hello-jss-typescript.dev.local/sitecore/api/jss/import]:
+Sitecore API Key (ID of API key item): {57231674-4CC9-48AA-AFF0-190DB9D68FE1}
+Please enter your deployment secret (32+ random chars; or press enter to generate one):
+Deployment secret has been generated. Ensure the JSS app config on the Sitecore end has the same secret set.
+Deploy secret Sitecore config written to C:\P\hello-jss-typescript\sitecore\config\hello-jss-typescript.deploysecret.config
+Ensure this configuration is deployed to Sitecore.
+JSS connection settings saved to C:\P\hello-jss-typescript\scjssconfig.json
+
+NEXT STEPS
+* Ensure the hostName in /sitecore/config/*.config is configured as hello-jss-typescript.dev.local, and in hosts file if needed.
+* Deploy your configuration (i.e. &amp;#39;jss deploy config&amp;#39;)
+* Deploy your app (i.e. &amp;#39;jss deploy app -c -d&amp;#39;)
+* Test your app in integrated mode by visiting http://hello-jss-typescript.dev.local&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;As specified in the &lt;code class=&quot;language-text&quot;&gt;NEXT STEPS&lt;/code&gt; we should deploy the configuration using &lt;code class=&quot;language-text&quot;&gt;jss deploy config&lt;/code&gt;
+and deploy the app using &lt;code class=&quot;language-text&quot;&gt;jss deploy app -c -d&lt;/code&gt;.&lt;/p&gt;
+&lt;h3 id=&quot;building-the-server-bundle&quot;&gt;&lt;a href=&quot;#building-the-server-bundle&quot; aria-hidden class=&quot;anchor&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Building the server bundle&lt;/h3&gt;
+&lt;p&gt;When we deploy the app we get a compilation error in building the &lt;code class=&quot;language-text&quot;&gt;server.bundle.js&lt;/code&gt;:&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;text&quot;&gt;&lt;pre class=&quot;language-text&quot;&gt;&lt;code class=&quot;language-text&quot;&gt;ERROR in ./src/AppRoot.js
+Module not found: Error: Can&amp;#39;t resolve &amp;#39;./temp/componentFactory&amp;#39; in &amp;#39;C:\P\hello-jss-typescript\src&amp;#39;
+ @ ./src/AppRoot.js 5:0-55 32:22-38
+ @ ./server/server.js&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Because &lt;code class=&quot;language-text&quot;&gt;server/server.js&lt;/code&gt; does an import of &lt;code class=&quot;language-text&quot;&gt;AppRoot&lt;/code&gt; from &lt;code class=&quot;language-text&quot;&gt;../src/AppRoot&lt;/code&gt; and
+&lt;code class=&quot;language-text&quot;&gt;AppRoot&lt;/code&gt; does an import of &lt;code class=&quot;language-text&quot;&gt;./temp/componentFactory&lt;/code&gt; which is generated as a
+TypeScript file we have an issue. This can be fixed by renaming &lt;code class=&quot;language-text&quot;&gt;server/server.js&lt;/code&gt;
+to &lt;code class=&quot;language-text&quot;&gt;server/server.tsx&lt;/code&gt; and modifying &lt;code class=&quot;language-text&quot;&gt;server/server.webpack.config.js&lt;/code&gt; to have as
+entry &lt;code class=&quot;language-text&quot;&gt;entry: path.resolve(__dirname, &amp;#39;./server.tsx&amp;#39;)&lt;/code&gt;. Because the server bundle specific
+webpack configuration file does a require of &lt;code class=&quot;language-text&quot;&gt;babel-preset-react-app&lt;/code&gt; it can use the
+Babel 7 configuration to compile TypeScript files out of the box.&lt;/p&gt;
+&lt;p&gt;Next step is to rename the file &lt;code class=&quot;language-text&quot;&gt;src/AppRoot.js&lt;/code&gt; to &lt;code class=&quot;language-text&quot;&gt;src/AppRoot.tsx&lt;/code&gt;. This is the main
+entry point of the app invoked by the renderer for server and client rendering. It imports
+the generated &lt;code class=&quot;language-text&quot;&gt;src/temp/componentFactory&lt;/code&gt; file, but we can’t import a &lt;code class=&quot;language-text&quot;&gt;.ts&lt;/code&gt; file
+from a &lt;code class=&quot;language-text&quot;&gt;.js&lt;/code&gt; file. It won’t be resolved.&lt;/p&gt;
+&lt;p&gt;For the Typescript compilation of the server bundle we need the same &lt;code class=&quot;language-text&quot;&gt;tsconfig.json&lt;/code&gt; configuration
+as for the client bundle, with only the include path changed. For this we can create the file
+&lt;code class=&quot;language-text&quot;&gt;server/tsconfig&lt;/code&gt; with the following contents:&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;json&quot;&gt;&lt;pre class=&quot;language-json&quot;&gt;&lt;code class=&quot;language-json&quot;&gt;&lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;token property&quot;&gt;&quot;extends&quot;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;../tsconfig.json&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+  &lt;span class=&quot;token property&quot;&gt;&quot;include&quot;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;
+    &lt;span class=&quot;token string&quot;&gt;&quot;.&quot;&lt;/span&gt;
+  &lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt;
+&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Including the content of the above described files will make this blog post too large, so please refer
+to the GitHub repository &lt;a href=&quot;https://www.github.com/macaw-interactive/hello-jss-typescript&quot;&gt;hello-jss-typescript&lt;/a&gt;
+for the details.&lt;/p&gt;
+&lt;p&gt;If we now the app using &lt;code class=&quot;language-text&quot;&gt;jss deploy app -c -d&lt;/code&gt; we can navigate to &lt;a href=&quot;http://hello-jss-typescript.dev.local/&quot;&gt;http://hello-jss-typescript.dev.local/&lt;/a&gt; and
+the site is rendered correctly.&lt;/p&gt;
+&lt;h3 id=&quot;the-sitecore-layout-service&quot;&gt;&lt;a href=&quot;#the-sitecore-layout-service&quot; aria-hidden class=&quot;anchor&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;The Sitecore layout service&lt;/h3&gt;
+&lt;p&gt;The layout of the rendered React page for a given route is provided by the
+&lt;a href=&quot;https://jss.sitecore.com/docs/fundamentals/services/layout-service&quot;&gt;Sitecore layout service&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;In our case a hit on &lt;code class=&quot;language-text&quot;&gt;http://hello-jss-typescript.dev.local/sitecore/api/layout/render/jss?item=/&amp;amp;sc_apikey={57231674-4CC9-48AA-AFF0-190DB9D68FE1}&lt;/code&gt; (your API key will vary) gives us:&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;json&quot;&gt;&lt;pre class=&quot;language-json&quot;&gt;&lt;code class=&quot;language-json&quot;&gt;&lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;token property&quot;&gt;&quot;sitecore&quot;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;token property&quot;&gt;&quot;context&quot;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+      &lt;span class=&quot;token property&quot;&gt;&quot;pageEditing&quot;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token boolean&quot;&gt;false&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+      &lt;span class=&quot;token property&quot;&gt;&quot;site&quot;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;token property&quot;&gt;&quot;name&quot;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;hello-jss-typescript&quot;&lt;/span&gt;
+      &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+      &lt;span class=&quot;token property&quot;&gt;&quot;pageState&quot;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;normal&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+      &lt;span class=&quot;token property&quot;&gt;&quot;language&quot;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;en&quot;&lt;/span&gt;
+    &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+    &lt;span class=&quot;token property&quot;&gt;&quot;route&quot;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+      &lt;span class=&quot;token property&quot;&gt;&quot;name&quot;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;home&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+      &lt;span class=&quot;token property&quot;&gt;&quot;displayName&quot;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;home&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+      &lt;span class=&quot;token property&quot;&gt;&quot;fields&quot;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;token property&quot;&gt;&quot;pageTitle&quot;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+          &lt;span class=&quot;token property&quot;&gt;&quot;value&quot;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;Welcome to Sitecore JSS&quot;&lt;/span&gt;
+        &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+      &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+      &lt;span class=&quot;token property&quot;&gt;&quot;databaseName&quot;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;master&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+      &lt;span class=&quot;token property&quot;&gt;&quot;deviceId&quot;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;fe5d7fdf-89c0-4d99-9aa3-b5fbd009c9f3&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+      &lt;span class=&quot;token property&quot;&gt;&quot;itemId&quot;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;75b2a549-f227-51dd-98dd-599438514aad&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+      &lt;span class=&quot;token property&quot;&gt;&quot;itemLanguage&quot;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;en&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+      &lt;span class=&quot;token property&quot;&gt;&quot;itemVersion&quot;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token number&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+      &lt;span class=&quot;token property&quot;&gt;&quot;layoutId&quot;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;a0909742-4629-5ae4-a71a-1fe76a57379a&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+      &lt;span class=&quot;token property&quot;&gt;&quot;templateId&quot;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;ab82556d-8208-5edd-a980-be88546ccf5b&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+      &lt;span class=&quot;token property&quot;&gt;&quot;templateName&quot;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;App Route&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+      &lt;span class=&quot;token property&quot;&gt;&quot;placeholders&quot;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;token property&quot;&gt;&quot;jss-main&quot;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;
+          &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+            &lt;span class=&quot;token property&quot;&gt;&quot;uid&quot;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;3af894c3-37f9-52fa-943b-561cdf38da1a&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+            &lt;span class=&quot;token property&quot;&gt;&quot;componentName&quot;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;Hero&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+            &lt;span class=&quot;token property&quot;&gt;&quot;dataSource&quot;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;{0DC131EC-C855-5F8B-BFB9-62606ABB2DF2}&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+            &lt;span class=&quot;token property&quot;&gt;&quot;fields&quot;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+              &lt;span class=&quot;token property&quot;&gt;&quot;heading&quot;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+                &lt;span class=&quot;token property&quot;&gt;&quot;value&quot;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;Serge&apos;s hero component!&quot;&lt;/span&gt;
+              &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+            &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+          &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+          &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+            &lt;span class=&quot;token property&quot;&gt;&quot;uid&quot;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;7418112d-b1c0-53fe-9256-b807b16fe3f4&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+            &lt;span class=&quot;token property&quot;&gt;&quot;componentName&quot;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;ContentBlock&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+            &lt;span class=&quot;token property&quot;&gt;&quot;dataSource&quot;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;{20448A26-84CB-52B7-BCE7-8D4851E8AABC}&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+            &lt;span class=&quot;token property&quot;&gt;&quot;fields&quot;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+              &lt;span class=&quot;token property&quot;&gt;&quot;heading&quot;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+                &lt;span class=&quot;token property&quot;&gt;&quot;value&quot;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;Welcome to Sitecore JSS&quot;&lt;/span&gt;
+              &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+              &lt;span class=&quot;token property&quot;&gt;&quot;content&quot;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+                &lt;span class=&quot;token property&quot;&gt;&quot;value&quot;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;&amp;lt;p&gt;Thanks for using JSS. Here are some resources to get you started:&amp;lt;/p&gt;\n\n&amp;lt;h3&gt;&amp;lt;a href=\&quot;https://jss.sitecore.net\&quot; rel=\&quot;noopener noreferrer\&quot;&gt;Documentation&amp;lt;/a&gt;&amp;lt;/h3&gt;\n&amp;lt;p&gt;The official JSS documentation can help you with any JSS task from getting started to advanced techniques.&amp;lt;/p&gt;\n\n&amp;lt;h3&gt;&amp;lt;a href=\&quot;/styleguide\&quot;&gt;Styleguide&amp;lt;/a&gt;&amp;lt;/h3&gt;\n&amp;lt;p&gt;The JSS styleguide is a living example of how to use JSS, hosted right in this app.\nIt demonstrates most of the common patterns that JSS implementations may need to use,\nas well as useful architectural patterns.&amp;lt;/p&gt;\n\n&amp;lt;h3&gt;&amp;lt;a href=\&quot;/graphql\&quot;&gt;GraphQL&amp;lt;/a&gt;&amp;lt;/h3&gt;\n&amp;lt;p&gt;JSS features integration with the Sitecore GraphQL API to enable fetching non-route data from Sitecore - or from other internal backends as an API aggregator or proxy.\nThis route is a living example of how to use an integrate with GraphQL data in a JSS app.&amp;lt;/p&gt;\n\n&amp;lt;div class=\&quot;alert alert-dark\&quot;&gt;\n  &amp;lt;h4&gt;This app is a boilerplate&amp;lt;/h4&gt;\n  &amp;lt;p&gt;The JSS samples are a boilerplate, not a library. That means that any code in this app is meant for you to own and customize to your own requirements.&amp;lt;/p&gt;\n  &amp;lt;p&gt;Want to get change the lint settings? Do it. Want to read manifest data from a MongoDB database? Go for it. This app is yours.&amp;lt;/p&gt;\n&amp;lt;/div&gt;\n\n&amp;lt;div class=\&quot;alert alert-dark\&quot;&gt;\n  &amp;lt;h4&gt;How to start with an empty app&amp;lt;/h4&gt;\n  &amp;lt;p&gt;To remove all of the default sample content (the Styleguide and GraphQL routes) and start out with an empty JSS app:&amp;lt;/p&gt;\n  &amp;lt;ol&gt;\n    &amp;lt;li&gt;Delete &amp;lt;code&gt;/src/components/Styleguide*&amp;lt;/code&gt; and &amp;lt;code&gt;/src/components/GraphQL*&amp;lt;/code&gt;&amp;lt;/li&gt;\n    &amp;lt;li&gt;Delete &amp;lt;code&gt;/sitecore/definitions/components/Styleguide*&amp;lt;/code&gt;, &amp;lt;code&gt;/sitecore/definitions/templates/Styleguide*&amp;lt;/code&gt;, and &amp;lt;code&gt;/sitecore/definitions/components/GraphQL*&amp;lt;/code&gt;&amp;lt;/li&gt;\n    &amp;lt;li&gt;Delete &amp;lt;code&gt;/data/component-content/Styleguide&amp;lt;/code&gt;&amp;lt;/li&gt;\n    &amp;lt;li&gt;Delete &amp;lt;code&gt;/data/content/Styleguide&amp;lt;/code&gt;&amp;lt;/li&gt;\n    &amp;lt;li&gt;Delete &amp;lt;code&gt;/data/routes/styleguide&amp;lt;/code&gt; and &amp;lt;code&gt;/data/routes/graphql&amp;lt;/code&gt;&amp;lt;/li&gt;\n    &amp;lt;li&gt;Delete &amp;lt;code&gt;/data/dictionary/*.yml&amp;lt;/code&gt;&amp;lt;/li&gt;\n  &amp;lt;/ol&gt;\n&amp;lt;/div&gt;\n&quot;&lt;/span&gt;
+              &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+            &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+          &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+        &lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt;
+      &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+    &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+  &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Based on this JSON the final page is built.&lt;/p&gt;
+&lt;h3 id=&quot;and-now&quot;&gt;&lt;a href=&quot;#and-now&quot; aria-hidden class=&quot;anchor&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;And now…&lt;/h3&gt;
+&lt;p&gt;This is just the first step… all app specific code must be rewritten in TypeScript. I will keep you posted.&lt;/p&gt;
+&lt;p&gt;Interesting stuff to investigate in this context:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/Sitecore/jss/issues/74&quot;&gt;FR: Generate Typescript Typings from Manifest&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+                &lt;div style=&quot;margin-top=55px; font-style: italic;&quot;&gt;(This is an article posted to my blog at https://www.sergevandenoever.nl. You can read it online by &lt;a href=&quot;https://www.sergevandenoever.nl/sitecore_jss_typescript/&quot;&gt;clicking here&lt;/a&gt;.)&lt;/div&gt;
+              </content:encoded></item><item><title><![CDATA[Weblog deployment to a static Microsoft Azure website]]></title><description><![CDATA[This weblog is created with GatsbyJS and after build results in a static website that can be hosted anywhere. I host my weblog on a Microsoft Azure static website. In this post I provide links to how to set up an Azure static website, and how to automate the deployment based on commits to the Github repository.]]></description><link>https://www.sergevandenoever.nl/weblog-deployment-to-static-azure-website/</link><guid isPermaLink="false">https://www.sergevandenoever.nl/weblog-deployment-to-static-azure-website/</guid><content:encoded>&lt;p&gt;My  weblog is hosted in a Git repository on Github. Github is bought by Microsoft, and now Github provides integration with Azure and its pipelines for build and deploy. This integration can be enabled through the &lt;a href=&quot;https://github.com/marketplace/azure-pipelines&quot;&gt;Azure Pipelines app&lt;/a&gt; at the Github marketplace.&lt;/p&gt;
+&lt;p&gt;After setting up and configuring the Azure Pipelines app for your Github account move over to &lt;a href=&quot;https://dev.azure.com&quot;&gt;https://dev.azure.com&lt;/a&gt;. In the new configured Azure DevOps organization you can setup new projects.&lt;/p&gt;
+&lt;p&gt;
+  &lt;a
+    class=&quot;gatsby-resp-image-link&quot;
+    href=&quot;https://www.sergevandenoever.nl/static/685dea043d2f802f2a624375786a31f0/a9d25/AzureDevOpsNewProject.png&quot;
+    style=&quot;display: block&quot;
+    target=&quot;_blank&quot;
+    rel=&quot;noopener&quot;
+  &gt;
+  
+  &lt;span
+    class=&quot;gatsby-resp-image-wrapper&quot;
+    style=&quot;position: relative; display: block;  max-width: 590px; margin-left: auto; margin-right: auto;&quot;
+  &gt;
+    &lt;span
+      class=&quot;gatsby-resp-image-background-image&quot;
+      style=&quot;padding-bottom: 61.30268199233716%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAMCAIAAADtbgqsAAAACXBIWXMAACToAAAk6AGCYwUcAAABY0lEQVQoz41Rba7UMAzM/S/DT35xAg4AEkLqrt4+EE2bxo7txPko3i4Lu3ogMUqk1PYkM1MnWqVoYokAmJLkzDlrra13QNxAiBWZi0SGrdS2+LXBmoswiDMycql9N9RaKf2CHcawikKMtkop+xNG0+a+fmfvVxHex77E8OX1dJpO0zSdz+cxhqoigjFbMyk33A+ju9eZQtgggu6t/mD9cEZOCGgqjEPMm7Xs42Dbbgf7dpW7qzhkfwN693kO3s8erwDOBaVYEqLNrD2u1ocb448PG8BemOw9vtqmYxPbnD0upQIrSI2sSyqWk3sKwXzU396uGdoVl8uL996cBEgvl4upooRrxJTbM/lRxgGzPc+zhUJEEXlegl+CETckM+Ku/lv7F9likjvWNcx+NVZEgkSWmUtSA+ntP78lv608thyXBlxuDv+HHHOn0o/OcFU1IYrkv472B6hWK7z/FD9OUAgs2Z85sbsGI/rguQAAAABJRU5ErkJggg==&apos;); background-size: cover; display: block;&quot;
+    &gt;
+      &lt;img
+        class=&quot;gatsby-resp-image-image&quot;
+        style=&quot;width: 100%; height: 100%; margin: 0; vertical-align: middle; position: absolute; top: 0; left: 0; box-shadow: inset 0px 0px 0px 400px white;&quot;
+        alt=&quot;Azure DevOps New Project&quot;
+        title=&quot;&quot;
+        src=&quot;https://www.sergevandenoever.nl/static/685dea043d2f802f2a624375786a31f0/fb8a0/AzureDevOpsNewProject.png&quot;
+        srcset=&quot;https://www.sergevandenoever.nl/static/685dea043d2f802f2a624375786a31f0/1a291/AzureDevOpsNewProject.png 148w,https://www.sergevandenoever.nl/static/685dea043d2f802f2a624375786a31f0/2bc4a/AzureDevOpsNewProject.png 295w,https://www.sergevandenoever.nl/static/685dea043d2f802f2a624375786a31f0/fb8a0/AzureDevOpsNewProject.png 590w,https://www.sergevandenoever.nl/static/685dea043d2f802f2a624375786a31f0/a9d25/AzureDevOpsNewProject.png 783w&quot;
+        sizes=&quot;(max-width: 590px) 100vw, 590px&quot;
+      /&gt;
+    &lt;/span&gt;
+  &lt;/span&gt;
+  
+  &lt;/a&gt;
+    &lt;/p&gt;
+&lt;p&gt;There are no build pipelines configured yet.&lt;/p&gt;
+&lt;p&gt;
+  &lt;a
+    class=&quot;gatsby-resp-image-link&quot;
+    href=&quot;https://www.sergevandenoever.nl/static/13abe9f79f909aad469a9be4b5f2f65f/58f95/AzureDevOpsNoPipelinesYet.png&quot;
+    style=&quot;display: block&quot;
+    target=&quot;_blank&quot;
+    rel=&quot;noopener&quot;
+  &gt;
+  
+  &lt;span
+    class=&quot;gatsby-resp-image-wrapper&quot;
+    style=&quot;position: relative; display: block;  max-width: 590px; margin-left: auto; margin-right: auto;&quot;
+  &gt;
+    &lt;span
+      class=&quot;gatsby-resp-image-background-image&quot;
+      style=&quot;padding-bottom: 60.99110546378653%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAMCAIAAADtbgqsAAAACXBIWXMAACToAAAk6AGCYwUcAAABI0lEQVQoz32Q226EIBRF+f9v6UO/oG9tfVOTehvjTDUzGK0wCCoKisWStNMpdYVwOSeL7BwwyKXj08BHyjpCWtLSljLK2MA5oe217Vk/XbuOD7QjaJomTFj/UfU9QScM0uBUNVhrjNF5ntWyrEqpVZ/Ldt6gn7qoL6YhGg4cNyvydwhhWZZaXm1sn9nq4OnZ9Tw3CMIkSYQQFlFZRd1Zwavj+L4fRdHhcLDJG7NSs+0H4HleGIZpmmZZJqW8a0sxjg08kjHC3OT/JcdxbDLneX4rm7SoSl/e3KymqGXfxR+5qqq6rs1+NzCEMYSX06Wsv8AYW2TDX1mPYJbi0UcPbsPHSQpxH3tHNhyxOCJhHTkwkXbkHcD5fC6KApbwP3lR27LyCR+OtL2dj+R4AAAAAElFTkSuQmCC&apos;); background-size: cover; display: block;&quot;
+    &gt;
+      &lt;img
+        class=&quot;gatsby-resp-image-image&quot;
+        style=&quot;width: 100%; height: 100%; margin: 0; vertical-align: middle; position: absolute; top: 0; left: 0; box-shadow: inset 0px 0px 0px 400px white;&quot;
+        alt=&quot;Azure DevOps no pipelines yet&quot;
+        title=&quot;&quot;
+        src=&quot;https://www.sergevandenoever.nl/static/13abe9f79f909aad469a9be4b5f2f65f/fb8a0/AzureDevOpsNoPipelinesYet.png&quot;
+        srcset=&quot;https://www.sergevandenoever.nl/static/13abe9f79f909aad469a9be4b5f2f65f/1a291/AzureDevOpsNoPipelinesYet.png 148w,https://www.sergevandenoever.nl/static/13abe9f79f909aad469a9be4b5f2f65f/2bc4a/AzureDevOpsNoPipelinesYet.png 295w,https://www.sergevandenoever.nl/static/13abe9f79f909aad469a9be4b5f2f65f/fb8a0/AzureDevOpsNoPipelinesYet.png 590w,https://www.sergevandenoever.nl/static/13abe9f79f909aad469a9be4b5f2f65f/58f95/AzureDevOpsNoPipelinesYet.png 787w&quot;
+        sizes=&quot;(max-width: 590px) 100vw, 590px&quot;
+      /&gt;
+    &lt;/span&gt;
+  &lt;/span&gt;
+  
+  &lt;/a&gt;
+    &lt;/p&gt;
+&lt;p&gt;When creating a new build pipeline the first question is: where is your repo. In my case the repo is hosted on Github.&lt;/p&gt;
+&lt;p&gt;
+  &lt;a
+    class=&quot;gatsby-resp-image-link&quot;
+    href=&quot;https://www.sergevandenoever.nl/static/c246d003fc6e8011e4331fe895b3fceb/58f95/AzureDevOpsSelectRepo.png&quot;
+    style=&quot;display: block&quot;
+    target=&quot;_blank&quot;
+    rel=&quot;noopener&quot;
+  &gt;
+  
+  &lt;span
+    class=&quot;gatsby-resp-image-wrapper&quot;
+    style=&quot;position: relative; display: block;  max-width: 590px; margin-left: auto; margin-right: auto;&quot;
+  &gt;
+    &lt;span
+      class=&quot;gatsby-resp-image-background-image&quot;
+      style=&quot;padding-bottom: 60.99110546378653%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAMCAIAAADtbgqsAAAACXBIWXMAACToAAAk6AGCYwUcAAABQklEQVQoz52S226DMAxA+f8f68PU9ilpC1SUinbAAJEbTkICM0Hd1GmatJ6H4AQf20REw+glmAE0F4JxLpVSA3AphVRCKS60gpHj0cBl3xpjul6oj0qpvs26KCFZ1XR9z4QQnPO2W9Baj9aO42iMttZYa+d5nqbJe4+Bx2iebQPRZpfml+xW3MqyLIoijuMDpV3bosk5a5oGazHGQv5Pos0bOVASJ8n5fOYCZxcW2wEYP9m6ELeLBO2dsw++q0xztNtuKaVJkNHEJlJKAFg6s76uShNYTTx86rzf7wkhOG2apiKAV4bfjMLoPFd6MA63QwAAZwKtAd8u8vF4JISeTqc8z7HnmrTKzjtMxBKIc25d8bnGi1xVVV3X64oaOjqAwa+X9DR29WCV9YMveQq8KP/VuQ68KOOPcb1e7+939P8rfwItN7EwUo0C2QAAAABJRU5ErkJggg==&apos;); background-size: cover; display: block;&quot;
+    &gt;
+      &lt;img
+        class=&quot;gatsby-resp-image-image&quot;
+        style=&quot;width: 100%; height: 100%; margin: 0; vertical-align: middle; position: absolute; top: 0; left: 0; box-shadow: inset 0px 0px 0px 400px white;&quot;
+        alt=&quot;Azure DevOps select repo&quot;
+        title=&quot;&quot;
+        src=&quot;https://www.sergevandenoever.nl/static/c246d003fc6e8011e4331fe895b3fceb/fb8a0/AzureDevOpsSelectRepo.png&quot;
+        srcset=&quot;https://www.sergevandenoever.nl/static/c246d003fc6e8011e4331fe895b3fceb/1a291/AzureDevOpsSelectRepo.png 148w,https://www.sergevandenoever.nl/static/c246d003fc6e8011e4331fe895b3fceb/2bc4a/AzureDevOpsSelectRepo.png 295w,https://www.sergevandenoever.nl/static/c246d003fc6e8011e4331fe895b3fceb/fb8a0/AzureDevOpsSelectRepo.png 590w,https://www.sergevandenoever.nl/static/c246d003fc6e8011e4331fe895b3fceb/58f95/AzureDevOpsSelectRepo.png 787w&quot;
+        sizes=&quot;(max-width: 590px) 100vw, 590px&quot;
+      /&gt;
+    &lt;/span&gt;
+  &lt;/span&gt;
+  
+  &lt;/a&gt;
+    &lt;/p&gt;
+&lt;p&gt;Authorize yourself, and select the repository to use in the deployment. The final step is to configure the build pipeline. This is done though a YAML file called &lt;code class=&quot;language-text&quot;&gt;azure-pipelines.yml&lt;/code&gt; that will be stored in the root of the Github repository. Because the project to deploy is a Node application the information in the documentation
+&lt;a href=&quot;https://docs.microsoft.com/en-us/azure/devops/pipelines/languages/javascript?view=vsts&amp;#x26;tabs=yaml&quot;&gt;Build, test, and deploy JavaScript and Node.js apps in Azure Pipelines&lt;/a&gt; describes the possible configuration settings that can be made.&lt;/p&gt;
+&lt;p&gt;
+  &lt;a
+    class=&quot;gatsby-resp-image-link&quot;
+    href=&quot;https://www.sergevandenoever.nl/static/e0c10dedc03650fce3775f6e3368bec1/58f95/AzureDevOpsConfigureBuildPipeline.png&quot;
+    style=&quot;display: block&quot;
+    target=&quot;_blank&quot;
+    rel=&quot;noopener&quot;
+  &gt;
+  
+  &lt;span
+    class=&quot;gatsby-resp-image-wrapper&quot;
+    style=&quot;position: relative; display: block;  max-width: 590px; margin-left: auto; margin-right: auto;&quot;
+  &gt;
+    &lt;span
+      class=&quot;gatsby-resp-image-background-image&quot;
+      style=&quot;padding-bottom: 60.99110546378653%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAMCAIAAADtbgqsAAAACXBIWXMAACToAAAk6AGCYwUcAAABmklEQVQoz42SX2+bMBTF+f7fp+9768PU5gmWQNIsGW2BBGJf/zfG9DhupWnapB0hYwS/c+89ptDzIo3TxpIQnEgqpbQhCSmsRFppz6U0eGKjc25iQl2HxXH161Y05bG/ToxxIQQRjVOStdZ7H+LqltWFdYkrFGNclgWbEMLL5F8Oonh83p9+Hl/b167r2rat66aqKljM3isXLsJfpdc+MVmwiLN/qNi3oywev5c/qrJpmsPhoLVGcfRm78JnTI3vrB2o63Hx7kIDUzemJuclfIrnpyeUyjDmxQiXiRABLNAkN2pSXHkpncAlkIwlMtx4iwmKzWZTlmVd1/v9HmWn6Yb5ERfgOQRhnUn3GPLcvzcfY7Hdbsuy2u12p9OJc47iaNgYA9iHQMaMUuE4YkoNk8cEYh+XBPd9PwxDXjOTYGszLKy9CFKpvgeQ4Rz8J5wFGIHZL8HDzbN2bmAy0R7Nh/+CjfmsLK0dSIykRzLaJoPkkU77Dg93/aXyPe2wBDt7rGCAAkd8c/iC8WOcz+e39zfwf8B4vf5DOe0Pai2s0c6C/y0AAAAASUVORK5CYII=&apos;); background-size: cover; display: block;&quot;
+    &gt;
+      &lt;img
+        class=&quot;gatsby-resp-image-image&quot;
+        style=&quot;width: 100%; height: 100%; margin: 0; vertical-align: middle; position: absolute; top: 0; left: 0; box-shadow: inset 0px 0px 0px 400px white;&quot;
+        alt=&quot;Azure DevOps build pipeline configuration&quot;
+        title=&quot;&quot;
+        src=&quot;https://www.sergevandenoever.nl/static/e0c10dedc03650fce3775f6e3368bec1/fb8a0/AzureDevOpsConfigureBuildPipeline.png&quot;
+        srcset=&quot;https://www.sergevandenoever.nl/static/e0c10dedc03650fce3775f6e3368bec1/1a291/AzureDevOpsConfigureBuildPipeline.png 148w,https://www.sergevandenoever.nl/static/e0c10dedc03650fce3775f6e3368bec1/2bc4a/AzureDevOpsConfigureBuildPipeline.png 295w,https://www.sergevandenoever.nl/static/e0c10dedc03650fce3775f6e3368bec1/fb8a0/AzureDevOpsConfigureBuildPipeline.png 590w,https://www.sergevandenoever.nl/static/e0c10dedc03650fce3775f6e3368bec1/58f95/AzureDevOpsConfigureBuildPipeline.png 787w&quot;
+        sizes=&quot;(max-width: 590px) 100vw, 590px&quot;
+      /&gt;
+    &lt;/span&gt;
+  &lt;/span&gt;
+  
+  &lt;/a&gt;
+    &lt;/p&gt;
+&lt;p&gt;azure-pipelines.yml:&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;yaml&quot;&gt;&lt;pre class=&quot;language-yaml&quot;&gt;&lt;code class=&quot;language-yaml&quot;&gt;&lt;span class=&quot;token key atrule&quot;&gt;trigger&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+&lt;span class=&quot;token punctuation&quot;&gt;-&lt;/span&gt; master
+
+&lt;span class=&quot;token key atrule&quot;&gt;pool&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;token key atrule&quot;&gt;vmImage&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&apos;Ubuntu-16.04&apos;&lt;/span&gt;
+
+&lt;span class=&quot;token key atrule&quot;&gt;steps&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+&lt;span class=&quot;token punctuation&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;token key atrule&quot;&gt;task&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; NodeTool@0
+  &lt;span class=&quot;token key atrule&quot;&gt;inputs&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;token key atrule&quot;&gt;versionSpec&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&apos;10.x&apos;&lt;/span&gt;
+  &lt;span class=&quot;token key atrule&quot;&gt;displayName&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&apos;Install Node.js&apos;&lt;/span&gt;
+
+&lt;span class=&quot;token punctuation&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;token key atrule&quot;&gt;script&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;|&lt;/span&gt;&lt;span class=&quot;token scalar string&quot;&gt;
+    npm install
+    npm run azure-build&lt;/span&gt;
+  &lt;span class=&quot;token key atrule&quot;&gt;displayName&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&apos;npm install and build&apos;&lt;/span&gt;
+
+&lt;span class=&quot;token punctuation&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;token key atrule&quot;&gt;task&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; PublishBuildArtifacts@1
+  &lt;span class=&quot;token key atrule&quot;&gt;inputs&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;token key atrule&quot;&gt;PathtoPublish&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&apos;$(System.DefaultWorkingDirectory)/public&apos;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;In the above build pipeline configuration there are a few important elements:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;The script tag does an &lt;code class=&quot;language-text&quot;&gt;npm install&lt;/code&gt; and an &lt;code class=&quot;language-text&quot;&gt;npm run azure-build&lt;/code&gt; which actually just calls &lt;code class=&quot;language-text&quot;&gt;gatsby build&lt;/code&gt;. The result of this build is a static website with all blog posts in the folder &lt;code class=&quot;language-text&quot;&gt;public&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;The &lt;code class=&quot;language-text&quot;&gt;PublishBuildArtifacts&lt;/code&gt; tasks selects as path to publish only the contents on this public folder. Note that if the resulting artifacts a folder &lt;code class=&quot;language-text&quot;&gt;drop&lt;/code&gt; is created containing the contents of the public folder.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;We now have a build result which must be deployed. The website is deployed as a static website on an Azure storage account, as described in the documentation &lt;a href=&quot;https://docs.microsoft.com/en-us/azure/storage/blobs/storage-blob-static-website&quot;&gt;Static website hosting in Azure Storage&lt;/a&gt;. Important for the next step is that when you create a static website on the storage (only one static website per storage account), the website is stored in the container &lt;code class=&quot;language-text&quot;&gt;$web&lt;/code&gt;. In the case of my weblog the resulting website is &lt;a href=&quot;https://personalsvdoever.z6.web.core.windows.net&quot;&gt;https://personalsvdoever.z6.web.core.windows.net&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;The following step is the release pipeline for deployment of the build artifacts to the the static website.&lt;/p&gt;
+&lt;p&gt;
+  &lt;a
+    class=&quot;gatsby-resp-image-link&quot;
+    href=&quot;https://www.sergevandenoever.nl/static/ef30857813226a52b630e332fd5bee2a/58f95/AzureDevOpsReleasePipeline.png&quot;
+    style=&quot;display: block&quot;
+    target=&quot;_blank&quot;
+    rel=&quot;noopener&quot;
+  &gt;
+  
+  &lt;span
+    class=&quot;gatsby-resp-image-wrapper&quot;
+    style=&quot;position: relative; display: block;  max-width: 590px; margin-left: auto; margin-right: auto;&quot;
+  &gt;
+    &lt;span
+      class=&quot;gatsby-resp-image-background-image&quot;
+      style=&quot;padding-bottom: 60.99110546378653%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAMCAIAAADtbgqsAAAACXBIWXMAACToAAAk6AGCYwUcAAABNklEQVQoz52SbW+CMBCA+///l1myTN2HCaKMRGUymCD07fpGuwM+bHNkS3zSXK7pPVeugTBjBRgJijLWtl1HKWUcl5DQMUq54kJfGQNJeVtrra8tEx+lwE3WkI/nU3bKL3XDORNKMzBKazo06Rg6IL3vw0jf99Y5a4zrvQ/BXIA8Ll+zLM3zvCgKbAra4rGUUikFqAK4Hmu/mLYh4ApksXyJ42i/32dZpgeUxc4hYDbUjXdOWrjBB7JaPUVRPMlqAJRx+GmYCO2kDcp6Mzb57ZP1er3ZbHa7XZqmxpjm2gjOMcGz4kIX8ftDUr3VYl7ebrdRFCVJcjgc0ME5MQ513oPSNZUtU6DNvFyWZVVVU7TDYxmMN0POzzzJEyg75368yDfCHH/J/0KqkTtl/D2Ox+O5ON8hfwLL8bWw6RAHWgAAAABJRU5ErkJggg==&apos;); background-size: cover; display: block;&quot;
+    &gt;
+      &lt;img
+        class=&quot;gatsby-resp-image-image&quot;
+        style=&quot;width: 100%; height: 100%; margin: 0; vertical-align: middle; position: absolute; top: 0; left: 0; box-shadow: inset 0px 0px 0px 400px white;&quot;
+        alt=&quot;Azure DevOps release pipeline&quot;
+        title=&quot;&quot;
+        src=&quot;https://www.sergevandenoever.nl/static/ef30857813226a52b630e332fd5bee2a/fb8a0/AzureDevOpsReleasePipeline.png&quot;
+        srcset=&quot;https://www.sergevandenoever.nl/static/ef30857813226a52b630e332fd5bee2a/1a291/AzureDevOpsReleasePipeline.png 148w,https://www.sergevandenoever.nl/static/ef30857813226a52b630e332fd5bee2a/2bc4a/AzureDevOpsReleasePipeline.png 295w,https://www.sergevandenoever.nl/static/ef30857813226a52b630e332fd5bee2a/fb8a0/AzureDevOpsReleasePipeline.png 590w,https://www.sergevandenoever.nl/static/ef30857813226a52b630e332fd5bee2a/58f95/AzureDevOpsReleasePipeline.png 787w&quot;
+        sizes=&quot;(max-width: 590px) 100vw, 590px&quot;
+      /&gt;
+    &lt;/span&gt;
+  &lt;/span&gt;
+  
+  &lt;/a&gt;
+    &lt;/p&gt;
+&lt;p&gt;This release pipeline is triggered by a new build result, and requires only one task in the stage that is renamed to &lt;strong&gt;To static website&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;
+  &lt;a
+    class=&quot;gatsby-resp-image-link&quot;
+    href=&quot;https://www.sergevandenoever.nl/static/5fae130d3c1b8bf69ed834322e12d6be/58f95/AzureDevOpsReleaseFileCopy.png&quot;
+    style=&quot;display: block&quot;
+    target=&quot;_blank&quot;
+    rel=&quot;noopener&quot;
+  &gt;
+  
+  &lt;span
+    class=&quot;gatsby-resp-image-wrapper&quot;
+    style=&quot;position: relative; display: block;  max-width: 590px; margin-left: auto; margin-right: auto;&quot;
+  &gt;
+    &lt;span
+      class=&quot;gatsby-resp-image-background-image&quot;
+      style=&quot;padding-bottom: 60.99110546378653%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAMCAIAAADtbgqsAAAACXBIWXMAACToAAAk6AGCYwUcAAABY0lEQVQoz4WRbW+CMBSF+///2D7sxcXEqUMzQUQFofSVthS2Q0mYzmx70sCFnNN7ekuUbWXjdGMY45TWjAsuJRdS6QZFzbVQlkrZKK55ZY2lTOhLrmRdJTVJX+M4O9CKaq0b513rlVIyYI35vMW1rfeDZngJRx5nm93HNkmSoiiqmmFjY0wTQNH6zjlnrYW47/uu7303YJxvu548PM2Wy+X7e5SmKWM1pIMoAB06tAF84v8UARVCkNnL82q12kTRdhe/xUWUlnEuM+qw0srGF41TIMV1+D6AHcl8Pl8sFuv1Oj0cKJdVLSomKJNYqGuhRMBeMYTyHgXJsmy/3yNzeUEXiaW+l2i0lkJQOowTrWCYzoWCnM/nPM/xLMtS3oKG8KBgjCmthcawW3jGEQydz4HT6fSbWQV0YIw9mpH8f/PQVkpofwwMfpIH/jCPzcd7nvDhCglGhYEdj8d7M5jSQt3d8QVIQK2wBSgg7gAAAABJRU5ErkJggg==&apos;); background-size: cover; display: block;&quot;
+    &gt;
+      &lt;img
+        class=&quot;gatsby-resp-image-image&quot;
+        style=&quot;width: 100%; height: 100%; margin: 0; vertical-align: middle; position: absolute; top: 0; left: 0; box-shadow: inset 0px 0px 0px 400px white;&quot;
+        alt=&quot;Azure DevOps release pipeline filecopy&quot;
+        title=&quot;&quot;
+        src=&quot;https://www.sergevandenoever.nl/static/5fae130d3c1b8bf69ed834322e12d6be/fb8a0/AzureDevOpsReleaseFileCopy.png&quot;
+        srcset=&quot;https://www.sergevandenoever.nl/static/5fae130d3c1b8bf69ed834322e12d6be/1a291/AzureDevOpsReleaseFileCopy.png 148w,https://www.sergevandenoever.nl/static/5fae130d3c1b8bf69ed834322e12d6be/2bc4a/AzureDevOpsReleaseFileCopy.png 295w,https://www.sergevandenoever.nl/static/5fae130d3c1b8bf69ed834322e12d6be/fb8a0/AzureDevOpsReleaseFileCopy.png 590w,https://www.sergevandenoever.nl/static/5fae130d3c1b8bf69ed834322e12d6be/58f95/AzureDevOpsReleaseFileCopy.png 787w&quot;
+        sizes=&quot;(max-width: 590px) 100vw, 590px&quot;
+      /&gt;
+    &lt;/span&gt;
+  &lt;/span&gt;
+  
+  &lt;/a&gt;
+    &lt;/p&gt;
+&lt;p&gt;Import in the configuration of the &lt;strong&gt;Azure File Copy&lt;/strong&gt; task is that the we need to take the source files from the &lt;code class=&quot;language-text&quot;&gt;drop&lt;/code&gt; folder and copy them to the container &lt;code class=&quot;language-text&quot;&gt;$web&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;One issue with the static web sites on Azure storage is that they support http only. This can be solved using an Azure CDN as described in &lt;a href=&quot;https://docs.microsoft.com/en-us/azure/storage/blobs/storage-blob-static-website-custom-domain&quot;&gt;Tutorial: Use Azure CDN to enable a custom domain with SSL for a static website&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;My first take on selecting a CDN was taking the Microsoft standard
+CDN. The issue that I faced was that when I updated an article the
+CDN did not reflect these changes. Expiration of items on the CDN
+are controlled by &lt;code class=&quot;language-text&quot;&gt;Cache-Control&lt;/code&gt; headers as explained in the
+article &lt;a href=&quot;https://docs.microsoft.com/en-us/azure/cdn/cdn-manage-expiration-of-cloud-service-content&quot;&gt;Manage expiration of web content in Azure CDN&lt;/a&gt;. Because I’m running from a static web site hosted on Azure blob
+storage I don’t have a web server in between where I can control
+these headers like I can do on for example IIS. The other CDN
+offerings on Azure (Verizon, Akamai) give you more control to
+override caching based on for example file extensions. I first tried
+the Verizon offering which let you control these settings in a
+separate and incomprehensible “manage” interface. After struggling
+for a while I tried the Akamai offering of the CDN which has the
+Azure management screens as described in the above mentioned article
+so I could make all pages cache for 1 minute except for .js, .css
+and .json files which get a new unique url after each site
+generation and can be cached fr a year.  &lt;/p&gt;
+&lt;p&gt;The CDN for this weblog is running on &lt;a href=&quot;https://svdoever.azureedge.net&quot;&gt;https://svdoever.azureedge.net&lt;/a&gt;. The custom domain name &lt;a href=&quot;https://www.sergevandenoever.nl&quot;&gt;www.sergevandenoever.nl&lt;/a&gt; points to this url.&lt;/p&gt;
+                &lt;div style=&quot;margin-top=55px; font-style: italic;&quot;&gt;(This is an article posted to my blog at https://www.sergevandenoever.nl. You can read it online by &lt;a href=&quot;https://www.sergevandenoever.nl/weblog-deployment-to-static-azure-website/&quot;&gt;clicking here&lt;/a&gt;.)&lt;/div&gt;
+              </content:encoded></item><item><title><![CDATA[Serge's first blog post!?]]></title><description><![CDATA[That mandatory first blog post on my own "blogging platform". After blogging for years on http://weblogs.asp.net/soever and some endeavors with the Medium blogging platform.]]></description><link>https://www.sergevandenoever.nl/first-blogpost/</link><guid isPermaLink="false">https://www.sergevandenoever.nl/first-blogpost/</guid><content:encoded>&lt;p&gt;There is always that first blog post when you start a weblog. Well, this is THAT post.
+I have been blogging (on and off) for years. I started on &lt;a href=&quot;http://weblogs.asp.net/soever&quot;&gt;weblogs.asp.net&lt;/a&gt; in 2003, a hosting platform provided by Microsoft - also hosting the big Microsoft names like &lt;a href=&quot;https://weblogs.asp.net/scottgu&quot;&gt;Scott Guthrie&lt;/a&gt;. But the platform is ageing, and writing blog posts in the web interface is not the best experience.&lt;/p&gt;
+&lt;p&gt;I tried &lt;a href=&quot;https://medium.com/@svdoever&quot;&gt;blog posts on Medium&lt;/a&gt;, and hated the editing experience, especially with code… everything must be gist on Github, because code formatting within Medium is terrible. But including long gists results in a really slow editing experience. But the most important reason to leave Medium is a post on an e-mail list by &lt;a href=&quot;http://joelhooks.com&quot;&gt;Joel Hooks&lt;/a&gt; of &lt;a href=&quot;https://egghead.io/&quot;&gt;EggHead.io&lt;/a&gt; who wrote in a post called &lt;a href=&quot;https://www.getdrip.com/deliveries/fseddnphjsr6souec1vf?__s=dx85yvypxe528hsunssi&quot;&gt;building YOUR brand as a developer…&lt;/a&gt;:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Giving Medium words in exchange for exposure is hardly a fair trade.
+If I write something, I want it to be a “Joel” post, not a “Medium” post.
+Nobody ever says “oh, hey, did you see that article Joel wrote on Medium?” They say, “Did you see that Medium post?”&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;and &lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;These are your deeply-held opinions that took years for you to develop.
+You own those thoughts, so you should own where you air them.
+We — and I mean us, the software developers — need to make a stand and bring back the personal blog.
+We need to own our work, our thoughts, our tutorials, our content.
+And as developers, we’re uniquely positioned to do it.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;So this the start of my first self-owned blogging platform. I’m using &lt;a href=&quot;https://www.gatsbyjs.org&quot;&gt;Gatsby&lt;/a&gt;, and “stole” the initial code from Dan Abramov’s weblog &lt;a href=&quot;https://overreacted.io&quot;&gt;overreacted.io&lt;/a&gt;. Thanks Dan!&lt;/p&gt;
+&lt;p&gt;Joel Hooks also created a great &lt;a href=&quot;https://github.com/eggheadio/gatsby-starter-egghead-blog&quot;&gt;Gatsby-based weblog starter&lt;/a&gt;,  I will definitely steal some of the ideas from his code-base - I love the MDX idea!&lt;/p&gt;
+&lt;p&gt;So let’s get started with blogging! It has been a while…&lt;/p&gt;
+                &lt;div style=&quot;margin-top=55px; font-style: italic;&quot;&gt;(This is an article posted to my blog at https://www.sergevandenoever.nl. You can read it online by &lt;a href=&quot;https://www.sergevandenoever.nl/first-blogpost/&quot;&gt;clicking here&lt;/a&gt;.)&lt;/div&gt;
+              </content:encoded></item></channel></rss>
