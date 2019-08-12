@@ -7,6 +7,7 @@
   "bugs": {
     "url": "https://github.com/svdoever/serge-weblog/issues"
   },
+  "engines" : { "node" : ">=10.0.0" },
   "dependencies": {
     "gatsby": "^2.13.60",
     "gatsby-plugin-feed": "^2.3.6",
@@ -54,7 +55,6 @@
     "azure-build": "gatsby build",
     "build": "rm -rf public && rm -rf .cache && gatsby build",
     "fix-semi": "eslint --quiet --ignore-pattern node_modules --ignore-pattern public --parser babel-eslint --no-eslintrc --rule '{\"semi\": [2, \"never\"], \"no-extra-semi\": [2]}' --fix gatsby-node.js",
-    "now-build": "npm run build",
-    "deploy": "gatsby build --prefix-paths && gh-pages -d public"
+    "now-build": "npm run build"
   }
 }
