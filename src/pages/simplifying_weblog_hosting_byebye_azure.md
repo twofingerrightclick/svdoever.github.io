@@ -1,7 +1,7 @@
 ---
 title: Simplifying hosting my weblog - bye bye Azure
 date: '2019-08-13'
-spoiler: I really tried tried. Hard. But Azure - you failed me!
+spoiler: I really tried hard. But Azure - you failed me!
 ---
 
 As described in my blog post [Weblog deployment to a static Microsoft Azure website](/weblog-deployment-to-static-azure-website/) I initially hosted my weblog on an Azure static website. I had to jump through a lot of hoops to get both https and http working, but in the end I got it all up and running using a DevOps build pipeline, Azure blob storage and a CDN.
