@@ -1,5 +1,5 @@
 ---
-title: Install Sitecore 9.1 in a breeze
+title: Install Sitecore 9.3 in a breeze
 date: '2020-01-18'
 spoiler: I would prefer to have a Sitecore installation on a VM so I only put it "on" 
 ---
