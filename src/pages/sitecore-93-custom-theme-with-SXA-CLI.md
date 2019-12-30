@@ -8,12 +8,12 @@ spoiler: Manage your SXA 9.3 theme under source control instead of as artifacts 
 
 There are some good reasons why to use SXA CLI for your Sitecore SXA development:
 
-- Real front-end developers get bored by clicking through Sitecore for the creation of HTML structures for the rendering variants
+- Front-end developers get bored by clicking through Sitecore to create HTML structures for the rendering variants
 - Importing/exporting front-end assets through Creative Exchange souds like a very brittle and uncontrollable process 
 - Real developers use version control for your theme files
 - We don't want to get the  Media Library polluted with unnecessary files
 - We only want transpiled and minified assets stored in Sitecore
-- 
+
 # Getting SXA CLI installed
 
 ## Introduction
