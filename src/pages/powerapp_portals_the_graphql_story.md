@@ -1,10 +1,10 @@
 ---
 title: PowerApps Portals - the GraphQL story
 date: '2020-01-17'
-spoiler: PowerApps Portals is positioned as a low-code platform. Built on top of the Dynamics and the underlying Common Data Services (CDS) it enables the "citizen" developer to create public facing websites with support for logged-in users. Underlying the WYSIWYG editing story there is a powerfull beast that can be tamed to add a professional developer story to empower the citizen developer.
+spoiler: PowerApps Portals is positioned as a low-code platform. Built on top of the Dynamics and the underlying Common Data Services (CDS) it enables the "citizen" developer to create public facing websites with support for logged-in users. Underlying the WYSIWYG editing GraphQL is used to do updates on the content and configuration of the portal.
 ---
 
-In this post I will show the GraphQL API available in the PowerApps Portals platform, and how this API is used to manage the content and configuration of the portal.
+PowerApps Portals is positioned as a low-code platform. Built on top of the Dynamics and the underlying Common Data Services (CDS) it enables the "citizen" developer to create public facing websites with support for logged-in users. Underlying the WYSIWYG editing GraphQL is used to do updates on the content and configuration of the portal.
 
 For an introduction on PowerApps Portals have a look at the following links:
 
