@@ -11,8 +11,8 @@ The only problem is that I have almost no readers. I put a lot of work in resear
 
 Here are the steps I take for cross-posting from a Markdown blog to https://dev.to:
 
-1. Create a new post on dev.to by pressing the **WRITE A POST** and copy over the Markdown
-2. Upload all images linked into your blog to **dev.to** by clicking the image button ![](https://dev.to/packs/_/assets/images/image-upload-db6ef1c66e1b6352103bc262c453d25c.svg) and click **Choose Files** under Body Images. Select all your images of your original blog post at once. You are then provided a text area with all **Direct URLs**. https://dev.to rewrites the names of your images, so it is difficult to correlate the new urls to your original images.
+1. Create a new post on https://dev.to by pressing the **WRITE A POST** and copy over the Markdown
+2. Upload all images linked into your blog to https://dev.to by clicking the image button ![](https://dev.to/packs/_/assets/images/image-upload-db6ef1c66e1b6352103bc262c453d25c.svg) and click **Choose Files** under Body Images. Select all your images of your original blog post at once. You are then provided a text area with all **Direct URLs**. https://dev.to rewrites the names of your images, so it is difficult to correlate the new urls to your original images.
 3. Copy this list of image urls into a new file in Visual Studio Code, and set the format of the file to Markdown in the bottom-right of Visual Studio Code. Now press the Markdown preview button.
 ![](republishing_blogposts_on_devto/CopyUrls.png)
 4. Press Ctrl-H to do replacements on the file and select the right option for regular expressions. In the top field type `^(.*)$` and in the bottom field type `$1\n![]($1)<hr/>`. Now select replace all ocurrences. This will result in the following:
