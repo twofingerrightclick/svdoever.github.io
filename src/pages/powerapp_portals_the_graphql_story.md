@@ -113,7 +113,7 @@ To easily get access to your JWT tokens (Bearer tokens) install the tool [JWT An
 
 Using this tool we can inspect the different tokens available:
 
-![](powerapp_portals_the_graphql_story/Bearer&#32;token&#32;for&#32;GraphQL.png)
+![](powerapp_portals_the_graphql_story/BearerTokenForGraphQL.png)
 
 The first token with the Guid is the required **Bearer** token for the GraphQL queries. When you press this entry a JWT token is shown that can be easily copied.
 The second token named `<organization>.crm4.dynamics.com` in the Bearer token for the invalidation requests.
