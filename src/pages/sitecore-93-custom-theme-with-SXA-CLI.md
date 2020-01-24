@@ -215,7 +215,9 @@ Now navigate again to the anonymous browser window with your page https://serges
 
 # Automating the theme publishing
 
-Going to the Sitecore UI all the time to publish the theme items is rather annoying. Can't this be automated?
+_Update: some nice automation stuff below, bu a collegue of mine pointed out to me that it is also possible to configure au
+Going to the Sitecore UI all the time to publish the theme items is rather annoying. Can't this be automated?tomatic publishing to **web** for preview. See the documentation [Publishing items to a preview publishing target](https://doc.sitecore.com/users/93/sitecore-experience-platform/en/publishing-items-to-a-preview-publishing-target.html) for more information._
+
 Of course it can be automated... enter the [Sitecore PowerShell Extensions](https://doc.sitecorepowershell.com/):
 
 _The SPE Remoting module provides remote connectivity to a Sitecore instance. The Sitecore PowerShell Extensions (SPE) module must be installed and configured to accept remoting connections._
