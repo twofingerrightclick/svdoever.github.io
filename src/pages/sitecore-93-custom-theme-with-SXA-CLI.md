@@ -9,7 +9,7 @@ spoiler: Manage your SXA 9.3 theme under source control instead of as artifacts 
 There are some good reasons why to use SXA CLI for your Sitecore SXA development:
 
 - Front-end developers get bored by clicking through Sitecore to create HTML structures for the rendering variants
-- Importing/exporting front-end assets through Creative Exchange souds like a very brittle and uncontrollable process 
+- Importing/exporting front-end assets through Creative Exchange sounds like a very brittle and uncontrollable process 
 - Real developers use version control for your theme files
 - We don't want to get the  Media Library polluted with unnecessary files
 - We only want transpiled and minified assets stored in Sitecore
@@ -17,11 +17,11 @@ There are some good reasons why to use SXA CLI for your Sitecore SXA development
 # Getting SXA CLI installed
 
 ## Introduction
-After some puzzling I got the SXA CLI working on Windows 10. After I wrote the installation description below I also found a blog post by [Mark van Aalst](https://www.markvanaalst.com/) called [Installing the SXA CLI](https://www.markvanaalst.com/blog/sxa/installing-the-sitecore-sxa-cli/). He knows infinitly more about Sitecore than I do, so check out his blog post as well, but you may find some additional interesting information is this blog post as well. Check out his video [SXA Front-End Developer Workflow - Creating a theme using SXA CLI](https://www.youtube.com/watch?v=MDWuqhmvwgI) as well to get a good overview of the installation process.
+After some puzzling I got the SXA CLI working on Windows 10. After I wrote the installation description below I also found a blog post by [Mark van Aalst](https://www.markvanaalst.com/) called [Installing the SXA CLI](https://www.markvanaalst.com/blog/sxa/installing-the-sitecore-sxa-cli/). He knows infinitely more about Sitecore than I do, so check out his blog post as well, but you may find some additional interesting information in this blog post as well. Check out his video [SXA Front-End Developer Workflow - Creating a theme using SXA CLI](https://www.youtube.com/watch?v=MDWuqhmvwgI) as well to get a good overview of the installation process.
 
 ## Getting the correct version of NodeJS installed
 
-First requirement for the SXA CLI is NodeJS version 11.15.0 (the latest 11 version) or lower, because an error occurs when using the 12+ version of NodeJS.
+The first requirement for the SXA CLI is NodeJS version 11.15.0 (the latest 11 version) or lower because an error occurs when using the 12+ version of NodeJS.
 
 What I did was install the [Node Version Switcher](https://github.com/jasongin/nvs), because I want to keep working with newer versions of NodeJS on other projects.
 
@@ -40,7 +40,7 @@ ReferenceError: primordials is not defined
 
 ## The actual installation of SXA CLI
 
-Next step is to install the SXA CLI as described in the [documentation](https://doc.sitecore.com/developers/sxa/93/sitecore-experience-accelerator/en/add-a-theme-using-sxa-cli.html).
+The next step is to install the SXA CLI as described in the [documentation](https://doc.sitecore.com/developers/sxa/93/sitecore-experience-accelerator/en/add-a-theme-using-sxa-cli.html).
 
 As a first step remove the `.disabled` extension of the file `C:\inetpub\wwwroot\sergesc.dev.local\App_Config\Include\z.Feature.Overrides\z.SPE.Sync.Enabler.Gulp.config.disabled` (your path may vary). This enables the [Creative Exchange Live](https://doc.sitecore.com/developers/sxa/93/sitecore-experience-accelerator/en/modify-your-site-design-with-creative-exchange-live.html) feature of Sitecore SXA.
 
@@ -57,7 +57,7 @@ Note that if you run the above commands from a PowerShell console, the **@** cha
 npm config set `@sxa:registry https://sitecore.myget.org/F/sc-npm-packages/npm/
 ```
 
-Create a folder for your project in a folder that normally holds your projects, and in this folder execute the command`sxa new YourThemeName` and answer the questions:
+Create a folder for your project in a folder that normally holds your projects, and in this folder execute the command `sxa new YourThemeName` and answer the questions:
 
 ```
 mkdir sergesc.dev.local
@@ -177,7 +177,7 @@ Watching JS files started...
 
 The gulp script does a login, and all changes are compiled, optimized and uploaded to Sitecore.
 
-Note that the file `SergeTheme\gulp\config.js` contains all configurations for the generic gulp tasks living in the npm package `@sxa/celt`. The name `celt` stands for `Creative Exchange Live for SXA themes`. It is a pity that Sitecore did not open-source the package (yet) like they did with [Sitecore JavaScript Services](https://github.com/Sitecore/jss).
+Note that the file `SergeTheme\gulp\config.js` contains all configurations for the generic gulp tasks living in the npm package `@sxa/celt`. The name `celt` stands for `Creative Exchange Live for SXA themes`. It is a pity that Sitecore did not open-source the package (yet) as they did with [Sitecore JavaScript Services](https://github.com/Sitecore/jss).
 
 # Assigning the new theme
 
@@ -200,7 +200,7 @@ body {
 }
 ```
 
-In the experience editor the background will change to red.
+In the experience editor, the background will change to red.
 
 Now open an anonymous browser window (otherwise cookies will throw you in the editor again) and navigate to https://sergesc.dev.local/SergeSxaSite, and note that the site without a red background will be visible.
 
@@ -215,10 +215,9 @@ Now navigate again to the anonymous browser window with your page https://serges
 
 # Automating the theme publishing
 
-_Update: some nice automation stuff below, bu a collegue of mine pointed out to me that it is also possible to configure au
-Going to the Sitecore UI all the time to publish the theme items is rather annoying. Can't this be automated?tomatic publishing to **web** for preview. See the documentation [Publishing items to a preview publishing target](https://doc.sitecore.com/users/93/sitecore-experience-platform/en/publishing-items-to-a-preview-publishing-target.html) for more information._
+_Update: some nice automation stuff below, but a colleague of mine pointed out to me that it is also possible to configure automatic published to **web** for preview because going to the Sitecore UI all the time to publish the theme items is rather annoying. See the documentation [Publishing items to a preview publishing target](https://doc.sitecore.com/users/93/sitecore-experience-platform/en/publishing-items-to-a-preview-publishing-target.html) for more information._
 
-Of course it can be automated... enter the [Sitecore PowerShell Extensions](https://doc.sitecorepowershell.com/):
+Of course, it can be automated... enter the [Sitecore PowerShell Extensions](https://doc.sitecorepowershell.com/):
 
 _The SPE Remoting module provides remote connectivity to a Sitecore instance. The Sitecore PowerShell Extensions (SPE) module must be installed and configured to accept remoting connections._
 
@@ -256,7 +255,7 @@ The correct way would be to add a patch file `C:\inetpub\wwwroot\sergesc.dev.loc
 </configuration>
 ```
 
-but I could not get this working. I tried to follow the guidance from https://doc.sitecore.com/developers/93/platform-administration-and-architecture/en/use-a-patch-file-to-customize-the-sitecore-configuration.html, but it did not work. Any help is highly appriciated!
+but I could not get this working. I tried to follow the guidance from https://doc.sitecore.com/developers/93/platform-administration-and-architecture/en/use-a-patch-file-to-customize-the-sitecore-configuration.html, but it did not work. Any help is highly appreciated!
 
 To see the resulting configuration file after patching see https://doc.sitecore.com/developers/93/platform-administration-and-architecture/en/view-configuration-changes.html.
 
@@ -265,7 +264,7 @@ One thing I ran into was the following error:
 Exception calling "Invoke" with "1" argument(s): "Element 'Objs' with namespace name 'http://schemas.microsoft.com/powershell/2004/04' was not found. Line 3, position 2."
 ```
 
-This error occured if I made a mistake in my configuration file changes, but it can also be:
+This error occurred if I made a mistake in my configuration file changes, but it can also be:
 https://sitecore.stackexchange.com/questions/19525/exception-calling-invoke-with-1-argumentselement-objs-with-namespace-n
 
 ## Working with the PowerShell SPE module
@@ -352,7 +351,7 @@ Add the `publish` script to the `package.json` file:
 
 You can now publish your theme with the command ```npm run publish``` on your local or remote Sitecore server using PowerShell remoting!
 
-# Desecting the SXA CLI tooling
+# Dissecting  the SXA CLI tooling
 
 When starting up the gulp task of the SXA CLI tooling a set of watchers are started for files in the theme project. These files, and possible exclusion rules, are defined in the file `.\gulp\config.js` and are for you to modify where needed. The default configuration does something like:
 
@@ -375,7 +374,7 @@ _A big issue is that only changed files are processed! An initial **build &deplo
 
 By default the configuration is to **not upload the source files** to Sitecore, so all preoptimization is done on the front-end developer machines. See the documentation [Preoptimize your CSS theme and JavaScript](https://doc.sitecore.com/developers/sxa/93/sitecore-experience-accelerator/en/preoptimize-your-css-theme-and-javascript.html) for more information. It is a pity that currently no build task is available that can be executed on a build server, but this would be a good next step in the develoment of **SXA CLI**.
 
-Sitecore has a built-in Asset Optimizer that does the combining and minification of the assets. The documention describes how to configure the Asset Optimizer in the section [Enable and configure the Asset Optimizer](https://doc.sitecore.com/developers/sxa/93/sitecore-experience-accelerator/en/enable-and-configure-the-asset-optimizer.html). This configuration can be set globally, per site or per theme. Note that by default the new created theme has its setting on  **inherit from Site**, in wonder if this could be set to **Off** if all assets are preoptimized on the developer machine, or that it can be used in combination so files can be added on top of the uploaded minified files. What I understand from the video by Mark van Aalst Sitecore will not use the Asset Optimizer if a `pre-optimized-min` item is available in the theme.
+Sitecore has a built-in Asset Optimizer that does the combining and minification of the assets. The documentation describes how to configure the Asset Optimizer in the section [Enable and configure the Asset Optimizer](https://doc.sitecore.com/developers/sxa/93/sitecore-experience-accelerator/en/enable-and-configure-the-asset-optimizer.html). This configuration can be set globally, per site or per theme. Note that by default the newly created theme has its setting on  **inherit from Site**, in wonder if this could be set to **Off** if all assets are preoptimized on the developer machine, or that it can be used in combination so files can be added on top of the uploaded minified files. What I understand from the video by Mark van Aalst Sitecore will not use the Asset Optimizer if a `pre-optimized-min` item is available in the theme.
 
 # Scriban
 
@@ -383,7 +382,7 @@ A really interesting development by Sitecore is the usage of the [Scriban templa
 
 # Creating a Scriban-based rendering variant though the Content Editor
 
-A **Scriban** script can be used as a variant step in a rendering variant. For example to create a rendering variant of the Page Content component do the following:
+A **Scriban** script can be used as a variant step in a rendering variant. For example, to create a rendering variant of the Page Content component do the following:
 
 - In the Content Editor select the item `/sitecore/content/SergeTenant/SergeSxaSite/Presentation/Rendering Variants/Page Content`
 - Right-click the item and select **Insert - Rendering Variant**, give the rendering variant a name, like for example **Blog Post**
@@ -400,7 +399,7 @@ Creating the rendering variant as we did above is enough to take over with the S
 - Open the `Blog1` page in the Experience Editor and drag the **Page Content** component on the page
 - select the **Blog Post** variant and you have a content-editable component on your page using your new rendering variant!!
 
-Note that as with a "normal" rendering variant, a Scriban script can be one of multiple variant items in the rendering variant.
+Note that as with a "normal" rendering variant, a Scriban script can be one of the multiple variant items in the rendering variant.
 
 # Handling Scriban scripts through SXA CLI
 
@@ -426,7 +425,7 @@ We now need to run the command `npm run gulp-all` to get everything started, and
 
 ## The required metadata.json file
 
-The last thing we need is the file `-\scriban\metadata.json`. From the documentation it is not clear that this file should exist and what the contents of the file should be. My last resort was to create a **Creative Exchange** export zip file which contains a lot of information useful to get SXA CLI working correctly. In the Experience Editor select **EXPERIENCE ACCELERATOR** in the top bar and select **Export**. After investigate the downloaded zip file I could see that the file `-\scriban\metadata.json` must contain something like the following:
+The last thing we need is the file `-\scriban\metadata.json`. From the documentation, it is not clear that this file should exist and what the contents of the file should be. My last resort was to create a **Creative Exchange** export zip file which contains a lot of information useful to get SXA CLI working correctly. In the Experience Editor select **EXPERIENCE ACCELERATOR** in the top bar and select **Export**. After investigate the downloaded zip file I could see that the file `-\scriban\metadata.json` must contain something like the following:
 
 ```
 {"siteId":"{F5AE341E-0C2E-44F8-8AD6-765DC311F57E}","database":"master"}
@@ -503,7 +502,7 @@ Some good things to know about the Scriban scripts:
 - The scriban file is uploaded as a variant item and does not need additional settings like a tag
 - When there are multiple variant items their order will be alphabetical
 
-There is a Visual studio Code extension available for Scriban by [Adam Najmanowicz](https://twitter.com/adamnaj) called **Sitecore Scriban**: _This extension allows to colorize Sitecore Experience Accelerator Scriban-Html scripts following the syntax of the scriban templating language with SXA extensions_
+There is a Visual Studio Code extension available for Scriban by [Adam Najmanowicz](https://twitter.com/adamnaj) called **Sitecore Scriban**: _This extension allows to colorize Sitecore Experience Accelerator Scriban-Html scripts following the syntax of the scriban templating language with SXA extensions_
 
 You can study the source code of this extension to see information on the Sitecore specific objects available to you. There is also the Sitecore documentation section [Scriban templates](https://doc.sitecore.com/developers/sxa/93/sitecore-experience-accelerator/en/scriban-templates.html) available.
 
@@ -532,7 +531,7 @@ The script will fail if there does not exist a `scripts` folder with a JavaScrip
 # Conclusion
 
 So far my first adventures into both SXA and the SXA CLI. The SXA CLI tooling is a good first step, but there is still a lot of polishing to do.
-It is a pity that the SXAL CLI tooling is not open sourced so the community could help out. Next steps for the development team could be:
+It is a pity that the SXAL CLI tooling is not open-sourced so the community could help out. Next steps for the development team could be:
 
 - Improve the documentation - it is still a bit thin. I'm sure this will improve, I'm really impressed by the quality of the [JSS documentation](https://jss.sitecore.com/).
 - Describe the developer workflow with SXA CLI, source control, multiple users, local dev machines, and a shared dev environment where things get combined
