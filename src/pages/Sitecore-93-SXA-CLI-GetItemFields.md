@@ -4,7 +4,7 @@ date: '2020-02-03'
 spoiler: In my Sitecore 9.3 SXA CLI endeavors I find myself searching for the internal field names of Sitecore items so I can use them in my Scriban templates. Using this remote PowerShell script you can look up the item fields of any Sitecore item.
 ---
 
-In my blogpost [Sitecore 9.3 - create a custom theme for SXA using SXA CLI](https://www.sergevandenoever.nl/sitecore-93-custom-theme-with-SXA-CLI/) I described how to get started with SXA CLI. When configured as describe in the blog post, and with the PowerShell remoting enabled. it is easy to build utility scripts for things like getting the fields of a Sitecore item. This is very useful in writing rendering variants using the new Scriban templating language. Add the following script PowerShell script to the root of your theme folder with the name `get-itemfields.ps1`, and with the command:
+In my blogpost [Sitecore 9.3 - create a custom theme for SXA using SXA CLI](https://www.sergevandenoever.nl/sitecore-93-custom-theme-with-SXA-CLI/) I describe how to get started with SXA CLI. When configured as described in the blog post, and with the PowerShell remoting enabled, it is easy to build utility scripts for things like getting the fields of a Sitecore item. This is very useful in writing rendering variants using the new Scriban templating language. Add the following script PowerShell script to the root of your theme folder with the name `get-itemfields.ps1`, and with the command:
 
     .\get-itemfields.ps1 -itemPath /sitecore/home/content
 
