@@ -1,6 +1,6 @@
 ---
 title: Sitecore SXA theme investigation
-date: '2020-02-03'
+date: '2020-02-04'
 spoiler: To understand the way Sitecore Experience Accelerator (SXA) works, how components are built and theming is done you need to do some deep-diving. In this blog post I describe the best way to do this deep dive using the creative exchange.
 ---
 
