@@ -32,20 +32,24 @@ If you select **Preview** on the Home page in the Experience Editor, do a right-
 
 The head contains the css files loaded in the following order:
 
-- /-/media/Feature/Experience-Accelerator/Bootstrap-4/Bootstrap-4/Styles/optimized-min.css
-- /-/media/Base-Themes/Core-Libraries/styles/optimized-min.css/-/media/Base-Themes/Main-Theme/styles/optimized-min.css
-- /-/media/Themes/SergeTenant/CreativeExchangeExport/CreativeExchangeExportTheme/styles/pre-optimized-min.css 
+```
+/-/media/Feature/Experience-Accelerator/Bootstrap-4/Bootstrap-4/Styles/optimized-min.css
+/-/media/Base-Themes/Core-Libraries/styles/optimized-min.css/-/media/Base-Themes/Main-Theme/styles/optimized-min.css
+/-/media/Themes/SergeTenant/CreativeExchangeExport/CreativeExchangeExportTheme/styles/pre-optimized-min.css 
+```
 
 At the end of the body the following js files are loaded in the following order:
 
-- /-/media/Base-Themes/Core-Libraries/scripts/optimized-min.js
-- /-/media/Base-Themes/XA-API/Scripts/optimized-min.js
-- /-/media/Base-Themes/Main-Theme/scripts/optimized-min.js
-- /-/media/Base-Themes/Google-Maps-JS-Connector/Scripts/optimized-min.js
-- /-/media/Base-Themes/Maps/Scripts/optimized-min.js
-- /-/media/Base-Themes/SearchTheme/Scripts/optimized-min.js
-- /-/media/Base-Themes/Components-Theme/Scripts/optimized-min.js
-- /-/media/Base-Themes/Resolve-Conflicts/Scripts/optimized-min.js
+```
+/-/media/Base-Themes/Core-Libraries/scripts/optimized-min.js
+/-/media/Base-Themes/XA-API/Scripts/optimized-min.js
+/-/media/Base-Themes/Main-Theme/scripts/optimized-min.js
+/-/media/Base-Themes/Google-Maps-JS-Connector/Scripts/optimized-min.js
+/-/media/Base-Themes/Maps/Scripts/optimized-min.js
+/-/media/Base-Themes/SearchTheme/Scripts/optimized-min.js
+/-/media/Base-Themes/Components-Theme/Scripts/optimized-min.js
+/-/media/Base-Themes/Resolve-Conflicts/Scripts/optimized-min.js
+```
 
 Note that there is css file `pre-optimized-min.css` for your new created theme, but no js file `pre-optimized-min.js`. This file will appear when you add JavaScript files to your theme in the **scripts** folder.
 
@@ -63,102 +67,105 @@ Now navigate to the homepage of your website in an incognito browser window so n
 
 This results in the loading of the following CSS files:
 
-- /sitecore/shell/-/media/Feature/Experience-Accelerator/Bootstrap-4/Bootstrap-4/Styles/bootstrap-grid.css
-- /sitecore/shell/-/media/Base-Themes/Core-Libraries/styles/mediaelementplayer.css
-- /sitecore/shell/-/media/Base-Themes/Core-Libraries/styles/mediaelementplayer-legacy.css
-- /sitecore/shell/-/media/Base-Themes/Core-Libraries/styles/font-awesomemin.css
-- /sitecore/shell/-/media/Base-Themes/Core-Libraries/styles/fullcalendar.css
-- /sitecore/shell/-/media/Base-Themes/Core-Libraries/styles/jquerymCustomScrollbar.css
-- /sitecore/shell/-/media/Base-Themes/Core-Libraries/styles/jquery-ui.css
-- /sitecore/shell/-/media/Base-Themes/Main-Theme/styles/author.css
-- /sitecore/shell/-/media/Base-Themes/Main-Theme/styles/core.css
-- /sitecore/shell/-/media/Base-Themes/Main-Theme/styles/file-type-icons.css
-- /sitecore/shell/-/media/Base-Themes/Main-Theme/styles/grayscale-mode.css
-- /sitecore/shell/-/media/Base-Themes/Main-Theme/styles/reset.css
-- /sitecore/shell/-/media/Themes/SergeTenant/CreativeExchangeExport/CreativeExchangeExportTheme/styles/pre-optimized-min.css
+```
+/sitecore/shell/-/media/Feature/Experience-Accelerator/Bootstrap-4/Bootstrap-4/Styles/bootstrap-grid.css
+/sitecore/shell/-/media/Base-Themes/Core-Libraries/styles/mediaelementplayer.css
+/sitecore/shell/-/media/Base-Themes/Core-Libraries/styles/mediaelementplayer-legacy.css
+/sitecore/shell/-/media/Base-Themes/Core-Libraries/styles/font-awesomemin.css
+/sitecore/shell/-/media/Base-Themes/Core-Libraries/styles/fullcalendar.css
+/sitecore/shell/-/media/Base-Themes/Core-Libraries/styles/jquerymCustomScrollbar.css
+/sitecore/shell/-/media/Base-Themes/Core-Libraries/styles/jquery-ui.css
+/sitecore/shell/-/media/Base-Themes/Main-Theme/styles/author.css
+/sitecore/shell/-/media/Base-Themes/Main-Theme/styles/core.css
+/sitecore/shell/-/media/Base-Themes/Main-Theme/styles/file-type-icons.css
+/sitecore/shell/-/media/Base-Themes/Main-Theme/styles/grayscale-mode.css
+/sitecore/shell/-/media/Base-Themes/Main-Theme/styles/reset.css
+/sitecore/shell/-/media/Themes/SergeTenant/CreativeExchangeExport/CreativeExchangeExportTheme/styles/pre-optimized-min.css
+```
 
+and the following JavaScript files (I removed the `/creativeexchangeexport/-/media/Base-Themes/` prefix):
 
-and the following JavaScript files:
-
-- /creativeexchangeexport/-/media/Base-Themes/Core-Libraries/scripts/ie-origin-fix.js
-- /creativeexchangeexport/-/media/Base-Themes/Core-Libraries/scripts/xaquery.js
-- /creativeexchangeexport/-/media/Base-Themes/Core-Libraries/scripts/moment.js
-- /creativeexchangeexport/-/media/Base-Themes/Core-Libraries/scripts/lo-dash.js
-- /creativeexchangeexport/-/media/Base-Themes/Core-Libraries/scripts/modernizr.js
-- /creativeexchangeexport/-/media/Base-Themes/Core-Libraries/scripts/galleria-157.js
-- /creativeexchangeexport/-/media/Base-Themes/Core-Libraries/scripts/fullcalendar.js
-- /creativeexchangeexport/-/media/Base-Themes/Core-Libraries/scripts/gcal.js
-- /creativeexchangeexport/-/media/Base-Themes/Core-Libraries/scripts/jqueryuitouch-punchmin.js
-- /creativeexchangeexport/-/media/Base-Themes/Core-Libraries/scripts/hammer.js
-- /creativeexchangeexport/-/media/Base-Themes/Core-Libraries/scripts/backbone-min.js
-- /creativeexchangeexport/-/media/Base-Themes/Core-Libraries/scripts/typeahead.js
-- /creativeexchangeexport/-/media/Base-Themes/Core-Libraries/scripts/jquerymCustomScrollbar.js
-- /creativeexchangeexport/-/media/Base-Themes/Core-Libraries/scripts/flash-polyfill.js
-- /creativeexchangeexport/-/media/Base-Themes/Core-Libraries/scripts/mediaelement-and-player.js
-- /creativeexchangeexport/-/media/Base-Themes/Core-Libraries/scripts/dailymotion.js
-- /creativeexchangeexport/-/media/Base-Themes/Core-Libraries/scripts/facebook.js
-- /creativeexchangeexport/-/media/Base-Themes/Core-Libraries/scripts/soundcloud.js
-- /creativeexchangeexport/-/media/Base-Themes/Core-Libraries/scripts/twitch.js
-- /creativeexchangeexport/-/media/Base-Themes/Core-Libraries/scripts/vimeo.js
-- /creativeexchangeexport/-/media/Base-Themes/XA-API/Scripts/xa.js
-- /creativeexchangeexport/-/media/Base-Themes/Main-Theme/scripts/observer.js
-- /creativeexchangeexport/-/media/Base-Themes/Main-Theme/scripts/partial-design-highlight.js
-- /creativeexchangeexport/-/media/Base-Themes/Google-Maps-JS-Connector/Scripts/google-maps-connector.js
-- /creativeexchangeexport/-/media/Base-Themes/Maps/Scripts/component-location-service.js
-- /creativeexchangeexport/-/media/Base-Themes/Maps/Scripts/component-map.js
-- /creativeexchangeexport/-/media/Base-Themes/SearchTheme/Scripts/component-location-service.js
-- /creativeexchangeexport/-/media/Base-Themes/SearchTheme/Scripts/component-search.js
-- /creativeexchangeexport/-/media/Base-Themes/SearchTheme/Scripts/component-search-ajax.js
-- /creativeexchangeexport/-/media/Base-Themes/SearchTheme/Scripts/component-search-base-model.js
-- /creativeexchangeexport/-/media/Base-Themes/SearchTheme/Scripts/component-search-base-view.js
-- /creativeexchangeexport/-/media/Base-Themes/SearchTheme/Scripts/component-search-box.js
-- /creativeexchangeexport/-/media/Base-Themes/SearchTheme/Scripts/component-search-facet-data.js
-- /creativeexchangeexport/-/media/Base-Themes/SearchTheme/Scripts/component-search-facet-summary.js
-- /creativeexchangeexport/-/media/Base-Themes/SearchTheme/Scripts/component-search-facet-dropdown.js
-- /creativeexchangeexport/-/media/Base-Themes/SearchTheme/Scripts/component-search-facet-managed-range.js
-- /creativeexchangeexport/-/media/Base-Themes/SearchTheme/Scripts/component-search-facet-range-slider.js
-- /creativeexchangeexport/-/media/Base-Themes/SearchTheme/Scripts/component-search-facet-slider.js
-- /creativeexchangeexport/-/media/Base-Themes/SearchTheme/Scripts/component-search-load-more.js
-- /creativeexchangeexport/-/media/Base-Themes/SearchTheme/Scripts/component-search-location-filter.js
-- /creativeexchangeexport/-/media/Base-Themes/SearchTheme/Scripts/component-search-page-selector.js
-- /creativeexchangeexport/-/media/Base-Themes/SearchTheme/Scripts/component-search-page-size.js
-- /creativeexchangeexport/-/media/Base-Themes/SearchTheme/Scripts/component-search-parameters.js
-- /creativeexchangeexport/-/media/Base-Themes/SearchTheme/Scripts/component-search-query.js
-- /creativeexchangeexport/-/media/Base-Themes/SearchTheme/Scripts/component-search-radius-filter.js
-- /creativeexchangeexport/-/media/Base-Themes/SearchTheme/Scripts/component-search-results.js
-- /creativeexchangeexport/-/media/Base-Themes/SearchTheme/Scripts/component-search-results-count.js
-- /creativeexchangeexport/-/media/Base-Themes/SearchTheme/Scripts/component-search-results-filter.js
-- /creativeexchangeexport/-/media/Base-Themes/SearchTheme/Scripts/component-search-sort.js
-- /creativeexchangeexport/-/media/Base-Themes/SearchTheme/Scripts/component-search-url.js
-- /creativeexchangeexport/-/media/Base-Themes/SearchTheme/Scripts/component-search-variant-filter.js
-- /creativeexchangeexport/-/media/Base-Themes/SearchTheme/Scripts/component-search-service.js
-- /creativeexchangeexport/-/media/Base-Themes/SearchTheme/Scripts/component-search-router.js
-- /creativeexchangeexport/-/media/Base-Themes/SearchTheme/Scripts/component-search-facet-daterange.js
-- /creativeexchangeexport/-/media/Base-Themes/Components-Theme/Scripts/accessibility.js
-- /creativeexchangeexport/-/media/Base-Themes/Components-Theme/Scripts/component-accordions.js
-- /creativeexchangeexport/-/media/Base-Themes/Components-Theme/Scripts/component-archive.js
-- /creativeexchangeexport/-/media/Base-Themes/Components-Theme/Scripts/component-breadcrumb.js
-- /creativeexchangeexport/-/media/Base-Themes/Components-Theme/Scripts/component-carousel.js
-- /creativeexchangeexport/-/media/Base-Themes/Components-Theme/Scripts/component-container.js
-- /creativeexchangeexport/-/media/Base-Themes/Components-Theme/Scripts/component-disqus.js
-- /creativeexchangeexport/-/media/Base-Themes/Components-Theme/Scripts/component-facebook.js
-- /creativeexchangeexport/-/media/Base-Themes/Components-Theme/Scripts/component-flash.js
-- /creativeexchangeexport/-/media/Base-Themes/Components-Theme/Scripts/component-flip.js
-- /creativeexchangeexport/-/media/Base-Themes/Components-Theme/Scripts/component-fullcalendar.js
-- /creativeexchangeexport/-/media/Base-Themes/Components-Theme/Scripts/component-galleria.js
-- /creativeexchangeexport/-/media/Base-Themes/Components-Theme/Scripts/component-language-selector.js
-- /creativeexchangeexport/-/media/Base-Themes/Components-Theme/Scripts/component-navigation.js
-- /creativeexchangeexport/-/media/Base-Themes/Components-Theme/Scripts/component-overlay.js
-- /creativeexchangeexport/-/media/Base-Themes/Components-Theme/Scripts/component-snippet.js
-- /creativeexchangeexport/-/media/Base-Themes/Components-Theme/Scripts/component-social.js
-- /creativeexchangeexport/-/media/Base-Themes/Components-Theme/Scripts/component-tabs.js
-- /creativeexchangeexport/-/media/Base-Themes/Components-Theme/Scripts/component-toggle.js
-- /creativeexchangeexport/-/media/Base-Themes/Components-Theme/Scripts/component-video.js
-- /creativeexchangeexport/-/media/Base-Themes/Components-Theme/Scripts/component-video-playlist.js
-- /creativeexchangeexport/-/media/Base-Themes/Components-Theme/Scripts/details-polyfill.js
-- /creativeexchangeexport/-/media/Base-Themes/Components-Theme/Scripts/fixheight.js
-- /creativeexchangeexport/-/media/Base-Themes/Components-Theme/Scripts/search-fixheight.js
-- /creativeexchangeexport/-/media/Base-Themes/Resolve-Conflicts/Scripts/resolveconflicts.js
+```
+Core-Libraries/scripts/ie-origin-fix.js
+Core-Libraries/scripts/xaquery.js
+Core-Libraries/scripts/moment.js
+Core-Libraries/scripts/lo-dash.js
+Core-Libraries/scripts/modernizr.js
+Core-Libraries/scripts/galleria-157.js
+Core-Libraries/scripts/fullcalendar.js
+Core-Libraries/scripts/gcal.js
+Core-Libraries/scripts/jqueryuitouch-punchmin.js
+Core-Libraries/scripts/hammer.js
+Core-Libraries/scripts/backbone-min.js
+Core-Libraries/scripts/typeahead.js
+Core-Libraries/scripts/jquerymCustomScrollbar.js
+Core-Libraries/scripts/flash-polyfill.js
+Core-Libraries/scripts/mediaelement-and-player.js
+Core-Libraries/scripts/dailymotion.js
+Core-Libraries/scripts/facebook.js
+Core-Libraries/scripts/soundcloud.js
+Core-Libraries/scripts/twitch.js
+Core-Libraries/scripts/vimeo.js
+XA-API/Scripts/xa.js
+Main-Theme/scripts/observer.js
+Main-Theme/scripts/partial-design-highlight.js
+Google-Maps-JS-Connector/Scripts/google-maps-connector.js
+Maps/Scripts/component-location-service.js
+Maps/Scripts/component-map.js
+SearchTheme/Scripts/component-location-service.js
+SearchTheme/Scripts/component-search.js
+SearchTheme/Scripts/component-search-ajax.js
+SearchTheme/Scripts/component-search-base-model.js
+SearchTheme/Scripts/component-search-base-view.js
+SearchTheme/Scripts/component-search-box.js
+SearchTheme/Scripts/component-search-facet-data.js
+SearchTheme/Scripts/component-search-facet-summary.js
+SearchTheme/Scripts/component-search-facet-dropdown.js
+SearchTheme/Scripts/component-search-facet-managed-range.js
+SearchTheme/Scripts/component-search-facet-range-slider.js
+SearchTheme/Scripts/component-search-facet-slider.js
+SearchTheme/Scripts/component-search-load-more.js
+SearchTheme/Scripts/component-search-location-filter.js
+SearchTheme/Scripts/component-search-page-selector.js
+SearchTheme/Scripts/component-search-page-size.js
+SearchTheme/Scripts/component-search-parameters.js
+SearchTheme/Scripts/component-search-query.js
+SearchTheme/Scripts/component-search-radius-filter.js
+SearchTheme/Scripts/component-search-results.js
+SearchTheme/Scripts/component-search-results-count.js
+SearchTheme/Scripts/component-search-results-filter.js
+SearchTheme/Scripts/component-search-sort.js
+SearchTheme/Scripts/component-search-url.js
+SearchTheme/Scripts/component-search-variant-filter.js
+SearchTheme/Scripts/component-search-service.js
+SearchTheme/Scripts/component-search-router.js
+SearchTheme/Scripts/component-search-facet-daterange.js
+Components-Theme/Scripts/accessibility.js
+Components-Theme/Scripts/component-accordions.js
+Components-Theme/Scripts/component-archive.js
+Components-Theme/Scripts/component-breadcrumb.js
+Components-Theme/Scripts/component-carousel.js
+Components-Theme/Scripts/component-container.js
+Components-Theme/Scripts/component-disqus.js
+Components-Theme/Scripts/component-facebook.js
+Components-Theme/Scripts/component-flash.js
+Components-Theme/Scripts/component-flip.js
+Components-Theme/Scripts/component-fullcalendar.js
+Components-Theme/Scripts/component-galleria.js
+Components-Theme/Scripts/component-language-selector.js
+Components-Theme/Scripts/component-navigation.js
+Components-Theme/Scripts/component-overlay.js
+Components-Theme/Scripts/component-snippet.js
+Components-Theme/Scripts/component-social.js
+Components-Theme/Scripts/component-tabs.js
+Components-Theme/Scripts/component-toggle.js
+Components-Theme/Scripts/component-video.js
+Components-Theme/Scripts/component-video-playlist.js
+Components-Theme/Scripts/details-polyfill.js
+Components-Theme/Scripts/fixheight.js
+Components-Theme/Scripts/search-fixheight.js
+Resolve-Conflicts/Scripts/resolveconflicts.js
+```
 
 Some further investigations reveals that the file `xaquery.js` contains **jQuery** version 3.1.1. Also interesting is that libraries like **knockout**, **moment** (version 2.20.1) and **lodash** (version 1.8.3) are available, amongst many others.
 
