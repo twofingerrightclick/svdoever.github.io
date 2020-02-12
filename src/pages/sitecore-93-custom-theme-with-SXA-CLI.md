@@ -3,6 +3,7 @@ title: Sitecore 9.3 - create a custom theme for SXA using SXA CLI
 date: '2019-12-30'
 spoiler: Manage your SXA 9.3 theme under source control instead of as artifacts under the `Media Library/Themes` folder using the SXA CLI - make your front-end developers happy!  
 ---
+_breaking news: [A set of enhancements on the Sitecore SXA CLI to support team development and the usage of TypeScript](https://github.com/macaw-interactive/SXACLI-enhancements)_
 
 # Why Sitecore 9.3 SXA CLI?
 
