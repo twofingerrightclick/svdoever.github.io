@@ -21,6 +21,24 @@ After some puzzling I got the SXA CLI working on Windows 10. After I wrote the i
 
 ## Getting the correct version of NodeJS installed
 
+_Important update_
+
+Due to a solution described by [Sitecore Snippets](https://sitecoresnippets.blogspot.com/2020/01/sitecore-sxa-cli-tips-tricks.html) I am now running smoothly using NodeJS version 13.5.0! The solution is to add a file `npm-shrinkwrap.json` with the following contents:
+
+```json
+{
+  "dependencies": {
+    "graceful-fs": {
+      "version": "4.2.2"
+    }
+  }
+}
+```
+
+This has to be done before running `npm install`. I first removed my existing `node_modules` folder using `npx rimraf node_modules`, and after that executed the `npm install` command. The install rewrites the `npm-shrinkwrap.json` file. See https://docs.npmjs.com/configuring-npm/shrinkwrap-json.html for more information.
+
+Note that the rest of this section is obsolete.
+
 The first requirement for the SXA CLI is NodeJS version 11.15.0 (the latest 11 version) or lower because an error occurs when using the 12+ version of NodeJS.
 
 What I did was install the [Node Version Switcher](https://github.com/jasongin/nvs), because I want to keep working with newer versions of NodeJS on other projects.
