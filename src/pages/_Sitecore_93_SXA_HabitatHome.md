@@ -410,3 +410,5 @@ Rebuild-Test-Index                   00:00:00.0116861
 Total:                               00:07:23.4624796
 C:\projects\Sitecore.HabitatHome.Platform [master ≡ +0 ~1 -0 !]>
 ```
+
+See the blog post [Sitecore XP 9.3.0 and SXA 9.3.0 Demo – Habitat Home – Setup Guide](https://buoctrenmay.com/2019/12/23/sitecore-xp-9-3-0-and-sxa-9-3-0-demo-habitat-home-setup-guide/) for more detaiuls on how to get Habitat Home running with Docker.
