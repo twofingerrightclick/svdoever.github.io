@@ -26,7 +26,9 @@ I had to do some, probably for most Sitecore devs obvious, steps that I will doc
   Sitecore-InstallConfiguration_1581641373.txt:710:[SitecoreXP0_CreateWebsite]:[Create] habitathomesc.dev.local
   Sitecore-InstallConfiguration_1585527079.txt:725:[SitecoreXP0_CreateWebsite]:[Create] sxastyleguidesc.dev.local
   ```
-6. Run the uninstall script using `.\Sitecore-Uninstall-SIA.ps1` to uninstall the latest installed Sitecore site, or with `-SIALogFIle "$env:USERPROFILE\sitecore.installassistant\Sitecore-InstallConfiguration_1585527079.txt"` to uninstall a specific Sitecore site
+6. Run the uninstall script using `.\Sitecore-Uninstall-SIA.ps1` to uninstall the latest installed Sitecore site, or with `-SIALogFile "$env:USERPROFILE\sitecore.installassistant\Sitecore-InstallConfiguration_1585527079.txt"` to uninstall a specific Sitecore site
 7. Have your **SQLServer** (`localhost` in my case), **SqlAdminUser** (`sa` in my case), and **SqlAdminPassword** ready, make sure you are uninstalling the right site and GO!
 
 Please do this at your own risk:-)
+
+Note that you can remove the SIA log file and corresponding files with the same number after you successfully removed your site. Don't remove the remaining log files, you need them for new uninstalls.
