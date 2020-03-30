@@ -1,7 +1,7 @@
 ---
 title: Sitecore 9.3 - uninstall site installed with Sitecore Install Assistant
 date: '2020-03-30'
-spoiler: If you are still one of those losers like me that install their Sitecore 9.3 on their local machine with the Sitecore Install Assistant (SIA) instead of in a fancy set of docker containers using Docker Compose, and if you are an even bigger loser (like me) that you mess up your Sitecore installation or even worse: forgot your Sitecore admin password, welcome to this life-saver post to uninstall your installation in seconds!
+spoiler: If you are still one of those losers like me that install their Sitecore 9.3 on their local machine with the Sitecore Install Assistant (SIA) instead of in a fancy set of docker containers using Docker Compose, and if you are an even bigger loser (like me) that you mess up your Sitecore installation or even worse forgot your Sitecore admin password, welcome to this life-saver post to uninstall your installation in seconds!
 ---
 
 There is a great post by [Scott Gillis of The Code Attic](https://thecodeattic.wordpress.com/about/), a Sitecore Technology MVP, where he provides a great uninstall script for SharePoint 9.3 sites installed with the Sitecore Install Assistant. The post has the humble name [Sitecore 9.3 Uninstall Script](https://thecodeattic.wordpress.com/2019/12/17/sitecore-9-3-uninstall-script/), but it saved my life after some stupid mistakes like messing up my Sitecore installation and forgetting my admin password.
