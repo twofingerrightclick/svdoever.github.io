@@ -25,4 +25,4 @@ But there were still some things "sub-optimal":
 
 So time for a big make-over! Welcome to [SXA Umbrella](https://github.com/macaw-interactive/sxa-umbrella) - *Project structure and tooling to optimize front-end team development workflow in any Sitecore SXA project*. The Github repository contains a lot of documentation and a getting started guide. Please let me know if it works for you or if you miss features.
 
-Happy front-end coding - the right way!
+Happy SXA front-end coding - the right way!

@@ -7,7 +7,9 @@
   "bugs": {
     "url": "https://github.com/svdoever/serge-weblog/issues"
   },
-  "engines" : { "node" : ">=10.0.0" },
+  "engines": {
+    "node": ">=10.0.0"
+  },
   "dependencies": {
     "gatsby": "^2.13.60",
     "gatsby-plugin-feed": "^2.3.6",
