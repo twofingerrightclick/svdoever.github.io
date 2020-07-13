@@ -19,7 +19,7 @@ The Sitecore documentation and the Sitecore UI is not consistent in terminology.
 
 I use the term *rendering instance* for a rendering added to a page.
 
-In the specified paths in the cheat sheet I use "replacements tokens" for variable elements in the paths. The following tokens are used:
+In the specified paths in the cheat sheet I use identifiers for elements in the paths. The following identifiers are used:
 
 - `<tenant>` - the name of the tenant
 - `<site>` - the name of the site
@@ -102,6 +102,10 @@ SXA has concept of **tenants** and **sites**:
   - `Twitter Apps` - Configure Twitter credentials
     <br/>`Insert > Twitter App` - Fields: `Application:Consumer Key`, `Application:Consumer Secret`, ...
 
+# Setting up a new tenant and site
+A new tenant [TODO]
+
+## New tenant
 New tenant creates template folder `/sitecore/Templates/Project/<tenant>` with sub-items specifying the selected base templates (Field: `Data:Base template`):
 - `Home` - Page, Home
 - `Page` - Page, _HasValidUrlName, _Navigable, _Page Search Scope, _Searchable, _Custom Metadata, _OpenGraph Metadata, _Seo Metadata, _Sitemap, _Twitter Metadata, _Sticky Note, _Taggable, _Local Data Link, _Designable, _Styleable
@@ -114,7 +118,25 @@ New tenant creates template folder `/sitecore/Templates/Project/<tenant>` with s
 - `Settings` - Settings, _Composite Theme, _Error Handling, _Search Criteria, _Favicon, _Robots Content, _SitemapSettings, _Datasource Behaviour, _Editing Theme, _Grid Mapping, _CustomRenderingViewPath, _Compatible themes
 - `Site` - Site, _Forms Folder Location, _Role Domain, _Modules
 - `Tenant` Tenant, _Forms Folder Location, _Role Domain, _Modules  
-  
+
+## New site
+[TODO]
+
+## A site and its theme
+When a site has no theme assigned it will fallback to the **Wireframe** theme.
+
+Assign theme:
+- Experience Editor: select **Experience Accelerator** tab, click **Theme**, select for **Default** the required theme
+- Content Editor: On `/sitecore/content/<tenant>/<site>/Presentation/Page Designs` - field `Styling:Theme` set value of `Default` to the required theme. It is also possible to create additional values 
+
+If your theme styles and scripts are preoptimized (advised - use [SXA Umbrella](https://github.com/macaw-interactive/sxa-umbrella)), set on `/sitecore/content/<tenant>/<site>/Presentation/Page Designs`:
+- field `Asset Optimization: Styles Optimizing Enabled` to `No`
+- field `Asset Optimization: Scripts Optimizing Enabled` to `No`
+
+on `/sitecore/content/<tenant>/<site>/Presentation/Page Designs` - field `Designing:Template to Design Mapping` [TODO]
+
+
+- 
 ## Extending SXA
 
 Create SXA extensions in the `/sitecore/Templates` folder using custom items outside standard SXA sections.
@@ -128,7 +150,7 @@ Those layers you will find back in everything Sitecore does, that is why you see
 - [project](https://helix.sitecore.net/principles/architecture-principles/layers.html#project-layer) - context of the solution
 
 ### Create a new module
-A module is selectable when scaffolding a new tenant or site (or can be added afterward).
+A module is selectable when scaffolding a new tenant or site (or can be added afterward). A module is also required to add new renderings.
 
 Module can be created at tenant and/or site level.
 
@@ -171,14 +193,20 @@ Considerations for new rendering: *Rendering Parameters* vs *Data Source* - can 
   - reusable over multiple rendering instances on multiple pages
   - supports personalization and A/B testing
   
-New rendering can be created in multiple ways:
-- On `/sitecore/Layout/Renderings/<layer>/<module>` select `Insert > Component` to start a wizard to create a new component (no further details - a lot of manual configuration)
-- Clone an existing rendering - preferred approach, and described below
+New rendering can be created in two ways:
+1. On `/sitecore/Layout/Renderings/<layer>/<module>` select `Insert > Component` to start a wizard to create a new component (*no further details - a lot of manual configuration*)
+2. Clone an existing rendering - preferred approach, and described below
 
-- **Rendering Parameters & Data Source**: clone the **Promo** rendering `/sitecore/layout/Renderings/Feature/Experience Accelerator/Page Content/Promo` using `Scripts > Clone Rendering`
-- **Rendering Parameters** only: clone the **Page Content** rendering `/sitecore/layout/Renderings/Feature/Experience Accelerator/Page Content/Page Content` using `Scripts > Clone Rendering`
+#### Clone a rendering
+If you need a rendering with **Rendering Parameters & Data Source**: 
+
+* clone the **Promo** rendering `/sitecore/layout/Renderings/Feature/Experience Accelerator/Page Content/Promo` using `Scripts > Clone Rendering`
+
+If you need a rendering with **Rendering Parameters** only:
+
+* clone the **Page Content** rendering `/sitecore/layout/Renderings/Feature/Experience Accelerator/Page Content/Page Content` using `Scripts > Clone Rendering`
   
-Make the following selections:
+In the **Clone rendering** wizard make the following selections:
 
 **GENERAL tab:**
 - New rendering name: `<rendering>`
@@ -276,3 +304,6 @@ When cloning the **Promo** rendering (to get both **Rendering Parameters & Data 
 ### Add rendering to toolbox
 
 The Experience Editor contains a toolbox with the available renderings organized in sections. The sections and their renderings are managed per site at the following location `/sitecore/content/<tenant>/<site>/Presentation/Available Renderings`. Use `Insert > Available Renderings` to create a new section. On a section edit the field `Data:Renderings` to add/remove renderings in the section.
+
+### Add data folder for rendering data sources
+On `/sitecore/content/<layer>/<module>` select `Insert > Insert from template` to create a new data folder for items for your new component. 
