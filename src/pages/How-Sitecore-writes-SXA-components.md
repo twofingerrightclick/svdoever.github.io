@@ -3,6 +3,8 @@ title: How the Sitecore SXA team writes SXA components
 date: '2020-07-13'
 spoiler: When you look at the out-of-the-box Sitecore SXA components you can see that the Sitecore SXA team writes most SXA components using jQuery and a small utility API called XA (eXperience Accelerator). In this post, I will dissect how Sitecore writes components and I will show you how to write a simple clock component in TypeScript using the XA API.
 ---
+*When you look at the out-of-the-box Sitecore SXA components you can see that the Sitecore SXA team writes most SXA components using jQuery and a small utility API called XA (eXperience Accelerator). In this post, I will dissect how Sitecore writes components and I will show you how to write a simple clock component in TypeScript using the XA API.*
+
 ## Introduction
 If you look at the HTML code of an SXA page you will see something like the following scripts loaded at the end of the page body:
 

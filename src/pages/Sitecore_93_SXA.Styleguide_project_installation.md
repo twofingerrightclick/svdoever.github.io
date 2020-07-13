@@ -3,6 +3,7 @@ title: Installing the Sitecore 9.3 SXA.Styleguide project
 date: '2020-05-26'
 spoiler: Mark van Aalst provides a great "no C# code" SXA sample project with the SXA.Styleguide project available on Github. In this post I describe how to get this project up and running on your local Sitecore 9.3 installation.
 ---
+*Mark van Aalst provides a great "no C# code" SXA sample project with the SXA.Styleguide project available on Github. In this post I describe how to get this project up and running on your local Sitecore 9.3 installation.*
 
 When you want to install the [SXA.Styleguide](https://github.com/markvanaalst/SXA.Styleguide) by Mark van Aalst, and you don't want to do it using Docker, follow the following steps:
 

@@ -3,6 +3,7 @@ title: Umbrella for Sitecore JSS
 date: '2019-04-04'
 spoiler: Umbrella for Sitecore JSS is our vision on how a website should be developed and hosted while using the JSS SDK and Sitecore as a headless CMS.
 ---
+*Umbrella for Sitecore JSS is our vision on how a website should be developed and hosted while using the JSS SDK and Sitecore as a headless CMS.*
 
 I'm sitting at the keynote of the Sitecore [SUGCON Europe 2019](https://www.sugcon.eu/) conference listening to the opening keynote by Donovan Brown from Microsoft. Donovan Brown is a Senior DevOps Program Manager on Microsoft’s US Developer Division team and is telling about Azure DevOps. A perfect time to write a blog post on our open source Sitecore JSS starter project we have been working on for the last months.
 
