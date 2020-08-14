@@ -170,7 +170,7 @@ I created three sample address card items with the following data:
 
 For the images I created a folder `` as shown below. From the datasource items I browsed to these images to link them to the address cards:
 
-![Media People forlder for images](Sitecore-93-SXA-custom-rendering/Media%20People.png)
+![Media People folder for images](Sitecore-93-SXA-custom-rendering/Media-People.png)
 
 I provided the above data because I know how much work it is to find good sample data. I used this same dataset in a web components experiment that can be found [here](https://mango-river-020e4d803.azurestaticapps.net/).
 
@@ -181,9 +181,9 @@ We can accomplish this by creating a *Rendering Variant*.
 Right-click on `/sitecore/content/DigitalMarketingPlatform/ComponentLibrary/Presentation/Rendering Variants` (path may vary for your site), and select `Insert > Variants`. As name for the item use *Address Card*, the name of your rendering.
 
 On this new created rendering variant we can add *Variant Definitions*. These are one or more definitions on how to visualize our rendering.
-Right-click on `/sitecore/content/DigitalMarketingPlatform/ComponentLibrary/Presentation/Rendering Variants/Address Card` (path may vary for your site), and select `Insert > Variant Definition`. As name for the item use *Plain*, the name of variant definition. In future blog posts I will explain how to create more advanced versions of the address card. This whole process and all configuration options on the rendering variant is perfectly explained in the Sitecore documentation [Create a rendering variant](https://doc.sitecore.com/developers/sxa/93/sitecore-experience-accelerator/en/create-a-rendering-variant.html).
+Right-click on `/sitecore/content/DigitalMarketingPlatform/ComponentLibrary/Presentation/Rendering Variants/Address Card` (path may vary for your site), and select `Insert > Variant Definition`. As a name for the item use *Plain*, the name of a variant definition. In future blog posts I will explain how to create more advanced versions of the address card. This whole process and all configuration options on the rendering variant is perfectly explained in the Sitecore documentation [Create a rendering variant](https://doc.sitecore.com/developers/sxa/93/sitecore-experience-accelerator/en/create-a-rendering-variant.html).
 
-Although Sitecore provides many ways to present visualization of data within a rendering variant, in my opinion [Scriban templates](https://doc.sitecore.com/developers/sxa/93/sitecore-experience-accelerator/en/scriban-templates.html) should be used where possible. Scriban is a more developer-oriented approach where you write code in the Scriban template language that makes most other options obsolete. In my experience rendering variants are created by developers who want to work in a structured way and use versioning and source-control, instead of clicking together Sitecore items for every HTML element they want to render. 
+Although Sitecore provides many ways to present a visualization of data within a rendering variant, in my opinion [Scriban templates](https://doc.sitecore.com/developers/sxa/93/sitecore-experience-accelerator/en/scriban-templates.html) should be used where possible. Scriban is a more developer-oriented approach where you write code in the Scriban template language that makes most other options obsolete. In my experience rendering variants are created by developers who want to work in a structured way and use versioning and source-control, instead of clicking together Sitecore items for every HTML element they want to render. 
 
 For more information on working in a structured way with Scriban supporting real development tools like Visual Studio Code, source-control and team development have a look at the following projects:
 
