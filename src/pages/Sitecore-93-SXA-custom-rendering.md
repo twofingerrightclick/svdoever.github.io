@@ -37,9 +37,9 @@ Execute the following steps to create a new module on feature level:
 
 We are now ready to add the newly created (empty) module to our SXA Site.
 
-### Create an SXA site for testing
+### Create a SXA site for testing
 
-When you don't have an SXA Site available to test out the new SXA module, create an SXA Tenant **DigitalMarketingPlatform** with all modules, and under his tenant an SXA Site **ComponentLibrary** on the virtual folder `/ComponentLibrary`, all modules including the newly created **Acme Components** module, the theme **Wireframe** (for now) and the grid **Bootstrap 4**.
+When you don't have a SXA Site available to test out the new SXA module, create a SXA Tenant **DigitalMarketingPlatform** with all modules, and under his tenant a SXA Site **ComponentLibrary** on the virtual folder `/ComponentLibrary`, all modules including the newly created **Acme Components** module, the theme **Wireframe** (for now) and the grid **Bootstrap 4**.
 
 Now we have our environment ready to add a new rendering.
 
