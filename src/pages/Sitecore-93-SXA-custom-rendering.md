@@ -1,5 +1,5 @@
 ---
-title: Creating Sitecore SXA 9.3+ custom renderings
+title: Creating Sitecore SXA 9.3+ renderings without C#
 date: '2020-08-13'
 spoiler: Creating custom renderings can be done completely without adding C# code. In this post, we explore how to create a new SXA Toolbox section and a new rendering through the Sitecore web interface.
 ---
