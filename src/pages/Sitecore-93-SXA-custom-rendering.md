@@ -144,15 +144,15 @@ The next step is to make our new rendering available to the Experience Editor to
 
 The Experience Editor toolbox is completely customizable per SXA site. Right-click on `/sitecore/content/DigitalMarketingPlatform/ComponentLibrary/Presentation/Available Renderings` (path may vary for your site), and select `Insert > Available Renderings`. As name for the new item use `Acme Components`, the name of the new toolbox section. The new created item contains a section `Data:Renderings` with an `Edit` link. When you click this edit link an item sector pops up that enables you to select the `Address Card` rendering from `Renderings/Feature/Acme Components/Address Card`.
 
-![Experience editor toolbox](Sitecore-93-SXA-custom-rendering/Experience%20editor%20toolbox.png)
+![Experience editor toolbox](Sitecore-93-SXA-custom-rendering/Experience-editor-toolbox.png)
 
 The new rendering is now draggable onto the page, and when no datasource item is connected yet has a fallback rendering of the name of the rendering, e.g. `[Address Card]:
 
-![Address Card on page](Sitecore-93-SXA-custom-rendering/Address%20Card%20rendering%20in%20Experience%20Editor.png)
+![Address Card on page](Sitecore-93-SXA-custom-rendering/Address-Card-rendering-in-Experience-Editor.png)
 
 When we select `More > Edit component properties` the created rendering parameters are available:
 
-![Address Card - rendering parameters](Sitecore-93-SXA-custom-rendering/Address%20Card%20-%20Control%20properties.png)
+![Address Card - rendering parameters](Sitecore-93-SXA-custom-rendering/AddressCard-Control-properties.png)
 
 ### Add an Address Cards datasource folder
 When we add Address Cards to our pages, we need a folder under the SXA site to hold the datasource items, and create some sample items.
@@ -164,11 +164,11 @@ I created three sample address card items with the following data:
 
 | Name | Image | Address | Latiture | Longitude | Phonenumber |
 | - | - | - | - | - | - |
-| Amy Edwards | ![](Sitecore-93-SXA-custom-rendering/Amy%20Edwards.jpg) | 1212 Omaha Dr, Montgomery, AL 36105, United States | 32.1479602 | -85.0162703 | +1 334-280-0960 |
-| Ellen May | ![](Sitecore-93-SXA-custom-rendering/Ellen%20May.jpg) | 610 Valley View Ln, Farmers Branch, TX 75234, United States | 32.923308 | -96.892596 | +1 972-919-2620 |
-| Vanessa Adams | ![](Sitecore-93-SXA-custom-rendering/Vanessa%20Adams.jpg) | 1118 W Fullerton Ave, Chicago, IL 60614, United States | 41.9243558 | 87.657001 | +1 773-472-4873 |
+| Amy Edwards | ![](Sitecore-93-SXA-custom-rendering/Amy-Edwards.jpg) | 1212 Omaha Dr, Montgomery, AL 36105, United States | 32.1479602 | -85.0162703 | +1 334-280-0960 |
+| Ellen May | ![](Sitecore-93-SXA-custom-rendering/Ellen-May.jpg) | 610 Valley View Ln, Farmers Branch, TX 75234, United States | 32.923308 | -96.892596 | +1 972-919-2620 |
+| Vanessa Adams | ![](Sitecore-93-SXA-custom-rendering/Vanessa-Adams.jpg) | 1118 W Fullerton Ave, Chicago, IL 60614, United States | 41.9243558 | 87.657001 | +1 773-472-4873 |
 
-For the images I created a folder `` as shown below. From the datasource items I browsed to these images to link them to the address cards:
+For the images I created a folder `Media People` as shown below. From the datasource items I browsed to these images to link them to the address cards:
 
 ![Media People folder for images](Sitecore-93-SXA-custom-rendering/Media-People.png)
 
@@ -214,7 +214,7 @@ On the rendering variant Scriban item set the `VariantDetails:Template` field to
 
 This will result in the following component:
 
-![Address Card - content editable](Sitecore-93-SXA-custom-rendering/Address%20Card%20-%20content%20editable.png)
+![Address Card - content editable](Sitecore-93-SXA-custom-rendering/Address-Card-content-editable.png)
 
 The fields in the card are content-editable.
 
@@ -222,7 +222,9 @@ As you can see in the Scriban code above, rendering parameters can be read throu
 
 When not in the Experience editor the result will be as follows when the `PhoneNumber is link` checkbox is enabled:
 
-![Address Card - phonenumber is link](Sitecore-93-SXA-custom-rendering/Address%20Card%20-%20phonenumber%20is%20link.png)
+![Address Card - phonenumber is link](Sitecore-93-SXA-custom-rendering/Address-Card-phonenumber-is-link.png)
+
+Note that the telephone number is a link that tries to dial-out on click.
 
 ### Division of work: Sitecore developer, Sitecore specialist, Front-end developer
 Given a Sitecore project we see multiple roles involved like backend developers for the integration with other systems, Sitecore developers for extending Sitecore, Sitecore specialists for configuring Sitecore and front-end developers to create the HTML, CSS and JavaScript that makes the websites shine and fly. And this list does not yet include the search specialist, infrastructure specialist, support engineer, cloud genius, business consultant, content architect, UX specialist, SEO/SEA specialist and designer!
