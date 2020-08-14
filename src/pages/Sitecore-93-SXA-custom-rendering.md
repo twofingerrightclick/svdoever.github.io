@@ -20,13 +20,13 @@ Without writing any C#.
 I have no idea why this approach is not described in the Sitecore documentation. If you look at the documentation [Walkthrough: Building a simple rendering](https://doc.sitecore.com/developers/sxa/93/sitecore-experience-accelerator/en/walkthrough--building-a-simple-rendering.html) you will see that Sitecore still describes the usage of a lot of C# code and plumbing. 
 
 ### Creating a new SXA module
-For the new SXA Toolbox section we create a correspoding new SXA module so it can be enabled on a site and will not lead to collision in a Sitecore upgrade. An SXA module can be created in the *Foundation* or *Feature* layer. This structuring comes from the [Sitecore Helix solution architecture](https://helix.sitecore.net/introduction/index.html), a set of conventions used in Sitecore applications to provide a modular architecture which helps you manage dependencies. In this solution architecture Sitecore Helix defines three layers:
+For the new SXA Toolbox section we create a corresponding new SXA module so it can be enabled on a site and will not lead to a collision in a Sitecore upgrade. A SXA module can be created in the *Foundation* or *Feature* layer. This structuring comes from the [Sitecore Helix solution architecture](https://helix.sitecore.net/introduction/index.html), a set of conventions used in Sitecore applications to provide a modular architecture which helps you manage dependencies. In this solution architecture Sitecore Helix defines three layers:
 
 ![Helix layers](https://helix.sitecore.net/_images/image7.png)
 
 Those layers you will find back in everything Sitecore does. That is why you see folders named [foundation](https://helix.sitecore.net/principles/architecture-principles/layers.html#foundation-layer), [feature](https://helix.sitecore.net/principles/architecture-principles/layers.html#feature-layer) and [project](https://helix.sitecore.net/principles/architecture-principles/layers.html#project-layer) all over the place.
 
-For our case it seems best to create an SXA module on feature level. See the [Create a new SXA module](https://doc.sitecore.com/developers/sxa/93/sitecore-experience-accelerator/en/create-a-new-sxa-module.html) section of the Sitecore documentation for more details on the steps required to create a new Sitecore SXA module. In this example we will name our SXA module _Acme Components_, named after the [fictional Looney Tunes company](https://en.wikipedia.org/wiki/Acme_Corporation).
+For our case it seems best to create a SXA module on feature level. See the [Create a new SXA module](https://doc.sitecore.com/developers/sxa/93/sitecore-experience-accelerator/en/create-a-new-sxa-module.html) section of the Sitecore documentation for more details on the steps required to create a new Sitecore SXA module. In this example we will name our SXA module _Acme Components_, named after the [fictional Looney Tunes company](https://en.wikipedia.org/wiki/Acme_Corporation).
 
 Execute the following steps to create a new module on feature level:
 
@@ -43,7 +43,7 @@ When you don't have an SXA Site available to test out the new SXA module, create
 
 Now we have our environment ready to add a new rendering.
 
-When you already have an SXA site, add the *Acme Modules* module to the site as described in the Sitecore documentation [Add a module to an existing tenant or site](https://doc.sitecore.com/developers/sxa/93/sitecore-experience-accelerator/en/add-a-module-to-an-existing-tenant-or-site.html).
+When you already have a SXA site, add the *Acme Modules* module to the site as described in the Sitecore documentation [Add a module to an existing tenant or site](https://doc.sitecore.com/developers/sxa/93/sitecore-experience-accelerator/en/add-a-module-to-an-existing-tenant-or-site.html).
 
 ### Add a custom rendering
 
@@ -63,20 +63,24 @@ In this example we will create a rendering for an *Address Card* with rendering 
 - Right-click on `/sitecore/layout/Renderings/Feature/Experience Accelerator/Page Content/Promo` and select `Scripts > Clone Rendering`
 - In the **Create derivative rendering** window make the following selections:
   - **General** tab:
+
     | Parameter | Value | Explanation |
     | - | - | - |
     | New rendering name | Address Card | The name of the Rendering |
     | Add to module | Feature/Acme Components | The new module we created to manage our components |
     | Rendering CSS class | addresscard | A CSS class for the component, can be used as a hook to connect functionality to the DOM elements of the component |
   - **Parameters** tab:
+  
     | Parameter | Value | Explanation |
     | - | - | - |
     | Rendering Parameters | Make a copy of the original rendering parameters | We want to be able to create our own set of rendering parameters, and not use the rendering parameters of the Promo rendering |
   - **Datasource** tab:
+  
     | Parameter | Value | Explanation |
     | - | - | - |
     | Datasource | Make a copy of original datasource | We want to be able to create our own datasource, and not use the datasource of the Promo rendering |
   - **View** tab:
+  
     | Parameter | Value | Explanation |
     | - | - | - |
     | View | Use original MVC view file | (unmodified) The Promo view file is a very generic view file and contains everything we need for our new rendering. The only "Promo" specific part is a fallback to a "promo" CSS class if not defined, but we specified the "addresscard" CSS class |
@@ -106,6 +110,7 @@ After:
 Rendering datasource configuration summary:
 
 Section name: **Address Card**
+
 | Name | Type | Source |
 | - | - | - |
 | Name | Single-Line Text | |
@@ -126,12 +131,13 @@ To configure the parameters, open the `Builder` tab of the item `/sitecore/templ
 Rendering parameters configuration summary:
 
 Section name: **Address Card**
+
 | Name | Type | Source |
 | - | - | - |
 | AddressIsLink | Checkbox | |
 | PhonenumberIsLink | Checkbox | |
 
-Afterwards I changed the title on the Address Card template field items to `Address is link` and `Phonenumber is link`, so the internal names are without spaces but the display names are with spaces.
+Afterward, I changed the title on the Address Card template field items to `Address is link` and `Phonenumber is link`, so the internal names are without spaces but the display names are with spaces.
 
 ### Add custom rendering to available renderings
 The next step is to make our new rendering available to the Experience Editor toolbox in SXA. We want to have a custom toolbox section *Acme Components* with our new rendering *Address Card*.
@@ -179,7 +185,7 @@ Right-click on `/sitecore/content/DigitalMarketingPlatform/ComponentLibrary/Pres
 
 Although Sitecore provides many ways to present visualization of data within a rendering variant, in my opinion [Scriban templates](https://doc.sitecore.com/developers/sxa/93/sitecore-experience-accelerator/en/scriban-templates.html) should be used where possible. Scriban is a more developer-oriented approach where you write code in the Scriban template language that makes most other options obsolete. In my experience rendering variants are created by developers who want to work in a structured way and use versioning and source-control, instead of clicking together Sitecore items for every HTML element they want to render. 
 
-For more information on working in a structured way with Scriban supporting real development tools like Visual Studio code, source-control and team development have a look at the following projects:
+For more information on working in a structured way with Scriban supporting real development tools like Visual Studio Code, source-control and team development have a look at the following projects:
 
 - [SXA CLI](https://doc.sitecore.com/developers/sxa/93/sitecore-experience-accelerator/en/add-a-theme-using-sxa-cli.html) - by Sitecore
 - [SXA Umbrella](https://github.com/macaw-interactive/sxa-umbrella#sxa-umbrella) - my take on a more enhanced approach to the SXA CLI functionality with better team development support (plug plug)
@@ -196,7 +202,8 @@ On the rendering variant Scriban item set the `VariantDetails:Template` field to
   <div>Address: <span>{{i_item.Address}}</span></div>
   <div>Email: <span>{{i_item.Email}}</span></div>
   <div>Phonenumber: 
-  {{ if !o_pagemode.is_experience_editor_editing && (sc_parameter 'PhonenumberIsLink') }}
+  {{ if !o_pagemode.is_experience_editor_editing && 
+     (sc_parameter 'PhonenumberIsLink') }}
      <a href="tel:{{ i_item.Phonenumber }}">{{ i_item.Phonenumber }}</a>
   {{ else }}
      <span>{{i_item.Phonenumber}}</span>
@@ -206,6 +213,7 @@ On the rendering variant Scriban item set the `VariantDetails:Template` field to
 ```
 
 This will result in the following component:
+
 ![Address Card - content editable](Sitecore-93-SXA-custom-rendering/Address%20Card%20-%20content%20editable.png)
 
 The fields in the card are content-editable.
@@ -219,13 +227,13 @@ When not in the Experience editor the result will be as follows when the `PhoneN
 ### Division of work: Sitecore developer, Sitecore specialist, Front-end developer
 Given a Sitecore project we see multiple roles involved like backend developers for the integration with other systems, Sitecore developers for extending Sitecore, Sitecore specialists for configuring Sitecore and front-end developers to create the HTML, CSS and JavaScript that makes the websites shine and fly. And this list does not yet include the search specialist, infrastructure specialist, support engineer, cloud genius, business consultant, content architect, UX specialist, SEO/SEA specialist and designer!
 
-Development for Sitecore SXA is a bit blurrier... who is taking care of creating new renderings, who configures the datasources and parameters, who writes the Scriban templates and where does the role of the front-end developer stops. In my opinion the Scriban templates should be the place where the Sitecore specialist who knows about the renderings, rendering variants and the data,and the front-end developer who knows about the required HTML markup, come together. The Scriban templates should contain the HTML markup as described by the front-end developer (preferrably documented in for example [Storybook](https://storybook.js.org/)) bound to the data from Sitecore, but should not contain any styling and functionality.
+Development for Sitecore SXA is a bit blurrier... who is taking care of creating new renderings, who configures the datasources and parameters, who writes the Scriban templates and where does the role of the front-end developer stops. In my opinion the Scriban templates should be the place where the Sitecore specialist who knows about the renderings, rendering variants and the data, and the front-end developer who knows about the required HTML markup, come together and work together. The Scriban templates should contain the HTML markup as described by the front-end developer (preferably documented in for example [Storybook](https://storybook.js.org/)) bound to the data from Sitecore, but should not contain any styling and functionality.
 
 ### Conclusion
 In this post I described how to create a Sitecore module, a new SXA Toolbox section, a custom rendering and a rendering variant for our custom rendering using Scriban **without writing any C#**. 
 
 All created Sitecore items can be serialized using a tool like [Unicorn](https://github.com/SitecoreUnicorn/Unicorn) or in the case of Sitecore 10 using [Sitecore Content Serialization](https://doc.sitecore.com/developers/100/developer-tools/en/sitecore-content-serialization.html).
 
-In future posts I will expand on how to make the address card more interactive, style the address card and make a clear division between the work of the front-end developer and the Sitecore specialist. 
+In future posts I will expand on how to make the address card more interactive, style the address card and make the front-end developer and the Sitecore specialist work together in the most optimal way. 
 
 
