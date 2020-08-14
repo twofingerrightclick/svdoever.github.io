@@ -17,7 +17,9 @@ In this post I described how to create:
 
 Without writing any C#. 
 
-I have no idea why this approach is not described in the Sitecore documentation. If you look at the documentation [Walkthrough: Building a simple rendering](https://doc.sitecore.com/developers/sxa/93/sitecore-experience-accelerator/en/walkthrough--building-a-simple-rendering.html) you will see that Sitecore still describes the usage of a lot of C# code and plumbing. 
+**The below statement happened to be completely false, [as pointed out by Barend Emmerzaal in a comment on my LinkedIn post announcement](https://www.linkedin.com/post/edit/6699930207480102912/). For the Sitecore documentation on this topic see [here](https://doc.sitecore.com/developers/sxa/93/sitecore-experience-accelerator/en/copy-and-customize-a-rendering.html). In my blog post I go into way more detail on the exact steps to take, and an extended example on how to accomplish the creation of a new rendering.**
+
+*I have no idea why this approach is not described in the Sitecore documentation. If you look at the documentation [Walkthrough: Building a simple rendering](https://doc.sitecore.com/developers/sxa/93/sitecore-experience-accelerator/en/walkthrough--building-a-simple-rendering.html) you will see that Sitecore still describes the usage of a lot of C# code and plumbing.* 
 
 ### Creating a new SXA module
 For the new SXA Toolbox section we create a corresponding new SXA module so it can be enabled on a site and will not lead to a collision in a Sitecore upgrade. A SXA module can be created in the *Foundation* or *Feature* layer. This structuring comes from the [Sitecore Helix solution architecture](https://helix.sitecore.net/introduction/index.html), a set of conventions used in Sitecore applications to provide a modular architecture which helps you manage dependencies. In this solution architecture Sitecore Helix defines three layers:
