@@ -1,10 +1,10 @@
 ---
 title: Web components the silver bullet for Sitecore SXA?
 date: '2020-08-27'
-spoiler: Sitecore SXA is a great way forward in structuring the way of building Sitecore web sites, providing a set of standard renderings and provide an editing experience for the web site maintainers. But sooner than later you want to extend/replace the out-of-the-box set of renderings, calling in the front-end developers to do their magic. At that moment there are many ways they can do their work, and in this post I will describe in what is in my opinion the optimal way for performance, SEO, front-end developer experience, and separation of concerns.
+spoiler: Sitecore SXA is a great way forward in structuring the way of building Sitecore web sites, providing a set of standard renderings and provide an editing experience for the web site maintainers. But sooner than later you want to extend/replace the out-of-the-box set of renderings, calling in the front-end developers to do their magic. At that moment there are many ways they can do their work, and in this post, I will describe in what is in my opinion the optimal way for performance, SEO, front-end developer experience, and separation of concerns.
 ---
 
-Sitecore SXA is a great way forward in structuring the way of building Sitecore web sites, providing a set of standard renderings and provide an editing experience for the web site maintainers. But sooner than later you want to extend/replace the out-of-the-box set of renderings, calling in the front-end developers to do their magic. At that moment there are many ways they can do their work, and in this post I will describe in what is in my opinion the optimal way for performance, SEO, front-end developer experience, and separation of concerns.
+Sitecore SXA is a great way forward in structuring the way of building Sitecore web sites, providing a set of standard renderings and provide an editing experience for the web site maintainers. But sooner than later you want to extend/replace the out-of-the-box set of renderings, calling in the front-end developers to do their magic. At that moment there are many ways they can do their work, and in this post, I will describe in what is in my opinion the optimal way for performance, SEO, front-end developer experience, and separation of concerns.
 
 ## Introduction
 A good Sitecore SXA project needs good front-end developers, and good front-end developers don't write ASP.NET Razor views and jQuery. We already had this problem a few years ago when we were done by the workflow of front-end developers writing a site mockup in HTML with SASS, and jQuery for the interactive elements, and back-end developers translating this into ASP.NET Razor views. That has not even the worst part - the trouble of keeping the changes to the often extensive amount of HTML in the mockup site in sync with the Razor views was the really bad part.
@@ -206,10 +206,10 @@ To reference the required files I added a HTML Snippet to the Metadata partial d
 For copy/paste purposes the relevant lines of the HTML snippet:
 
 ```html
-<link rel="stylesheet" href="https://unpkg.com/sxa-umbrella-webcomponents@0.0.1/dist/sxa-umbrella-webcomponents/sxa-umbrella-webcomponents.css" />
-<script type="module" src="https://unpkg.com/sxa-umbrella-webcomponents@0.0.1/dist/sxa-umbrella-webcomponents/sxa-umbrella-webcomponents.esm.js">
+<link rel="stylesheet" href="https://unpkg.com/sxa-umbrella-webcomponents@0.0.2/dist/sxa-umbrella-webcomponents/sxa-umbrella-webcomponents.css" />
+<script type="module" src="https://unpkg.com/sxa-umbrella-webcomponents@0.0.2/dist/sxa-umbrella-webcomponents/sxa-umbrella-webcomponents.esm.js">
 </script>
-<script nomodule src="https://unpkg.com/sxa-umbrella-webcomponents@0.0.1/dist/sxa-umbrella-webcomponents/sxa-umbrella-webcomponents.js">
+<script nomodule src="https://unpkg.com/sxa-umbrella-webcomponents@0.0.2/dist/sxa-umbrella-webcomponents/sxa-umbrella-webcomponents.js">
 </script>
 ```
 
