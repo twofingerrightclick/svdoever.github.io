@@ -1,6 +1,6 @@
 ---
 title: Netlify functions - continue after completion
-date: '220-09-21'
+date: '2020-09-21'
 spoiler: Netlify functions are a powerful beast for all your API needs. But what if I want to return as soon as possible from my API call to keep my web UI responsive, but still need to do something like sending out an e-mail? Enter the "classic" function style that makes this possible. 
 ---
 
