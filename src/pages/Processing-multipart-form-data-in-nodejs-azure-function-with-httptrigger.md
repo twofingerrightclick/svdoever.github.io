@@ -4,8 +4,8 @@ published: true
 date: '2020-09-25'
 spoiler: Processing multipart/form-data containing both fields, files and images is not as easy as it seems to be in a NodeJS Azure function with HttpTrigger. But it can be done, and I will show you how! 
 description: Processing multipart/form-data containing both fields, files and images is not as easy as it seems to be in a NodeJS Azure function with HttpTrigger. But it can be done, and I will show you how!
-tags: Azure,serverless,form-data
-canonical_url: https://www.sergevandenoever.nl/... - link for the canonical version of the content
+tags: Azure,serverless,formdata
+canonical_url: https://www.sergevandenoever.nl/Processing-multipart-form-data-in-nodejs-azure-function-with-httptrigger/
 ---
 
 ## Introduction

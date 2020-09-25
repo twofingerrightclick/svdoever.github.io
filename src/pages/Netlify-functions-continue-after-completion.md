@@ -1,7 +1,11 @@
 ---
 title: Netlify functions - continue after completion
+published: true
 date: '2020-09-21'
-spoiler: Netlify functions are a powerful beast for all your API needs. But what if I want to return as soon as possible from my API call to keep my web UI responsive, but still need to do something like sending out an e-mail? Enter the "classic" function style that makes this possible. 
+spoiler: Netlify functions are a powerful beast for all your API needs. But what if I want to return as soon as possible from my API call to keep my web UI responsive, but still need to do something like sending out an e-mail? Enter the "classic" function style that makes this possible.
+description: Netlify functions are a powerful beast for all your API needs. But what if I want to return as soon as possible from my API call to keep my web UI responsive, but still need to do something like sending out an e-mail? Enter the "classic" function style that makes this possible.
+tags: Netlify, serverless
+canonical_url: https://www.sergevandenoever.nl/Netlify-functions-continue-after-completion/
 ---
 
 [https://docs.netlify.com/functions/overview/](Netlify functions) can be used used to provide a API for your web site. You can [buid your functions with JavaScript](https://docs.netlify.com/functions/build-with-javascript/).
