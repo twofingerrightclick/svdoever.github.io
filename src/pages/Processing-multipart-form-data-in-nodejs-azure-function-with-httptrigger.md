@@ -92,8 +92,3 @@ export default httpTrigger;
 ```
 
 Check the [Busboy documentation](https://www.npmjs.com/package/busboy) for more information on configuration options and the handling fields and files.
-
-
-
-
-
