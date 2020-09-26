@@ -45,7 +45,7 @@ function getTime() {
 }
 
 function log(s) {
-    log(`${getTime()}: ${s}`);
+    console.log(`${getTime()}: ${s}`);
 }
 
 const httpTrigger: AzureFunction = async function (context: Context, request: HttpRequest): Promise<void> {
