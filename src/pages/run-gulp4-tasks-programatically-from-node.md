@@ -5,8 +5,8 @@ date: '2020-11-01'
 spoiler: Want to use the power of Gulp within your NodeJS application, instead of using the Gulp CLI and a gulpfile.js file? I finally found out how...
 description: Want to use the power of Gulp within your NodeJS application, instead of using the Gulp CLI and a gulpfile.js file? I finally found out how...
 tags: gulp, node
-canonical_url: https://www.sergevandenoever.nl/... - link for the canonical version of the content
-cover_image: cover image for post, accepts a URL. The best size is 1000 x 420.
+canonical_url: https://www.sergevandenoever.nl/run-gulp4-tasks-programatically-from-node/
+cover_image:
 series: Gulp
 ---
 I want to use the power of the Gulp functions like the series(), parallel(), src(), dest(), pipe(), the globbing, an the plugin model within my node application. And it is easy to do. But I can tell you... it took me hours to find out, and the missing link was that I forgot two brackets: (). The gulp.series() and gulp.parallel() give back a function that must be executed:
