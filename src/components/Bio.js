@@ -22,12 +22,19 @@ class Bio extends React.Component {
           style={{
             marginRight: rhythm(1 / 2),
             marginBottom: 0,
-            width: rhythm(2),
-            height: rhythm(2),
+            width: rhythm(4),
+            height: rhythm(4),
+            borderRadius: "50%"
           }}
         />
-        <p style={{ maxWidth: 310 }}>
-          Personal blog by <a href="https://mobile.twitter.com/svdoever">Serge van den Oever</a> - als je maar lol hebt...
+        <p style={{ maxWidth: rhythm(20) }}>
+          Personal blog by Serge van den Oever - als je maar lol hebt...<br/>
+          Twitter: <a href="https://twitter.com/svdoever" target="_blank" rel="noopener noreferrer">@svdoever</a><br/>
+          LinkedIn: <a href="https://www.linkedin.com/in/sergevandenoever/" target="_blank" rel="noopener noreferrer">Serge van den Oever</a> - <a href="https://www.linkedin.com/in/sergevandenoever/detail/recent-activity/posts/" target="_blank" rel="noopener noreferrer">articles on LinkedIn</a><br/>
+          <br/>
+          Technology Consultant @ Macaw<br/>
+          2021 Technology Sitecore Most Valuable Professional<br/>
+          <hr/>
         </p>
       </div>
     )
