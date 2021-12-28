@@ -1,7 +1,7 @@
 ---
 title: Next.js on Azure, and an example on how to use it for Sitecore JSS
 published: true
-date: '2020-12-28'
+date: '2021-12-28'
 spoiler: Running Next.js on Azure with all its CSR, SSR, SSG, and ISG goodness. And as an example run also Sitecore JSS on it!
 description: Running Next.js on Azure with all its CSR, SSR, SSG, and ISG goodness. And as an example run also Sitecore JSS on it!
 tags: nextjs, azure, sitecore, jss
