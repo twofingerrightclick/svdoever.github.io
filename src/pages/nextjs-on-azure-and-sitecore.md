@@ -7,7 +7,7 @@ description: Running Next.js on Azure with all its CSR, SSR, SSG, and ISG goodne
 tags: nextjs, azure, sitecore, jss
 canonical_url: https://www.sergevandenoever.nl/nextjs-on-azure-and-sitecore
 cover_image:
-series:
+series: nextjs-on-azure
 ---
 
 Next.js, developed by Vercel, runs best on Vercel. Problem is: it is difficult to "sell" to customers who commited to Microsoft Azure as their cloud platform to use Vercel (at the time of writing 178 employees) as an additional cloud provider for only the frontend application. Customers like insurance companies do for example a lot of checks on Azure before they even dare to go to the cloud on Azure, let alone they will embrace an additional cloud provider they never heard of.
