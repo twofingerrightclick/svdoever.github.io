@@ -1,7 +1,7 @@
 ---
 title: VSCode tasks and parsing your custom output for problems
 published: true
-date: '2021-02-16'
+date: '2022-02-16'
 spoiler: With custom tools reporting problems like errors and warnings it is nice if they end up in the "Problems" panel in Visual Studio Code. In this post I describe how to achieve this.
 description: With custom tools reporting problems like errors and warnings it is nice if they end up in the "Problems" panel in Visual Studio Code. In this post I describe how to achieve this.
 tags: vscode,tasks

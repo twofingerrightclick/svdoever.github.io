@@ -5,7 +5,7 @@ date: '2022-02-15'
 spoiler: Get chalk working with TypeScript, get color output with chalk in Lerna.
 description: Get chalk working with TypeScript, get color output with chalk in Lerna.
 tags: chalk,typescript,lerna
-canonical_url: https://www.sergevandenoever.nl/... - link for the canonical version of the content
+canonical_url: https://www.sergevandenoever.nl/chalk-typescript-lerna/
 cover_image:
 series:
 ---

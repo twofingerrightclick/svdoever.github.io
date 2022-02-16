@@ -1,7 +1,7 @@
 ---
 title: Prevent useless npm error output in your project
 published: true
-date: '2021-02-2022'
+date: '2022-02-16'
 spoiler: When you run an npm script that has not exit code 0, an annoying set of useless error lines is shown. But there are some options to get rid of them!
 description: When you run an npm script that has not exit code 0, an annoying set of useless error lines is shown. But there are some options to get rid of them!
 tags: npm
