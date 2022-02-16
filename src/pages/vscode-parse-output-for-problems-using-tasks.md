@@ -106,7 +106,7 @@ Is parsed using the regular expression `^(ERROR|WARNING):\\s*(.*)\\((\\d+),(\\d+
 
 Resulting in the following information in the "Problems" pane:
 
-![terminal task tab](vscode-parse-output-for-problems-using-tasks/problems-pane.png)
+![Problems pane](vscode-parse-output-for-problems-using-tasks/problems-pane.png)
 
 To run this task execute the task, press F1, select `Tasks: Run Task`, and next select the `Validate` task.
 

@@ -53,7 +53,7 @@
     "source": "https://excalidraw.com",
     "libraryItems": []
   },
-  "patchCommentBlock": true,
+  "patchCommentBlock": false,
   "imageElementNotice": false,
   "runWYSIWYGpatch": true,
   "fixInfinitePreviewLoop": true,

@@ -105,4 +105,4 @@ It is also possible to suppress the npm error output in your project by adding a
 loglevel=silent
 ```
 
-Using the abolve configuration the `--silent` flag is not required in the task configuration.
+Using the above configuration the `--silent` flag is not required in the task configuration.
