@@ -5,7 +5,7 @@ date: '2022-02-16'
 spoiler: When you run an npm script that has not exit code 0, an annoying set of useless error lines is shown. But there are some options to get rid of them!
 description: When you run an npm script that has not exit code 0, an annoying set of useless error lines is shown. But there are some options to get rid of them!
 tags: npm
-canonical_url: https://www.sergevandenoever.nl/... - link for the canonical version of the content
+canonical_url: https://www.sergevandenoever.nl/npm-prevent-error-output/
 cover_image: 
 series: 
 ---

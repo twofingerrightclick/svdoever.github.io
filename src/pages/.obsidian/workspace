@@ -1,0 +1,95 @@
+{
+  "main": {
+    "id": "b96526417ca8561f",
+    "type": "split",
+    "children": [
+      {
+        "id": "cbfac39f78c44cef",
+        "type": "leaf",
+        "state": {
+          "type": "markdown",
+          "state": {
+            "file": "vscode-parse-output-for-problems-using-tasks.md",
+            "mode": "source",
+            "source": false
+          }
+        }
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "dc0f9b30d9409085",
+    "type": "split",
+    "children": [
+      {
+        "id": "652c6bfabc8ee950",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "684af58b730923db",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {}
+            }
+          },
+          {
+            "id": "d466dfd1895fa223",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              }
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 592
+  },
+  "right": {
+    "id": "0e17b4518f1b0311",
+    "type": "split",
+    "children": [
+      {
+        "id": "1cd3db278bded955",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "a0ca8310fb319183",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "file": "vscode-parse-output-for-problems-using-tasks.md",
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": false
+              }
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300
+  },
+  "active": "cbfac39f78c44cef",
+  "lastOpenFiles": [
+    "vscode-parse-output-for-problems-using-tasks.md",
+    "npm-prevent-error-output.md",
+    "chalk-typescript-lerna.md"
+  ]
+}

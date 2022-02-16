@@ -2,10 +2,10 @@
 title: VSCode tasks and parsing your custom output for problems
 published: true
 date: '2022-02-16'
-spoiler: With custom tools reporting problems like errors and warnings it is nice if they end up in the "Problems" panel in Visual Studio Code. In this post I describe how to achieve this.
-description: With custom tools reporting problems like errors and warnings it is nice if they end up in the "Problems" panel in Visual Studio Code. In this post I describe how to achieve this.
+spoiler: For custom tools reporting problems like errors and warnings it is nice if they end up in the "Problems" panel in Visual Studio Code. In this post I describe how to achieve this.
+description: For custom tools reporting problems like errors and warnings it is nice if they end up in the "Problems" panel in Visual Studio Code. In this post I describe how to achieve this.
 tags: vscode,tasks
-canonical_url: https://www.sergevandenoever.nl/... - link for the canonical version of the content
+canonical_url: https://www.sergevandenoever.nl/vscode-parse-output-for-problems-using-tasks/
 cover_image: 
 series:
 ---
@@ -13,7 +13,7 @@ Assume you have a Node.js script that validates your content for problems. It is
 
 ![Error Output](vscode-parse-output-for-problems-using-tasks/error-output.png)
 
-To identify that it is a problem (error or warning) it is nice to do some coloring of the problem type, for example with the [chalk](https://github.com/chalk/chalk#readme) library. I use a few simple functions to create these messages which I write to the output using console.log().
+To identify that there is a problem (error or warning) it is possible to color the problem type, for example with the [chalk](https://github.com/chalk/chalk#readme) library. I use a few simple functions to create these messages which I write to the output using console.log().
 
 
 createWarningOrErrorString.ts: (note, this is TypeScript)
@@ -29,7 +29,7 @@ export function createErrorString(message: string, errorType: string, filepath =
 
 export function createWarningString(message: string, errorType: string, filepath = "", line = 1, column = 1): string {
     const filepathString = filepath === "" ? "<nofile>" : path.join(process.cwd(), filepath);
-    const warningMessage = `${chalk.bgRed("WARNING")}: ${filepathString}(${line},${column}): ${errorType} - ${message}`;
+    const warningMessage = `${chalk.bgYellow("WARNING")}: ${filepathString}(${line},${column}): ${errorType} - ${message}`;
     return warningMessage;
 }
 ```
