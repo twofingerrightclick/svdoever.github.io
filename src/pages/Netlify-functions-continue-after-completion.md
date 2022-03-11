@@ -3,7 +3,7 @@ title: Netlify functions - continue after completion
 published: true
 date: '2020-09-21'
 spoiler: Netlify functions are a powerful beast for all your API needs. But what if I want to return as soon as possible from my API call to keep my web UI responsive, but still need to do something like sending out an e-mail? Enter the "classic" function style that makes this possible.
-description: Netlify functions are a powerful beast for all your API needs. But what if I want to return as soon as possible from my API call to keep my web UI responsive, but still need to do something like sending out an e-mail? Enter the "classic" function style that makes this possible.
+description: Netlify functions are a powerful beast for all your API needs. But what if I want to return as soon as possible from my API call to keep my web UI responsive, but still need to do something like sending out an e-mail?
 tags: Netlify, serverless
 canonical_url: https://www.sergevandenoever.nl/Netlify-functions-continue-after-completion/
 ---
@@ -36,7 +36,9 @@ callback(null, {
 };
 ```
 
-I would encourage you to use the modern style, **except** when you want to return a result as soon as posible, but continue processing in the function. This can only be done with the legacy style, as follows:
+I would encourage you to use the modern style, and it is required for returning a response to the requester and allowing the function to continue its process. If you use the "legacy" style the response of the callback will not be sent to the requester until the function is done with all invocations or it times out at 10 seconds, even when the setTimeout technique is used as illustrated in the following "modern" style example.
+
+Use the "modern" style like so:
 
 function `continueAfterDoneTest.js`:
 ```javascript
@@ -44,13 +46,13 @@ function getTime() {
   return (new Date()).toISOString().substr(11, 8);
 }
 
-exports.handler = (event, context, callback) => {
+exports.handler = (event, context) => {
   console.log(`${getTime()}: THE FUNCTION HAS STARTED`);
   setTimeout(function () {
     console.log(`${getTime()}: THE TIMEOUT IS COMPLETED`)
   }, 5000);
 
-  callback(null, { statusCode: 200, body: `${getTime()}: FUNCTION COMPLETED` });
+ return { statusCode: 200, body: `${getTime()}: FUNCTION COMPLETED` };
 };
 ```
 
